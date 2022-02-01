@@ -1,5 +1,6 @@
 package com.keskonmange.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,12 +16,14 @@ public class Personne {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@NotNull
-	@NotBlank
+	//@NotNull
+	//@NotBlank
+	@Column(name = "nom", length = 50, nullable = true, unique = false)
 	private String nom;
 		
-	@NotNull
-	@NotBlank
+	//@NotNull
+	//@NotBlank
+	@Column(name = "prenom", length = 50, nullable = true, unique = false)
 	private String prenom;
 	
 	/*@Transient
