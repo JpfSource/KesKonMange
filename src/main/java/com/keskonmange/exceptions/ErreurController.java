@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ErrorController {
+public class ErreurController {
 	
     @Autowired
     private MessageSource messageSource;
     
-	public ErrorController() {
+	public ErreurController() {
 	}
 	
 	@ExceptionHandler(value = {Exception.class})

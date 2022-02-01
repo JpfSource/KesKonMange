@@ -34,6 +34,13 @@ public class Personne {
 		super();
 		//this.emprunts = new HashSet<Emprunt>();
 	}
+	
+	public Personne(int id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+	}
 
 	public int getId() {
 		return id;
