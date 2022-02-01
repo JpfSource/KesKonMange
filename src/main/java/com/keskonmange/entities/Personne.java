@@ -16,14 +16,14 @@ public class Personne {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	//@NotNull
-	//@NotBlank
-	@Column(name = "nom", length = 50, nullable = true, unique = false)
+	@NotNull
+	@NotBlank
+	@Column(name = "nom", length = 50, nullable = false, unique = false)
 	private String nom;
 		
-	//@NotNull
-	//@NotBlank
-	@Column(name = "prenom", length = 50, nullable = true, unique = false)
+	@NotNull
+	@NotBlank
+	@Column(name = "prenom", length = 50, nullable = false, unique = false)
 	private String prenom;
 	
 	/*@Transient
