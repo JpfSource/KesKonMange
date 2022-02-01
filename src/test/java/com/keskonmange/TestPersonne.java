@@ -2,11 +2,14 @@ package com.keskonmange;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,18 +18,41 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.validation.BindingResult;
 
 import com.keskonmange.entities.Personne;
 import com.keskonmange.exceptions.ErreurPersonne;
 import com.keskonmange.restcontrollers.RestControllerPersonne;
 import com.keskonmange.services.ServicePersonne;
-import java.util.Optional;
-
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class TestPersonne {
 
+	/* STATIC */
+
+	// STATIC.DECLARATIONS
+	private static final Integer PID = 1;
+	private static final Integer NB_MAX_PERSONNES = 4;
+	private static List<Personne> personnesStatic = TestPersonne.getFewPersonnes(4);
+	
+	// STATIC.METHODES
+	private static Personne getOnePersonne() {
+		return TestPersonne.getFewPersonnes(1).get(0);
+	}
+	private static List<Personne> getFewPersonnes(Integer nbPersonnes) {
+		List<Personne> personnes = new ArrayList<Personne>();
+		if(nbPersonnes >= 1) { personnes.add(new Personne(1, "FRANCISCO", "Jean-Philippe"));}
+		if(nbPersonnes >= 2) { personnes.add(new Personne(2, "DOMBALD", "Steeve"));}
+		if(nbPersonnes >= 3) { personnes.add(new Personne(3, "GUILLON", "Antonin"));}
+		if(nbPersonnes >= 4) { personnes.add(new Personne(4, "INGOLD", "Christian"));}
+		return personnes;
+	}
+
+	
+	/* NON STATIC */
+	
+	// NON STATIC.DECLARATIONS
 	@Autowired
 	@InjectMocks
 	RestControllerPersonne rcp;
@@ -35,67 +61,106 @@ public class TestPersonne {
 	@Mock
     ServicePersonne sp;
 	
+	// NON STATIC.METHODES.TESTS
 	@Test
 	public void testGetAll() {
-		List<Personne> mockPersonnes = new ArrayList<Personne>();
-		Personne p1 = new Personne(1, "FRANCISCO", "Jean-Philippe");
-		Personne p2 = new Personne(2, "DOMBALD", "Steeve");
-		Personne p3 = new Personne(3, "GUILLON", "Antonin");
-		Personne p4 = new Personne(4, "INGOLD", "Christian");
-		mockPersonnes.add(p1);
-		mockPersonnes.add(p2);
-		mockPersonnes.add(p3);
-		mockPersonnes.add(p4);
+	
+		when(sp.findAll()).thenReturn(TestPersonne.getFewPersonnes(NB_MAX_PERSONNES));
 		
-		when(sp.findAll()).thenReturn(mockPersonnes);
-		
-		// when
 		List<Personne> personnes = (List<Personne>) rcp.getAll();
 		
-		// then
-		// --> Contrôle du nombre de lignes récupérées
-		assertThat(personnes.size()).isEqualTo(4);
+		assertThat(personnes.size()).isEqualTo(NB_MAX_PERSONNES);
         
-		// --> Contrôle sur les noms
-        assertThat(personnes.get(0).getNom()).isEqualTo(p1.getNom());
-        assertThat(personnes.get(1).getNom()).isEqualTo(p2.getNom());
-        assertThat(personnes.get(2).getNom()).isEqualTo(p3.getNom());
-        assertThat(personnes.get(3).getNom()).isEqualTo(p4.getNom());
+        assertThat(personnes.get(0).getNom()).isEqualTo(personnesStatic.get(0).getNom());
+        assertThat(personnes.get(1).getNom()).isEqualTo(personnesStatic.get(1).getNom());
+        assertThat(personnes.get(2).getNom()).isEqualTo(personnesStatic.get(2).getNom());
+        assertThat(personnes.get(3).getNom()).isEqualTo(personnesStatic.get(3).getNom());
 		
-		// --> Contrôle sur les prénoms
-        assertThat(personnes.get(0).getPrenom()).isEqualTo(p1.getPrenom());
-        assertThat(personnes.get(1).getPrenom()).isEqualTo(p2.getPrenom());
-        assertThat(personnes.get(2).getPrenom()).isEqualTo(p3.getPrenom());
-        assertThat(personnes.get(3).getPrenom()).isEqualTo(p4.getPrenom());
+        assertThat(personnes.get(0).getPrenom()).isEqualTo(personnesStatic.get(0).getPrenom());
+        assertThat(personnes.get(1).getPrenom()).isEqualTo(personnesStatic.get(1).getPrenom());
+        assertThat(personnes.get(2).getPrenom()).isEqualTo(personnesStatic.get(2).getPrenom());
+        assertThat(personnes.get(3).getPrenom()).isEqualTo(personnesStatic.get(3).getPrenom());
 	}
 
 	@Test
 	public void testGetOne() {
-		Personne p1 = new Personne(1, "FRANCISCO", "Jean-Philippe");
-		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(p1));
+		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
 		
-		// when
 		try {
-			Personne personne = null;
-			Optional<Personne> op = rcp.getOne(1);
-			if (op != null) {
-				personne = op.get();
-			}
+			Personne personne = rcp.getOne(PID).get();
 
-			// then
-			// --> Contrôle du nombre de lignes récupérées
+			assertThatNoException();
+			
 			assertThat(personne).isNotNull();
 	        
-			// --> Contrôle sur les noms
-	        assertThat(personne.getNom()).isEqualTo(p1.getNom());
+	        assertThat(personne.getNom()).isEqualTo(TestPersonne.getOnePersonne().getNom());
 			
-			// --> Contrôle sur les prénoms
-	        assertThat(personne.getPrenom()).isEqualTo(p1.getPrenom());
+	        assertThat(personne.getPrenom()).isEqualTo(TestPersonne.getOnePersonne().getPrenom());
 	        
 		} catch (ErreurPersonne e) {
 			e.printStackTrace();
 		}
 	}
 	
+	@Test
+	public void testCreate() {
+		when(sp.save(any(Personne.class))).thenReturn(TestPersonne.getOnePersonne());
+		
+		try {
+			Personne personne = new Personne();
+			personne.setNom(TestPersonne.getOnePersonne().getNom());
+			personne.setPrenom(TestPersonne.getOnePersonne().getPrenom());
+			BindingResult result = mock(BindingResult.class);
+			Personne p2 = rcp.create(personne, result);
+			
+			assertThatNoException();
+			
+			assertThat(p2).isNotNull();
+	        
+	        assertThat(p2.getNom()).isEqualTo(TestPersonne.getOnePersonne().getNom());
+			
+	        assertThat(p2.getPrenom()).isEqualTo(TestPersonne.getOnePersonne().getPrenom());
+	        
+		} catch (ErreurPersonne e) {
+			e.printStackTrace();
+		}
+	}
 	
-}
+	@Test
+	public void testUpdate() {
+		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
+		try {
+			Personne personne  = rcp.getOne(PID).get();
+			personne.setNom(TestPersonne.getFewPersonnes(NB_MAX_PERSONNES).get(1).getNom());
+			personne.setPrenom(TestPersonne.getFewPersonnes(NB_MAX_PERSONNES).get(1).getPrenom());
+			when(sp.save(any(Personne.class))).thenReturn(personne);
+			Personne p2 = rcp.update(personne, PID);
+
+			assertThatNoException();
+			
+			assertThat(p2).isNotNull();
+	        
+	        assertThat(p2.getNom()).isEqualTo(TestPersonne.getFewPersonnes(NB_MAX_PERSONNES).get(1).getNom());
+			
+	        assertThat(p2.getPrenom()).isEqualTo(TestPersonne.getFewPersonnes(NB_MAX_PERSONNES).get(1).getPrenom());
+	        
+		} catch (ErreurPersonne e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testDelete() {
+		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
+
+		try {
+			rcp.delete(PID);
+
+			assertThatNoException();
+		} catch (ErreurPersonne e) {
+			e.printStackTrace();
+		}
+	}
+}	
+	
+	
