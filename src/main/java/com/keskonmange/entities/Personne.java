@@ -1,21 +1,29 @@
 package com.keskonmange.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+
+
 @Entity
 @Table(name="PERSONNE")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Personne {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@NotNull
 	@NotBlank
@@ -27,26 +35,25 @@ public class Personne {
 	@Column(name = "prenom", length = 50, nullable = false, unique = false)
 	private String prenom;
 	
-	/*@Transient
-	private Set<Emprunt> emprunts;
-	*/
+//	@ManyToMany(mappedBy="groupePersonnes")
+//	private Set<Groupe> groupes;	
+	
 	public Personne() {
 		super();
-		//this.emprunts = new HashSet<Emprunt>();
 	}
 	
-	public Personne(int id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
+	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -65,15 +72,16 @@ public class Personne {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-/*
-	public Set<Emprunt> getEmprunts() {
-		return emprunts;
-	}
 
-	public void setEmprunts(Set<Emprunt> emprunts) {
-		this.emprunts = emprunts;
-	}
-*/
+		
+//	public Set<Groupe> getGroupes() {
+//		return groupes;
+//	}
+//
+//	public void setGroupes(Set<Groupe> groupes) {
+//		this.groupes = groupes;
+//	}
+
 	@Override
 	public String toString() {
 		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
