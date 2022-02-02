@@ -1,12 +1,16 @@
 package com.keskonmange.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,8 +33,12 @@ public class Aliment {
 	@Column(name = "libelle", length = 30, nullable = false)
 	private String libelle;
 		
-	@Column(name = "allergie")
-	private List<String> allergie;
+	@ManyToMany
+	@JoinTable(name="ALLERGIE_ALIMENT",
+			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
+			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
+	)
+	private Set<String> allergies;
 	
 	@Column(name = "nutriscore")
 	private int nutriscore;
@@ -44,13 +52,13 @@ public class Aliment {
 	@Column(name = "kcal_100g")
 	private int kcal_100g;
 
-	public Aliment(int id, @NotNull @NotBlank long ean, @NotNull @NotBlank String libelle, List<String> allergie,
+	public Aliment(int id, @NotNull @NotBlank long ean, @NotNull @NotBlank String libelle,
 			int nutriscore, int ecoscore, int novagroupe, int kcal_100g) {
 		super();
 		this.id = id;
 		this.ean = ean;
 		this.libelle = libelle;
-		this.allergie = allergie;
+		this.allergies = new HashSet<>();
 		this.nutriscore = nutriscore;
 		this.ecoscore = ecoscore;
 		this.novagroupe = novagroupe;
@@ -59,6 +67,7 @@ public class Aliment {
 	
 	public Aliment() {
 		super();
+		this.allergies = new HashSet<>();
 	}
 
 	public int getId() {
@@ -85,12 +94,12 @@ public class Aliment {
 		this.libelle = libelle;
 	}
 
-	public List<String> getAllergie() {
-		return this.allergie;
+	public Set<String> getAllergies() {
+		return this.allergies;
 	}
 
-	public void setAllergie(List<String> allergie) {
-		this.allergie = allergie;
+	public void setAllergies(Set<String> allergies) {
+		this.allergies = allergies;
 	}
 
 	public int getNutriscore() {
@@ -127,7 +136,7 @@ public class Aliment {
 	
 	@Override
 	public String toString() {
-		return "Ingredient [id=" + this.id + ", ean=" + this.ean + ", libelle=" + this.libelle + ", allergie=" + this.allergie + ", nutriscore=" + this.nutriscore + 
+		return "Ingredient [id=" + this.id + ", ean=" + this.ean + ", libelle=" + this.libelle + ", allergies=" + this.allergies.toString() + ", nutriscore=" + this.nutriscore + 
 				", ecoscore=" + this.ecoscore + ", novagroupe=" + this.novagroupe + ", kcal_100g=" + this.kcal_100g + "]";
 	}
 }

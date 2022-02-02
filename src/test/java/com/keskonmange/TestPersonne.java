@@ -29,8 +29,8 @@ import com.keskonmange.services.ServicePersonne;
 @ExtendWith(MockitoExtension.class)
 public class TestPersonne {
 
-	/* STATIC */
-
+/* STATIC */
+/*
 	// STATIC.DECLARATIONS
 	private static final Integer PID = 1;
 	private static final Integer NB_MAX_PERSONNES = 4;
@@ -48,10 +48,10 @@ public class TestPersonne {
 		if(nbPersonnes >= 4) { personnes.add(new Personne(4, "INGOLD", "Christian"));}
 		return personnes;
 	}
-
+*/
 	
 	/* NON STATIC */
-	
+	/*
 	// NON STATIC.DECLARATIONS
 	@Autowired
 	@InjectMocks
@@ -160,7 +160,7 @@ public class TestPersonne {
 		} catch (ErreurPersonne e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }	
 	
 	
