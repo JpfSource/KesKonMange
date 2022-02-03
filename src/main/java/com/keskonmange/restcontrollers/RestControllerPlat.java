@@ -24,7 +24,7 @@ import com.keskonmange.services.ServicePlat;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/plat")
+@RequestMapping("api/plats")
 public class RestControllerPlat
 {
 	private String message;
