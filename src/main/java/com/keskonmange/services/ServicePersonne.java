@@ -74,7 +74,8 @@ public class ServicePersonne {
 		return jp.save(personne);
 	}
 
-	public void deleteById(Integer pid){
+	public void deleteById(Integer pid)
+	{
 		jp.deleteById(pid);
 	}
 }

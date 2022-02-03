@@ -21,6 +21,7 @@ import com.keskonmange.enums.Genre;
 
 @Entity
 @Table(name="PERSONNE")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Personne {
 
 	/* COLUMNS */
@@ -35,7 +36,7 @@ public class Personne {
 	@Column(name = "NOM", length = 50, nullable = false, unique = false)
 	private String nom;
 
-	@NotNull
+  @NotNull
 	@NotBlank
 	@Column(name = "PRENOM", length = 50, nullable = false, unique = false)
 	private String prenom;
@@ -325,7 +326,8 @@ public class Personne {
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
 	}
 

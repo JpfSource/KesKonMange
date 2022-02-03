@@ -7,12 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 @SpringBootApplication
-public class KeskonmangeApplication {
-
-	public static void main(String[] args) {
+public class KeskonmangeApplication
+{
+	public static void main(String[] args)
+	{
 		SpringApplication.run(KeskonmangeApplication.class, args);
 	}
-	
+
 	/**
      * Configuration pour le chargement des messages Intenationaux
      * messages.properties
