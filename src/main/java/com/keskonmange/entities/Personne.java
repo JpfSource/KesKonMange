@@ -21,7 +21,6 @@ import com.keskonmange.enums.Genre;
 
 @Entity
 @Table(name="PERSONNE")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Personne {
 
 	/* COLUMNS */
@@ -70,7 +69,6 @@ public class Personne {
 	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
 	private Integer objectifCalorique;
 
-
 	@Basic
 	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
 	private String activiteLibelle;
@@ -85,6 +83,14 @@ public class Personne {
 	/* CONSTRUCTORS */
 	public Personne() {
 		this(null, null, null,
+				null, null, null,
+				null, null, null,
+				null, null, null,
+				null);
+	}
+
+	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
+		this(id, nom, prenom,
 				null, null, null,
 				null, null, null,
 				null, null, null,
@@ -119,7 +125,7 @@ public class Personne {
 		this.activiteLibelle = activiteLibelle;
 		this.activite = activite;
 	}
-	
+
 	/* GETTERS & SETTERS */
 
 	/**
@@ -164,7 +170,7 @@ public class Personne {
 		this.prenom = prenom;
 	}
 
-   /**
+	/**
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -318,10 +324,11 @@ public class Personne {
 		this.besoinsCaloriques = besoinsCaloriques;
 	}
 
-  @Override
+	@Override
 	public String toString() {
 		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
-  
+	}
+
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {

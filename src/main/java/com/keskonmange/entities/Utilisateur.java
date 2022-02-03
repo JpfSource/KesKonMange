@@ -28,28 +28,15 @@ public class Utilisateur extends Personne {
 	@Column(name = "PWD", nullable = false)
 	private String pwd;
 
-//	@ManyToMany(mappedBy="administrateurs")
-//	private Set<Groupe> groupes;
-
-	
 	public Utilisateur() {
 		this(null, null, null, null, null);
 	}
 	
-/*
-	public Utilisateur(String nom, String prenom, Genre genre, Date dateNaissance, Integer taille, Integer poids, Integer objectifCalorique, String urlPhoto, String email, String pwd) {
-		super(nom, prenom, genre, dateNaissance, taille, poids, objectifCalorique, urlPhoto);
-		this.email = email;
-		this.pwd = pwd;
-	}
-*/
-
 	public Utilisateur(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,String email, String pwd) {
 		super(id, nom, prenom);
 		this.email = email;
 		this.pwd = pwd;
 	}
-
 
 	public Utilisateur(String email, String pwd) {
 		super();
@@ -66,10 +53,6 @@ public class Utilisateur extends Personne {
 		return pwd;
 	}
 
-//	public Set<Groupe> getGroupes() {
-//		return groupes;
-//	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -77,11 +60,4 @@ public class Utilisateur extends Personne {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-
-	
-//	public void setGroupes(Set<Groupe> groupes) {
-//		this.groupes = groupes;
-//	}
-	
-
 }

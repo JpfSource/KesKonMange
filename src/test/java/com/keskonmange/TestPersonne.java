@@ -42,7 +42,7 @@ public class TestPersonne {
 	private static List<Personne> personnesStatic = TestPersonne.getFewPersonnes(4);
 
 	// STATIC.METHODES
-	private static Personne getOneGroupe() {
+	private static Personne getOnePersonne() {
 		return TestPersonne.getFewPersonnes(1).get(0);
 	}
 	private static List<Personne> getFewPersonnes(Integer nbPersonnes) {
@@ -212,7 +212,7 @@ public class TestPersonne {
 
 	@Test
 	public void testUpdate() {
-		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOneGroupe()));
+		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
 		try {
 			Personne personne  = rcp.getOne(PID).get();
 			personne.setNom(TestPersonne.getFewPersonnes(NB_MAX_PERSONNES).get(1).getNom());
@@ -254,7 +254,7 @@ public class TestPersonne {
 
 	@Test
 	public void testDelete() {
-		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOneGroupe()));
+		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
 
 		try {
 			rcp.delete(PID);
