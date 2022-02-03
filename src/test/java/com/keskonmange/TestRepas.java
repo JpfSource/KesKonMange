@@ -50,19 +50,19 @@ public class TestRepas
 		{
 			if(nbRepas >= 1)
 			{
-				repas.add(new Repas(1, formatter.parse("27/11/2021"), "DEJEUNER", null));
+				repas.add(new Repas(1, formatter.parse("27/11/2021"), "Déjeuner"));
 			}
 			if(nbRepas >= 2)
 			{
-				repas.add(new Repas(2, formatter.parse("14/01/2022"), "DINER", null));
+				repas.add(new Repas(2, formatter.parse("14/01/2022"), "Diner"));
 			}
 			if(nbRepas >= 3)
 			{
-				repas.add(new Repas(3, formatter.parse("01/07/2021"), "PETIT_DEJEUNER", null));
+				repas.add(new Repas(3, formatter.parse("01/07/2021"), "Petit Déjeuner"));
 			}
 			if(nbRepas >= 4)
 			{
-				repas.add(new Repas(4, formatter.parse("04/11/2021"), "DEJEUNER", null));
+				repas.add(new Repas(4, formatter.parse("04/11/2021"), "Déjeuner"));
 			}
 		}
 		catch (ParseException e)

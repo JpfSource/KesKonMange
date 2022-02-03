@@ -8,11 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
 import com.keskonmange.enums.TypeRepas;
 
 @Entity
@@ -33,24 +34,22 @@ public class Repas
 
 	public Repas()
 	{
-		this(null, null, null, null);
+		this(null, null, null);
 	}
 
-	public Repas(Date date_Repas,String typeRepasLibelle,TypeRepas typeRepas)
+	public Repas(Date date_Repas,String typeRepasLibelle)
 	{
 		super();
 		this.Date_Repas = date_Repas;
 		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
 	}
 
-	public Repas(Integer id,Date date_Repas,String typeRepasLibelle,TypeRepas typeRepas)
+	public Repas(Integer id,Date date_Repas,String typeRepasLibelle)
 	{
 		super();
 		this.id = id;
 		this.Date_Repas = date_Repas;
 		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
 	}
 
 	public Integer getId()
@@ -92,4 +91,21 @@ public class Repas
 	{
 		this.typeRepas = typeRepas;
 	}
+	
+	
+	/* PERSISTENT METHODS */
+	@PostLoad
+	void fillTransient() {
+		if (!typeRepasLibelle.isEmpty()) {
+			this.typeRepas = TypeRepas.of(typeRepasLibelle);
+		}
+	}
+
+	@PrePersist
+	void fillPersistent() {
+		if (typeRepas != null) {
+			this.typeRepasLibelle = this.typeRepas.getLibelle();
+		}
+	}
+
 }

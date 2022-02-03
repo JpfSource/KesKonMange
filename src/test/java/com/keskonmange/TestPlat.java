@@ -45,19 +45,19 @@ public class TestPlat
 		List<Plat> plats = new ArrayList<Plat>();
 		if(nbPlats >= 1)
 		{
-			plats.add(new Plat(1, "LASAGNE", "PLAT_PRINCIPAL", null));
+			plats.add(new Plat(1, "LASAGNE", "Plat principal"));
 		}
 		if(nbPlats >= 2)
 		{
-			plats.add(new Plat(2, "BOEUF_BOURGUIGNON", "PLAT_PRINCIPAL", null));
+			plats.add(new Plat(2, "BOEUF_BOURGUIGNON", "Plat principal"));
 		}
 		if(nbPlats >= 3)
 		{
-			plats.add(new Plat(3, "CAROTTES_RAPEES", "ENTREE", null));
+			plats.add(new Plat(3, "CAROTTES_RAPEES", "Entrée"));
 		}
 		if(nbPlats >= 4)
 		{
-			plats.add(new Plat(4, "TIRAMISU", "DESSERT", null));
+			plats.add(new Plat(4, "TIRAMISU", "Dessert"));
 		}
 		return plats;
 	}

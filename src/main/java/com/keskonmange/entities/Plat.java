@@ -11,11 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import com.keskonmange.enums.TypePlat;
 
 @Entity
@@ -40,26 +41,24 @@ public class Plat
 
 	public Plat()
 	{
-		this(null, null, null, null);
+		this(null, null, null);
 	}
 
 	public Plat(@NotNull @NotBlank
-	String libellePlat,String typePlatLibelle,TypePlat typePlat)
+	String libellePlat,String typePlatLibelle)
 	{
 		super();
 		this.libellePlat = libellePlat;
 		this.typePlatLibelle = typePlatLibelle;
-		this.typePlat = typePlat;
 	}
 
 	public Plat(Integer id,@NotNull @NotBlank
-	String libellePlat,String typePlatLibelle,TypePlat typePlat)
+	String libellePlat,String typePlatLibelle)
 	{
 		super();
 		this.id = id;
 		this.libellePlat = libellePlat;
 		this.typePlatLibelle = typePlatLibelle;
-		this.typePlat = typePlat;
 	}
 
 	public Integer getId()
@@ -100,5 +99,20 @@ public class Plat
 	public void setTypePlat(TypePlat typePlat)
 	{
 		this.typePlat = typePlat;
+	}
+	
+	/* PERSISTENT METHODS */
+	@PostLoad
+	void fillTransient() {
+		if (!typePlatLibelle.isEmpty()) {
+			this.typePlat = TypePlat.of(typePlatLibelle);
+		}
+	}
+
+	@PrePersist
+	void fillPersistent() {
+		if (typePlat != null) {
+			this.typePlatLibelle = this.typePlat.getLibelle();
+		}
 	}
 }
