@@ -38,7 +38,10 @@ public class Aliment {
 			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
 	)
-	private Set<String> allergies;
+	private Set<Allergie> allergies;
+	
+	@ManyToMany(mappedBy="aliment_plat")
+	private Set<Plat> plats;
 	
 	@Column(name = "nutriscore")
 	private int nutriscore;
@@ -50,7 +53,7 @@ public class Aliment {
 	private int novagroupe;
 	
 	@Column(name = "kcal_100g")
-	private int kcal_100g;
+	private double kcal_100g;
 
 	public Aliment(int id, @NotNull @NotBlank long ean, @NotNull @NotBlank String libelle,
 			int nutriscore, int ecoscore, int novagroupe, int kcal_100g) {
@@ -94,11 +97,11 @@ public class Aliment {
 		this.libelle = libelle;
 	}
 
-	public Set<String> getAllergies() {
+	public Set<Allergie> getAllergies() {
 		return this.allergies;
 	}
 
-	public void setAllergies(Set<String> allergies) {
+	public void setAllergies(Set<Allergie> allergies) {
 		this.allergies = allergies;
 	}
 
@@ -126,17 +129,20 @@ public class Aliment {
 		this.novagroupe = novagroupe;
 	}
 
-	public int getKcal_100g() {
+	public double getKcal_100g() {
 		return this.kcal_100g;
 	}
 
 	public void setKcal_100g(int kcal_100g) {
 		this.kcal_100g = kcal_100g;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Ingredient [id=" + this.id + ", ean=" + this.ean + ", libelle=" + this.libelle + ", allergies=" + this.allergies.toString() + ", nutriscore=" + this.nutriscore + 
-				", ecoscore=" + this.ecoscore + ", novagroupe=" + this.novagroupe + ", kcal_100g=" + this.kcal_100g + "]";
+		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies + ", plats="
+				+ plats + ", nutriscore=" + nutriscore + ", ecoscore=" + ecoscore + ", novagroupe=" + novagroupe
+				+ ", kcal_100g=" + kcal_100g + "]";
 	}
+	
+	
 }
