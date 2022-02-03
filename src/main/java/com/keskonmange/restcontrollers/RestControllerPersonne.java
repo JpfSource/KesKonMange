@@ -28,10 +28,12 @@ import com.keskonmange.services.ServicePersonne;
 public class RestControllerPersonne
 {
 	private String message;
+
 	@Autowired
 	ServicePersonne sp;
+
 	@Autowired
-	private MessageSource messageSource;
+	private MessageSource messageSource;	
 
 	private void verifPersonne(Integer pid) throws ErreurPersonne
 	{

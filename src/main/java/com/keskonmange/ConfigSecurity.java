@@ -10,13 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class ConfigSecurity extends WebSecurityConfigurerAdapter
 {
 	@Override
-	protected void configure(HttpSecurity http) throws Exception
-	{
-		http.csrf().disable().formLogin().loginProcessingUrl("/login").and().logout().logoutUrl("/logout")
-				.invalidateHttpSession(true).and().authorizeRequests().antMatchers("/login").permitAll()
-				.antMatchers("/logout").permitAll().anyRequest().authenticated().and().httpBasic(); // pour autoriser
-																									// les API REST avec
-																									// leur propres
-																									// sécurités
+	protected void configure(HttpSecurity http) throws Exception {
+
+    http.csrf().disable()
+		.formLogin().loginProcessingUrl("/login").and()
+		.logout().logoutUrl("/logout").invalidateHttpSession(true)
+		.and().authorizeRequests()
+		.antMatchers("/login").permitAll()
+		.antMatchers("/logout").permitAll()
+		.anyRequest().authenticated()
+		.and().httpBasic();	// pour autoriser les API REST avec leur propres sécurités
 	}
 }
