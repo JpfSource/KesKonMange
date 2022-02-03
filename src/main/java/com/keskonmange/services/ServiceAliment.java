@@ -3,12 +3,12 @@ package com.keskonmange.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Aliment;
 import com.keskonmange.repository.JpaAliment;
 
-@Controller
+@Service
 public class ServiceAliment {
 
 	@Autowired

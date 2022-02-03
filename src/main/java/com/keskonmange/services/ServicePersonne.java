@@ -1,14 +1,15 @@
 package com.keskonmange.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 import com.keskonmange.entities.Personne;
 import com.keskonmange.repository.JpaPersonne;
 
-@Controller
+@Service
 public class ServicePersonne {
 
 	@Autowired
