@@ -76,7 +76,7 @@ public class RestControllerAliment {
 		return sa.save(aliment);
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
+	//@SuppressWarnings("unlikely-arg-type")
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer pid) throws ErreurAliment{
 		verifAliment(pid);

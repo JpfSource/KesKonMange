@@ -29,7 +29,6 @@ import com.keskonmange.restcontrollers.RestControllerPersonne;
 import com.keskonmange.services.ServicePersonne;
 import com.keskonmange.utils.UtilDate;
 
-
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class TestPersonne

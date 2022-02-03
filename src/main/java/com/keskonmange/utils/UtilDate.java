@@ -18,7 +18,6 @@ public class UtilDate {
 	}
 
 	public static Integer calculAge(LocalDate dateNaissanse){
-		System.out.println("*************** => "+ dateNaissanse.toString());
 		Integer age = 0;
 		LocalDate dateDuJour = LocalDate.now();  
 		if (dateNaissanse != null && dateDuJour != null){

@@ -134,7 +134,7 @@ public class Aliment
 		return this.kcal_100g;
 	}
 
-	public void setKcal_100g(int kcal_100g) {
+	public void setKcal_100g(double kcal_100g) {
 		this.kcal_100g = kcal_100g;
 	}
 

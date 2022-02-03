@@ -6,12 +6,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Utilisateur;
 import com.keskonmange.repository.JpaUtilisateur;
 
-@Controller
+@Service
 public class ServiceUtilisateur {
 
 	@Autowired
