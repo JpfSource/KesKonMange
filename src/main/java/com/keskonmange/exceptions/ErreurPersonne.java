@@ -1,6 +1,5 @@
 package com.keskonmange.exceptions;
 
-
 /**
  * On créé une exception fonctionnelle pour gérer
  * les erreurs sur les personnes

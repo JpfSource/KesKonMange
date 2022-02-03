@@ -1,7 +1,6 @@
 package com.keskonmange.exceptions;
 
 import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -12,15 +11,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ErreurController {
-	
-    @Autowired
-    private MessageSource messageSource;
-    
+
+	@Autowired
+	private MessageSource messageSource;
+
 	public ErreurController() {
 	}
-	
+
 	@ExceptionHandler(value = {Exception.class})
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public String errorGeneralException(Exception e) {
 		return messageSource.getMessage("erreur.prefix", null, Locale.getDefault()) +" "+ e.getMessage();
 	}
@@ -30,9 +29,8 @@ public class ErreurController {
 	public String errorPersonneException(ErreurPersonne e) {
 		return messageSource.getMessage("erreur.personne.prefix", null, Locale.getDefault()) +" "+ e.getMessage();
 	}
-	
-	
-	/**
+
+  /**
 	 * Erreur liée au groupe.
 	 * @param e
 	 * @return messaga à afficher
@@ -42,6 +40,4 @@ public class ErreurController {
 	public String errorGroupeException(ErreurGroupe e) {
 		return messageSource.getMessage("erreur.groupe.prefix", null, Locale.getDefault()) + " " + e.getMessage();
 	}
-
-	
 }
