@@ -20,15 +20,15 @@ public class Allergie
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotNull
+
+  @NotNull
 	@NotBlank
 	@Column(name = "libelle", length = 20, nullable = false)
 	private String libelle;
 	@ManyToMany(mappedBy = "allergies")
 	private Set<Aliment> aliments;
 
-	public Allergie(int id,@NotNull @NotBlank
-	String libelle)
+	public Allergie(int id,@NotNull @NotBlank String libelle)
 	{
 		super();
 		this.id = id;
@@ -36,35 +36,37 @@ public class Allergie
 		this.aliments = new HashSet<>();
 	}
 
-	public Allergie()
-	{
+	public Allergie() {
 		super();
 		this.aliments = new HashSet<>();
 	}
 
-	public int getId()
-	{
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(int id)
-	{
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getLibelle()
-	{
+	public String getLibelle() {
 		return this.libelle;
 	}
 
-	public void setLibelle(String libelle)
-	{
+	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
 
+	public Set<Aliment> getAliments() {
+		return aliments;
+	}
+
+	public void setAliments(Set<Aliment> aliments) {
+		this.aliments = aliments;
+	}
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Allergie [id=" + id + ", libelle=" + libelle + ", aliments=" + aliments + "]";
 	}
 }

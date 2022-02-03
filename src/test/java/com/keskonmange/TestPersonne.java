@@ -61,7 +61,6 @@ public class TestPersonne
 
 
 	/* NON STATIC */
-
 	// NON STATIC.DECLARATIONS
 	@Autowired
 	@InjectMocks
