@@ -15,18 +15,22 @@ public class ServiceAliment {
 	JpaAliment ja;
 	
 	public Optional<Aliment> findById(Integer pid){
-		return ja.findById(pid);
+		return getJa().findById(pid);
 	}
 
 	public Iterable<Aliment> findAll(){
-		return ja.findAll();
+		return getJa().findAll();
 	}
 	
 	public Aliment save(Aliment aliment){
-		return ja.save(aliment);
+		return getJa().save(aliment);
 	}
 
 	public void deleteById(Integer pid){
-		ja.deleteById(pid);
+		getJa().deleteById(pid);
+	}
+
+	public JpaAliment getJa() {
+		return ja;
 	}
 }

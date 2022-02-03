@@ -57,6 +57,14 @@ public class Allergie {
 		this.libelle = libelle;
 	}
 
+	public Set<Aliment> getAliments() {
+		return aliments;
+	}
+
+	public void setAliments(Set<Aliment> aliments) {
+		this.aliments = aliments;
+	}
+
 	@Override
 	public String toString() {
 		return "Allergie [id=" + id + ", libelle=" + libelle + ", aliments=" + aliments + "]";
