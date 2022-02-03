@@ -1,7 +1,5 @@
 package com.keskonmange.entities;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,6 +35,9 @@ public class Personne {
 //	@ManyToMany(mappedBy="groupePersonnes")
 //	private Set<Groupe> groupes;	
 	
+	@Column(name="besoin_cal")
+	private Integer besoinCalorique;
+	
 	public Personne() {
 		super();
 	}
@@ -47,6 +47,32 @@ public class Personne {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
+	}
+	
+	
+
+	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, Integer besoinCalorique) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.besoinCalorique = besoinCalorique;
+	}
+
+	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,
+			Integer besoinCalorique) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.besoinCalorique = besoinCalorique;
+	}
+
+	public Integer getBesoinCalorique() {
+		return besoinCalorique;
+	}
+
+	public void setBesoinCalorique(Integer besoinCalorique) {
+		this.besoinCalorique = besoinCalorique;
 	}
 
 	public Integer getId() {

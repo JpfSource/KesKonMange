@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.keskonmange.entities.Groupe;
@@ -55,31 +54,54 @@ public class RestControllerGroupe {
 	private void verifNomGroupe(Groupe groupe) throws ErreurGroupe {	
 	Optional<Groupe> groupeExistant = serviceGroupe.findGroupeByNom(groupe.getNom());
 	if(groupeExistant.isPresent()) {
-		//throw new ErreurGroupe("Le nom du groupe: "+ groupe.getNom() +" existe déjà !");
 		throw new ErreurGroupe(messageSource.getMessage("erreur.groupe.namealreadyexist", new Object[]{groupe.getNom()}, Locale.getDefault()));
 	}
 	}
 	
 	
+	/**
+	 * Renvoie le JSON de la liste de tous les groupes.
+	 * @return
+	 */
 	@GetMapping
 	public Iterable<Groupe> getAll(){
 		return serviceGroupe.findAll();
 	}
 	
 	// api/groupes/utilisateur/1
+	/**
+	 * Renvoie le JSON de tous les groupes dont l'id de l'utilisateur est passé paramètre de l'URL.
+	 * 
+	 * @param pid
+	 * @return
+	 */
 	@GetMapping({"/utilisateur/{id}"})
 	public Iterable<Groupe> getAllGroupeByUtilisateur(@PathVariable("id") Integer pid){
-		
 		return serviceGroupe.findByUtilisateurId(pid);
 	}
 	
 
+	/**
+	 * Renvoie le JSON du groupe correspondant à l'id de l'URL.
+	 * 
+	 * @param pid
+	 * @return
+	 * @throws ErreurGroupe
+	 */
 	@GetMapping("{id}")
 	public Optional<Groupe> getOne(@PathVariable("id") Integer pid) throws ErreurGroupe{
 		verifGroupe(pid);
 		return serviceGroupe.findById(pid);
 	}
 	
+	/**
+	 * Envoie les données du groupe du @RequestBody pour persistance en base de données.
+	 * 
+	 * @param groupe
+	 * @param result
+	 * @return
+	 * @throws ErreurGroupe
+	 */
 	@PostMapping
 	public Groupe create(@Valid @RequestBody Groupe groupe, BindingResult result) throws ErreurGroupe{
 		if(result.hasErrors()) {
@@ -94,6 +116,15 @@ public class RestControllerGroupe {
 		return serviceGroupe.save(groupe);
 	}
 
+	/**
+	 * Envoie les données du groupe du @RequestBody pour persistance en base de données.
+	 * Actualise les données.
+	 * 
+	 * @param groupe
+	 * @param pid
+	 * @return
+	 * @throws ErreurGroupe
+	 */
 	@PutMapping("{id}")
 	public Groupe update(@RequestBody Groupe groupe, @PathVariable ("id") Integer pid) throws ErreurGroupe {
 		verifGroupe(pid);
@@ -103,6 +134,11 @@ public class RestControllerGroupe {
 		return serviceGroupe.save(groupe);
 	}
 
+	/**
+	 * Supprime le groupe correspondant à l'id de l'URL.
+	 * @param pid
+	 * @throws ErreurGroupe
+	 */
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer pid) throws ErreurGroupe{
 		verifGroupe(pid);

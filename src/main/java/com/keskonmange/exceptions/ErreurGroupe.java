@@ -2,6 +2,11 @@ package com.keskonmange.exceptions;
 
 public class ErreurGroupe extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ErreurGroupe() {
 		super();
 		// TODO Auto-generated constructor stub

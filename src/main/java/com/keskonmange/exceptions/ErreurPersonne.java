@@ -3,7 +3,7 @@ package com.keskonmange.exceptions;
 
 /**
  * On créé une exception fonctionnelle pour gérer
- * les erreurs sur les clients
+ * les erreurs sur les personnes
  */
 public class ErreurPersonne extends Exception {
 	private static final long serialVersionUID = 1L;

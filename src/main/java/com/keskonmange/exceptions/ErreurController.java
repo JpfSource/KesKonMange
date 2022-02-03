@@ -42,13 +42,6 @@ public class ErreurController {
 	public String errorGroupeException(ErreurGroupe e) {
 		return messageSource.getMessage("erreur.groupe.prefix", null, Locale.getDefault()) + " " + e.getMessage();
 	}
-	
-	//Pour test PostMann
-//	@ExceptionHandler(value = { ErreurGroupe.class })
-//	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-//	public String errorLivreException(ErreurGroupe e) {
-//		String message = "Erreur liée au Groupe : " + e.getMessage();
-//		return message;
-//	}
+
 	
 }

@@ -2,15 +2,16 @@ package com.keskonmange;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,12 +22,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindingResult;
 
 import com.keskonmange.entities.Groupe;
-import com.keskonmange.entities.Groupe;
-import com.keskonmange.exceptions.ErreurGroupe;
+import com.keskonmange.entities.Personne;
 import com.keskonmange.exceptions.ErreurGroupe;
 import com.keskonmange.restcontrollers.RestControllerGroupe;
-import com.keskonmange.restcontrollers.RestControllerGroupe;
-import com.keskonmange.services.ServiceGroupe;
 import com.keskonmange.services.ServiceGroupe;
 
 @SpringBootTest
@@ -55,19 +53,20 @@ public class TestGroupe {
 		}
 		return groupes;
 	}
+	
 
 	// NON STATIC.DECLARATIONS
 	@Autowired
 	@InjectMocks
 	RestControllerGroupe rcg;
 
-//	@Autowired
-//	@Mock
-//    ServiceGroupe sp;
 
 	@Autowired
 	@Mock
 	ServiceGroupe gp;
+	
+	@Autowired
+	private ServiceGroupe sg;
 
 	// NON STATIC.METHODES.TESTS
 	@Test
@@ -96,9 +95,10 @@ public class TestGroupe {
 			Groupe groupe = new Groupe();
 			groupe.setNom(TestGroupe.getOneGroupe().getNom());
 			groupe.setUrlPhoto(TestGroupe.getOneGroupe().getUrlPhoto());
+
 			BindingResult result = mock(BindingResult.class);
 			Groupe g2 = rcg.create(groupe, result);
-
+			
 			assertThatNoException();
 
 			assertThat(g2).isNotNull();
@@ -106,6 +106,8 @@ public class TestGroupe {
 			assertThat(g2.getNom()).isEqualTo(TestGroupe.getOneGroupe().getNom());
 
 			assertThat(g2.getUrlPhoto()).isEqualTo(TestGroupe.getOneGroupe().getUrlPhoto());
+			
+
 
 		} catch (ErreurGroupe e) {
 			// TODO Auto-generated catch block
@@ -167,6 +169,26 @@ public class TestGroupe {
 		} catch (ErreurGroupe e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testGetBesoinCaloriqueGroupe() {
+		//given
+		Personne p1 = new Personne("Jean", "1", 1500);
+		Personne p2 = new Personne("Vier", "2", 2500);
+		
+		Set<Personne> personnes = new HashSet<Personne>();
+		personnes.add(p1);
+		personnes.add(p2);
+		
+		Groupe gpe = new Groupe("Groupe Test", null);
+		
+		gpe.setGroupePersonnes(personnes);
+
+		sg.getBesoinCaloriqueGroupe(gpe);
+		
+		assertThat(gpe.getBesoinCalorique() == 4000);
+		
 	}
 
 }
