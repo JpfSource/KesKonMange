@@ -13,12 +13,12 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable()
-        .formLogin().loginProcessingUrl("/login").and()
-        .logout().logoutUrl("/logout").invalidateHttpSession(true)
-        .and().authorizeRequests()
-        .antMatchers("/login").permitAll()
-        .antMatchers("/logout").permitAll()
-        .anyRequest().authenticated()
-        .and().httpBasic();	// pour autoriser les API REST avec leur propres sécurités
+		.formLogin().loginProcessingUrl("/login").and()
+		.logout().logoutUrl("/logout").invalidateHttpSession(true)
+		.and().authorizeRequests()
+		.antMatchers("/login").permitAll()
+		.antMatchers("/logout").permitAll()
+		.anyRequest().authenticated()
+		.and().httpBasic();	// pour autoriser les API REST avec leur propres sécurités
 	}
 }
