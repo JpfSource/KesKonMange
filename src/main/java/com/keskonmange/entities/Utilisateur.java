@@ -6,7 +6,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-//import com.keskonmange.enumeration.Genre;
 
 /**
  * Classe qui définie l'utilisateur ainsi que si oui ou non il est administrateur d'un groupe.
@@ -17,6 +16,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "UTILISATEUR")
+
 public class Utilisateur extends Personne {
 
 	@NotNull
