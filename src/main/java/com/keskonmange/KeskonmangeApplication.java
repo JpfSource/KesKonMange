@@ -26,4 +26,17 @@ public class KeskonmangeApplication {
         return messageSource;
     }
 
+	/**
+	 * Configuration pour le chargement des messages Intenationaux
+	 * messages.properties
+	 * 
+	 * @return
+	 */
+	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("i18n/messages");
+//		messageSource.setDefaultEncoding("UTF-8");
+		return messageSource;
+	}
 }

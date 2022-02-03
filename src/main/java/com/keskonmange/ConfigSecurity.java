@@ -12,7 +12,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable()
+    http.csrf().disable()
 		.formLogin().loginProcessingUrl("/login").and()
 		.logout().logoutUrl("/logout").invalidateHttpSession(true)
 		.and().authorizeRequests()

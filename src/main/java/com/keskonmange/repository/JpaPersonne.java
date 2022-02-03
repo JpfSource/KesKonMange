@@ -5,4 +5,6 @@ import com.keskonmange.entities.Personne;
 
 public interface JpaPersonne extends CrudRepository<Personne, Integer> {
 
+	//TODO: add new method
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+
 @RestControllerAdvice
 public class ErreurController {
 
@@ -29,4 +30,14 @@ public class ErreurController {
 		return messageSource.getMessage("erreur.personne.prefix", null, Locale.getDefault()) +" "+ e.getMessage();
 	}
 
+  /**
+	 * Erreur liée au groupe.
+	 * @param e
+	 * @return messaga à afficher
+	 */
+	@ExceptionHandler(value = { ErreurGroupe.class })
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String errorGroupeException(ErreurGroupe e) {
+		return messageSource.getMessage("erreur.groupe.prefix", null, Locale.getDefault()) + " " + e.getMessage();
+	}
 }

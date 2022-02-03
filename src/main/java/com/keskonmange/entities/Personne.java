@@ -16,12 +16,12 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 
 @Entity
 @Table(name="PERSONNE")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Personne {
 
 	/* COLUMNS */
@@ -119,8 +119,7 @@ public class Personne {
 		this.activiteLibelle = activiteLibelle;
 		this.activite = activite;
 	}
-
-
+	
 	/* GETTERS & SETTERS */
 
 	/**
@@ -165,7 +164,7 @@ public class Personne {
 		this.prenom = prenom;
 	}
 
-	/**
+   /**
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -319,7 +318,10 @@ public class Personne {
 		this.besoinsCaloriques = besoinsCaloriques;
 	}
 
-
+  @Override
+	public String toString() {
+		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
+  
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {

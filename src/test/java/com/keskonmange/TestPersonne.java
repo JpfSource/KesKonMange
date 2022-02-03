@@ -42,7 +42,7 @@ public class TestPersonne {
 	private static List<Personne> personnesStatic = TestPersonne.getFewPersonnes(4);
 
 	// STATIC.METHODES
-	private static Personne getOnePersonne() {
+	private static Personne getOneGroupe() {
 		return TestPersonne.getFewPersonnes(1).get(0);
 	}
 	private static List<Personne> getFewPersonnes(Integer nbPersonnes) {
@@ -146,13 +146,12 @@ public class TestPersonne {
 	public void testGetOne() {
 		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
 
-		try {
+    try {
 			Personne personne = rcp.getOne(PID).get();
 
 			assertThatNoException();
 
 			assertThat(personne).isNotNull();
-
 			assertThat(personne.getNom()).isEqualTo(TestPersonne.getOnePersonne().getNom());
 			assertThat(personne.getPrenom()).isEqualTo(TestPersonne.getOnePersonne().getPrenom());
 			assertThat(personne.getDescription()).isEqualTo(TestPersonne.getOnePersonne().getDescription());
@@ -165,7 +164,6 @@ public class TestPersonne {
 			assertThat(personne.getObjectifCalorique()).isEqualTo(TestPersonne.getOnePersonne().getObjectifCalorique());
 			assertThat(personne.getActiviteLibelle()).isEqualTo(TestPersonne.getOnePersonne().getActiviteLibelle());
 			assertThat(personne.getActivite()).isEqualTo(TestPersonne.getOnePersonne().getActivite());
-
 		} catch (ErreurPersonne e) {
 			e.printStackTrace();
 		}
@@ -195,7 +193,6 @@ public class TestPersonne {
 			assertThatNoException();
 
 			assertThat(p2).isNotNull();
-
 			assertThat(p2.getNom()).isEqualTo(TestPersonne.getOnePersonne().getNom());
 			assertThat(p2.getPrenom()).isEqualTo(TestPersonne.getOnePersonne().getPrenom());
 			assertThat(p2.getDescription()).isEqualTo(TestPersonne.getOnePersonne().getDescription());
@@ -208,7 +205,6 @@ public class TestPersonne {
 			assertThat(p2.getObjectifCalorique()).isEqualTo(TestPersonne.getOnePersonne().getObjectifCalorique());
 			assertThat(p2.getActiviteLibelle()).isEqualTo(TestPersonne.getOnePersonne().getActiviteLibelle());
 			assertThat(p2.getActivite()).isEqualTo(TestPersonne.getOnePersonne().getActivite());
-
 		} catch (ErreurPersonne e) {
 			e.printStackTrace();
 		}
@@ -216,7 +212,7 @@ public class TestPersonne {
 
 	@Test
 	public void testUpdate() {
-		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
+		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOneGroupe()));
 		try {
 			Personne personne  = rcp.getOne(PID).get();
 			personne.setNom(TestPersonne.getFewPersonnes(NB_MAX_PERSONNES).get(1).getNom());
@@ -258,7 +254,7 @@ public class TestPersonne {
 
 	@Test
 	public void testDelete() {
-		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
+		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOneGroupe()));
 
 		try {
 			rcp.delete(PID);
