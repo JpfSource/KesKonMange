@@ -24,10 +24,12 @@ public class ErreurController {
 		return messageSource.getMessage("erreur.prefix", null, Locale.getDefault()) +" "+ e.getMessage();
 	}
 
-	@ExceptionHandler(value = {ErreurPersonne.class})
+	@ExceptionHandler(value =
+	{ErreurPersonne.class})
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public String errorPersonneException(ErreurPersonne e) {
-		return messageSource.getMessage("erreur.personne.prefix", null, Locale.getDefault()) +" "+ e.getMessage();
+	public String errorPersonneException(ErreurPersonne e)
+	{
+		return messageSource.getMessage("erreur.personne.prefix", null, Locale.getDefault()) + " " + e.getMessage();
 	}
 
   /**
@@ -40,4 +42,18 @@ public class ErreurController {
 	public String errorGroupeException(ErreurGroupe e) {
 		return messageSource.getMessage("erreur.groupe.prefix", null, Locale.getDefault()) + " " + e.getMessage();
 	}
+
+	@ExceptionHandler(value = { ErreurPlat.class })
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String errorPlatException(ErreurPlat e) {
+		return messageSource.getMessage("erreur.plat.prefix", null, Locale.getDefault()) + " " + e.getMessage();
+	}
+
+	@ExceptionHandler(value = { ErreurRepas.class })
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String errorRepasException(ErreurRepas e) {
+		return messageSource.getMessage("erreur.repas.prefix", null, Locale.getDefault()) + " " + e.getMessage();
+	}
+  
+  
 }
