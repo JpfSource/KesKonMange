@@ -28,19 +28,19 @@ import com.keskonmange.services.ServicePersonne;
 public class RestControllerPersonne {
 
 	private String message;
-	
+
 	@Autowired
 	ServicePersonne sp;
-	
+
 	@Autowired
-    private MessageSource messageSource;	
+	private MessageSource messageSource;	
 
 	private void verifPersonne(Integer pid) throws ErreurPersonne {
 		if(sp.findById(pid).isEmpty()){
 			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notfound", new Object[]{pid}, Locale.getDefault()));
 		}
 	}
-		
+
 	@GetMapping
 	public Iterable<Personne> getAll(){
 		return sp.findAll();
@@ -51,7 +51,7 @@ public class RestControllerPersonne {
 		verifPersonne(pid);
 		return sp.findById(pid);
 	}
-	
+
 	@PostMapping
 	public Personne create(@Valid @RequestBody Personne personne, BindingResult result) throws ErreurPersonne{
 		if(result.hasErrors()) {
