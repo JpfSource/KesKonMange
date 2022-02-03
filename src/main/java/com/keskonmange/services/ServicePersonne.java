@@ -9,24 +9,28 @@ import com.keskonmange.entities.Personne;
 import com.keskonmange.repository.JpaPersonne;
 
 @Controller
-public class ServicePersonne {
-
+public class ServicePersonne
+{
 	@Autowired
 	JpaPersonne jp;
 
-	public Optional<Personne> findById(Integer pid){
+	public Optional<Personne> findById(Integer pid)
+	{
 		return jp.findById(pid);
 	}
 
-	public Iterable<Personne> findAll(){
+	public Iterable<Personne> findAll()
+	{
 		return jp.findAll();
 	}
-	
-	public Personne save(Personne personne){
+
+	public Personne save(Personne personne)
+	{
 		return jp.save(personne);
 	}
 
-	public void deleteById(Integer pid){
+	public void deleteById(Integer pid)
+	{
 		jp.deleteById(pid);
 	}
 }

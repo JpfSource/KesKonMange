@@ -18,47 +18,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.keskonmange.entities.Personne;
-import com.keskonmange.exceptions.ErreurPersonne;
-import com.keskonmange.services.ServicePersonne;
+import com.keskonmange.entities.Repas;
+import com.keskonmange.exceptions.ErreurRepas;
+import com.keskonmange.services.ServiceRepas;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/personnes")
-public class RestControllerPersonne
+@RequestMapping("api/repas")
+public class RestControllerRepas
 {
 	private String message;
 	@Autowired
-	ServicePersonne sp;
+	ServiceRepas sr;
 	@Autowired
 	private MessageSource messageSource;
 
-	private void verifPersonne(Integer pid) throws ErreurPersonne
+	private void verifRepas(Integer pid) throws ErreurRepas
 	{
-		if(sp.findById(pid).isEmpty())
+		if(sr.findById(pid).isEmpty())
 		{
-			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notfound", new Object[]
+			throw new ErreurRepas(messageSource.getMessage("erreur.repas.notfound", new Object[]
 			{pid}, Locale.getDefault()));
 		}
 	}
 
 	@GetMapping
-	public Iterable<Personne> getAll()
+	public Iterable<Repas> getAll()
 	{
-		return sp.findAll();
+		return sr.findAll();
 	}
 
 	@GetMapping("{id}")
-	public Optional<Personne> getOne(@PathVariable("id")
-	Integer pid) throws ErreurPersonne
+	public Optional<Repas> getOne(@PathVariable("id")
+	Integer pid) throws ErreurRepas
 	{
-		verifPersonne(pid);
-		return sp.findById(pid);
+		verifRepas(pid);
+		return sr.findById(pid);
 	}
 
 	@PostMapping
-	public Personne create(@Valid @RequestBody
-	Personne personne, BindingResult result) throws ErreurPersonne
+	public Repas create(@Valid @RequestBody
+	Repas repas, BindingResult result) throws ErreurRepas
 	{
 		if(result.hasErrors())
 		{
@@ -68,31 +68,31 @@ public class RestControllerPersonne
 				message += messageSource.getMessage("erreur.datalib", new Object[]
 				{e.getField(), e.getDefaultMessage()}, Locale.getDefault());
 			});
-			throw new ErreurPersonne(message);
+			throw new ErreurRepas(message);
 		}
-		return sp.save(personne);
+		return sr.save(repas);
 	}
 
 	@PutMapping("{id}")
-	public Personne update(@RequestBody
-	Personne personne, @PathVariable("id")
-	Integer pid) throws ErreurPersonne
+	public Repas update(@RequestBody
+	Repas repas, @PathVariable("id")
+	Integer pid) throws ErreurRepas
 	{
-		verifPersonne(pid);
-		if(pid != personne.getId())
+		verifRepas(pid);
+		if(pid != repas.getId())
 		{
-			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notequals", new Object[]
-			{pid, personne.getId()}, Locale.getDefault()));
+			throw new ErreurRepas(messageSource.getMessage("erreur.personne.notequals", new Object[]
+			{pid, repas.getId()}, Locale.getDefault()));
 		}
-		return sp.save(personne);
+		return sr.save(repas);
 	}
 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id")
-	Integer pid) throws ErreurPersonne
+	Integer pid) throws ErreurRepas
 	{
-		verifPersonne(pid);
+		verifRepas(pid);
 		// TODO : Vérifier les suppressions des tables relationnelles
-		sp.deleteById(pid);
+		sr.deleteById(pid);
 	}
 }
