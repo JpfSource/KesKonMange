@@ -1,33 +1,81 @@
 package com.keskonmange.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 import com.keskonmange.entities.Personne;
+import com.keskonmange.enums.BesoinEnergetiqueMineur;
 import com.keskonmange.repository.JpaPersonne;
+import com.keskonmange.utils.UtilDate;
 
 @Service
 public class ServicePersonne {
 
 	@Autowired
 	JpaPersonne jp;
+	
+	private static Boolean isPersonneOkForCalcul(Personne personne) {
+		return personne != null
+				&& personne.getDateNaissance() != null
+				&& personne.getPoids() != null
+				&& personne.getGenre() != null
+				&& personne.getTaille() != null
+				&& personne.getActivite() != null
+				&& personne.getObjectifCalorique() != null;
+	}
+
+	public static Integer calculBesoinsCaloriques(Personne personne){
+		if (isPersonneOkForCalcul(personne)) {
+			Integer age = UtilDate.calculAge(personne.getDateNaissance());
+
+			Double resultatBrut;
+			if(age < 18) {
+				resultatBrut = Double.valueOf(personne.getPoids() * BesoinEnergetiqueMineur.of(personne.getGenre(), age).getBesoinEnergetique());
+			}
+			else {
+				resultatBrut = Double.valueOf((personne.getPoids() * personne.getGenre().getCoeffPoids())
+						+ (personne.getTaille() * personne.getGenre().getCoeffTaille())
+						- (age * personne.getGenre().getCoeffAge())
+						+ personne.getGenre().getComplement());
+			}
+			Double resultatNet = resultatBrut * personne.getActivite().getCoefficient();
+
+			return ((Long)Math.round(resultatNet * (personne.getObjectifCalorique() / 100))).intValue();
+		}
+		else {
+			return null;
+		}
+	}
+
+	private static Iterable<Personne> calculBesoinsCaloriques(Iterable<Personne> personnes){
+		for(Personne personne : personnes) {
+			personne.setBesoinsCaloriques(calculBesoinsCaloriques(personne));
+		}
+		return personnes;
+	}
+	private static Optional<Personne> calculBesoinsCaloriques(Optional<Personne> personne){
+		if(personne != null && personne.isPresent()) {
+			personne.get().setBesoinsCaloriques(calculBesoinsCaloriques(personne.get()));
+		}
+		return personne;
+	}
 
 	public Optional<Personne> findById(Integer pid){
-		return jp.findById(pid);
+		return calculBesoinsCaloriques(jp.findById(pid));
 	}
 
 	public Iterable<Personne> findAll(){
-		return jp.findAll();
+		return calculBesoinsCaloriques(jp.findAll());
 	}
-	
+
 	public Personne save(Personne personne){
 		return jp.save(personne);
 	}
 
-	public void deleteById(Integer pid){
+	public void deleteById(Integer pid)
+	{
 		jp.deleteById(pid);
 	}
 }

@@ -18,49 +18,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.keskonmange.entities.Personne;
-import com.keskonmange.exceptions.ErreurPersonne;
-import com.keskonmange.services.ServicePersonne;
+import com.keskonmange.entities.Plat;
+import com.keskonmange.exceptions.ErreurPlat;
+import com.keskonmange.services.ServicePlat;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/personnes")
-public class RestControllerPersonne
+@RequestMapping("api/plats")
+public class RestControllerPlat
 {
 	private String message;
-
 	@Autowired
-	ServicePersonne sp;
-
+	ServicePlat spl;
 	@Autowired
-	private MessageSource messageSource;	
+	private MessageSource messageSource;
 
-	private void verifPersonne(Integer pid) throws ErreurPersonne
+	private void verifPlat(Integer pid) throws ErreurPlat
 	{
-		if(sp.findById(pid).isEmpty())
+		if(spl.findById(pid).isEmpty())
 		{
-			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notfound", new Object[]
+			throw new ErreurPlat(messageSource.getMessage("erreur.plat.notfound", new Object[]
 			{pid}, Locale.getDefault()));
 		}
 	}
 
 	@GetMapping
-	public Iterable<Personne> getAll()
+	public Iterable<Plat> getAll()
 	{
-		return sp.findAll();
+		return spl.findAll();
 	}
 
 	@GetMapping("{id}")
-	public Optional<Personne> getOne(@PathVariable("id")
-	Integer pid) throws ErreurPersonne
+	public Optional<Plat> getOne(@PathVariable("id")
+	Integer pid) throws ErreurPlat
 	{
-		verifPersonne(pid);
-		return sp.findById(pid);
+		verifPlat(pid);
+		return spl.findById(pid);
 	}
 
 	@PostMapping
-	public Personne create(@Valid @RequestBody
-	Personne personne, BindingResult result) throws ErreurPersonne
+	public Plat create(@Valid @RequestBody
+	Plat plat, BindingResult result) throws ErreurPlat
 	{
 		if(result.hasErrors())
 		{
@@ -70,31 +68,31 @@ public class RestControllerPersonne
 				message += messageSource.getMessage("erreur.datalib", new Object[]
 				{e.getField(), e.getDefaultMessage()}, Locale.getDefault());
 			});
-			throw new ErreurPersonne(message);
+			throw new ErreurPlat(message);
 		}
-		return sp.save(personne);
+		return spl.save(plat);
 	}
 
 	@PutMapping("{id}")
-	public Personne update(@RequestBody
-	Personne personne, @PathVariable("id")
-	Integer pid) throws ErreurPersonne
+	public Plat update(@RequestBody
+	Plat plat, @PathVariable("id")
+	Integer pid) throws ErreurPlat
 	{
-		verifPersonne(pid);
-		if(pid != personne.getId())
+		verifPlat(pid);
+		if(pid != plat.getId())
 		{
-			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notequals", new Object[]
-			{pid, personne.getId()}, Locale.getDefault()));
+			throw new ErreurPlat(messageSource.getMessage("erreur.personne.notequals", new Object[]
+			{pid, plat.getId()}, Locale.getDefault()));
 		}
-		return sp.save(personne);
+		return spl.save(plat);
 	}
 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id")
-	Integer pid) throws ErreurPersonne
+	Integer pid) throws ErreurPlat
 	{
-		verifPersonne(pid);
+		verifPlat(pid);
 		// TODO : Vérifier les suppressions des tables relationnelles
-		sp.deleteById(pid);
+		spl.deleteById(pid);
 	}
 }

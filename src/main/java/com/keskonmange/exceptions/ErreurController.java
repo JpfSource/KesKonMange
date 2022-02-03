@@ -1,7 +1,6 @@
 package com.keskonmange.exceptions;
 
 import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -9,25 +8,52 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+
 @RestControllerAdvice
 public class ErreurController {
-	
-    @Autowired
-    private MessageSource messageSource;
-    
+
+	@Autowired
+	private MessageSource messageSource;
+
 	public ErreurController() {
 	}
-	
+
 	@ExceptionHandler(value = {Exception.class})
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public String errorGeneralException(Exception e) {
 		return messageSource.getMessage("erreur.prefix", null, Locale.getDefault()) +" "+ e.getMessage();
 	}
 
-	@ExceptionHandler(value = {ErreurPersonne.class})
+	@ExceptionHandler(value =
+	{ErreurPersonne.class})
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public String errorPersonneException(ErreurPersonne e) {
-		return messageSource.getMessage("erreur.personne.prefix", null, Locale.getDefault()) +" "+ e.getMessage();
+	public String errorPersonneException(ErreurPersonne e)
+	{
+		return messageSource.getMessage("erreur.personne.prefix", null, Locale.getDefault()) + " " + e.getMessage();
 	}
-	
+
+  /**
+	 * Erreur liée au groupe.
+	 * @param e
+	 * @return messaga à afficher
+	 */
+	@ExceptionHandler(value = { ErreurGroupe.class })
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String errorGroupeException(ErreurGroupe e) {
+		return messageSource.getMessage("erreur.groupe.prefix", null, Locale.getDefault()) + " " + e.getMessage();
+	}
+
+	@ExceptionHandler(value = { ErreurPlat.class })
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String errorPlatException(ErreurPlat e) {
+		return messageSource.getMessage("erreur.plat.prefix", null, Locale.getDefault()) + " " + e.getMessage();
+	}
+
+	@ExceptionHandler(value = { ErreurRepas.class })
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String errorRepasException(ErreurRepas e) {
+		return messageSource.getMessage("erreur.repas.prefix", null, Locale.getDefault()) + " " + e.getMessage();
+	}
+  
+  
 }

@@ -14,22 +14,22 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="ALLERGIE")
-public class Allergie {
-
+@Table(name = "ALLERGIE")
+public class Allergie
+{
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@NotNull
+
+  @NotNull
 	@NotBlank
 	@Column(name = "libelle", length = 20, nullable = false)
 	private String libelle;
-	
-	@ManyToMany(mappedBy="allergies")
+	@ManyToMany(mappedBy = "allergies")
 	private Set<Aliment> aliments;
 
-	public Allergie(int id, @NotNull @NotBlank String libelle) {
+	public Allergie(int id,@NotNull @NotBlank String libelle)
+	{
 		super();
 		this.id = id;
 		this.libelle = libelle;
@@ -69,8 +69,4 @@ public class Allergie {
 	public String toString() {
 		return "Allergie [id=" + id + ", libelle=" + libelle + ", aliments=" + aliments + "]";
 	}
-
-	
-	
-	
 }

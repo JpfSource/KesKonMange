@@ -16,19 +16,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="ALIMENT")
-public class Aliment {
-
+@Table(name = "ALIMENT")
+public class Aliment
+{
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@NotNull
+
+  @NotNull
 	@NotBlank
 	@Column(name = "ean", nullable = false, unique = true)
 	private long ean;
-	
-	@NotNull
+
+  @NotNull
 	@NotBlank
 	@Column(name = "libelle", length = 30, nullable = false)
 	private String libelle;
@@ -69,6 +69,7 @@ public class Aliment {
 	}
 	
 	public Aliment() {
+
 		super();
 		this.allergies = new HashSet<>();
 	}
@@ -138,11 +139,10 @@ public class Aliment {
 	}
 
 	@Override
+
 	public String toString() {
 		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies + ", plats="
 				+ plats + ", nutriscore=" + nutriscore + ", ecoscore=" + ecoscore + ", novagroupe=" + novagroupe
 				+ ", kcal_100g=" + kcal_100g + "]";
 	}
-	
-	
 }
