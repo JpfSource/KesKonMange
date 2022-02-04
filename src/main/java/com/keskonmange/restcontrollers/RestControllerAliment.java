@@ -32,8 +32,10 @@ public class RestControllerAliment {
 	
 	@Autowired
 	ServiceAliment sa;
+	
 	@Autowired
 	ServiceAllergie sal;
+
 	
 	@Autowired
     private MessageSource messageSource;	
@@ -81,11 +83,12 @@ public class RestControllerAliment {
 	public void delete(@PathVariable("id") Integer pid) throws ErreurAliment{
 		verifAliment(pid);
 		
-		sa.getJa().getAllergieByAliment(pid).forEach(al->{
-			al.getAliments().remove(sa.findById(pid));
+		Aliment aliment = sa.findById(pid).get();
+		sa.getAllergieByAliment(pid).forEach(al->{
+			al.getAliments().remove(aliment);
 			sal.save(al);
 		});
-
+	
 		
 		sa.deleteById(pid);
 	}	

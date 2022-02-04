@@ -30,7 +30,7 @@ public class Aliment
 
   @NotNull
 	@NotBlank
-	@Column(name = "libelle", length = 30, nullable = false)
+	@Column(name = "libelle", length = 100, nullable = false)
 	private String libelle;
 		
 	@ManyToMany
