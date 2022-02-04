@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "ALLERGIE")
 public class Allergie
@@ -26,6 +28,7 @@ public class Allergie
 	@Column(name = "libelle", length = 20, nullable = false)
 	private String libelle;
   
+	@JsonIgnore
 	@ManyToMany(mappedBy = "allergies")
 	private Set<Aliment> aliments;
 

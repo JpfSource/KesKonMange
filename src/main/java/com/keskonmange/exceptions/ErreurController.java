@@ -55,5 +55,10 @@ public class ErreurController {
 		return messageSource.getMessage("erreur.repas.prefix", null, Locale.getDefault()) + " " + e.getMessage();
 	}
   
+	@ExceptionHandler(value = { ErreurUtilisateur.class })
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String errorUtilisateurException(ErreurUtilisateur e) {
+		return messageSource.getMessage("erreur.utilisateur.prefix", null, Locale.getDefault()) + " " + e.getMessage();
+	}
   
 }

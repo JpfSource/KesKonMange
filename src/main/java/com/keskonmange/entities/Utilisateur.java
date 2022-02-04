@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "UTILISATEUR")
-
 public class Utilisateur extends Personne {
 
 	@NotNull
@@ -28,9 +27,7 @@ public class Utilisateur extends Personne {
 	@Column(name = "PWD", nullable = false)
 	private String pwd;
 
-	public Utilisateur() {
-		this(null, null, null, null, null);
-	}
+	public Utilisateur() {}
 	
 	public Utilisateur(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,String email, String pwd) {
 		super(id, nom, prenom);

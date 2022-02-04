@@ -2,7 +2,7 @@ package com.keskonmange.utils;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Calendar;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class UtilDate {
@@ -25,11 +25,14 @@ public class UtilDate {
 		}
 		return age;
 	}  
-	public static Date getNaissanceFromAge(Integer age){
-		Calendar calendar = Calendar.getInstance();
+	public static LocalDate getNaissanceFromAge(Integer age){
+		/*Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, age * -1);
 		return calendar.getTime();
+		*/
+		LocalDate ld = LocalDate.now();
+		return ld.plus(age * -1, ChronoUnit.YEARS);
 	}
 
 }

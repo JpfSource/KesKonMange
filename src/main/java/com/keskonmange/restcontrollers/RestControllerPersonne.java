@@ -94,7 +94,6 @@ public class RestControllerPersonne
 	Integer pid) throws ErreurPersonne
 	{
 		verifPersonne(pid);
-		// TODO : Vérifier les suppressions des tables relationnelles
 		sp.deleteById(pid);
 	}
 }

@@ -67,7 +67,8 @@ public class ServicePersonne {
 	}
 
 	public Iterable<Personne> findAll(){
-		return calculBesoinsCaloriques(jp.findAll());
+		Iterable<Personne> personnes = jp.findAll();
+		return calculBesoinsCaloriques(personnes);
 	}
 
 	public Personne save(Personne personne){

@@ -24,7 +24,7 @@ import com.keskonmange.services.ServiceAllergie;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/Allergie")
+@RequestMapping("api/allergies")
 public class RestControllerAllergie {
 	private String message;
 	

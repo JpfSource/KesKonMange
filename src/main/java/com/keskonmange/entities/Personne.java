@@ -1,6 +1,6 @@
 package com.keskonmange.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,11 +13,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 
@@ -46,9 +45,8 @@ public class Personne {
 	@Column(name = "DESCRIPTION", nullable = true, unique = false)
 	private String description;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
-	private Date dateNaissance;
+	private LocalDate dateNaissance;
 
 	@Column(name = "URL_PHOTO", nullable = true, unique = false)
 	private String urlPhoto;
@@ -84,13 +82,7 @@ public class Personne {
 
 
 	/* CONSTRUCTORS */
-	public Personne() {
-		this(null, null, null,
-				null, null, null,
-				null, null, null,
-				null, null, null,
-				null);
-	}
+	public Personne() {}
 
 	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
 		this(id, nom, prenom,
@@ -101,7 +93,7 @@ public class Personne {
 	}
 
 	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
-			Date dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
+			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
 			@NotNull Integer objectifCalorique, String activiteLibelle, Activite activite) {
 		this(null, nom, prenom,
 				description, dateNaissance, urlPhoto,
@@ -111,7 +103,7 @@ public class Personne {
 	}
 
 	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
-			Date dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
+			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
 			@NotNull Integer objectifCalorique, String activiteLibelle, Activite activite) {
 		super();
 		this.id = id;
@@ -190,14 +182,14 @@ public class Personne {
 	/**
 	 * @return the dateNaissance
 	 */
-	public Date getDateNaissance() {
+	public LocalDate getDateNaissance() {
 		return dateNaissance;
 	}
 
 	/**
 	 * @param dateNaissance the dateNaissance to set
 	 */
-	public void setDateNaissance(Date dateNaissance) {
+	public void setDateNaissance(LocalDate dateNaissance) {
 		this.dateNaissance = dateNaissance;
 	}
 

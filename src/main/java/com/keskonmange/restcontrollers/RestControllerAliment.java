@@ -25,7 +25,7 @@ import com.keskonmange.services.ServiceAllergie;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/Aliment")
+@RequestMapping("api/aliments")
 public class RestControllerAliment {
 
 	private String message;

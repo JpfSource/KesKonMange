@@ -23,12 +23,12 @@ public class Aliment
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-  @NotNull
+	@NotNull
 	@NotBlank
 	@Column(name = "ean", nullable = false, unique = true)
 	private long ean;
 
-  @NotNull
+  	@NotNull
 	@NotBlank
 	@Column(name = "libelle", length = 100, nullable = false)
 	private String libelle;
@@ -40,8 +40,9 @@ public class Aliment
 	)
 	private Set<Allergie> allergies;
 	
-	@ManyToMany(mappedBy="aliment_plat")
+	/*@ManyToMany(mappedBy="aliment_plat")
 	private Set<Plat> plats;
+	*/
 	
 	@Column(name = "nutriscore")
 	private int nutriscore;
@@ -141,8 +142,8 @@ public class Aliment
 	@Override
 
 	public String toString() {
-		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies + ", plats="
-				+ plats + ", nutriscore=" + nutriscore + ", ecoscore=" + ecoscore + ", novagroupe=" + novagroupe
+		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies
+				+ ", nutriscore=" + nutriscore + ", ecoscore=" + ecoscore + ", novagroupe=" + novagroupe
 				+ ", kcal_100g=" + kcal_100g + "]";
 	}
 }

@@ -6,8 +6,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,16 +45,12 @@ public class TestPersonne
 		return TestPersonne.getFewPersonnes(1).get(0);
 	}
 	private static List<Personne> getFewPersonnes(Integer nbPersonnes) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		List<Personne> personnes = new ArrayList<Personne>();
-		try {
-			if(nbPersonnes >= 1) { personnes.add(new Personne(1, "FRANCISCO", "Jean-Philippe", "Le motard fou !", formatter.parse("27/11/1976"), "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.linkedin.com%2Fin%2Fjean-philippe-francisco-425880132&psig=AOvVaw11zoYdMLmEjvhCWr5rql52&ust=1643883682623000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCjz4rm4PUCFQAAAAAdAAAAABAK", "Masculin", Genre.MASCULIN, 183, 80, 100, "Sédentaire", Activite.SEDENTAIRE));}
-			if(nbPersonnes >= 2) { personnes.add(new Personne(2, "DOMBALD", "Steeve", "Le basketteur fou !", formatter.parse("21/11/1990"), "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.linkedin.com%2Fin%2Fsteeve-dombald&psig=AOvVaw1Wr5yz1mbzb7LI0crndPlE&ust=1643883970371000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKDL8ZPn4PUCFQAAAAAdAAAAABAD", "Masculin", Genre.MASCULIN, 181, 91, 90, "Actif", Activite.ACTIF));}
-			if(nbPersonnes >= 3) { personnes.add(new Personne(3, "GUILLON", "Antonin", "Le roi des fous !", formatter.parse("28/04/1997"), "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.linkedin.com%2Fin%2Fantonin-guillon-230718128&psig=AOvVaw3cf4M1Kpy5kj5PNb-eXglB&ust=1643884127294000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMDytN7n4PUCFQAAAAAdAAAAABAD", "Masculin", Genre.MASCULIN, 176, 75, 95, "Peu actif", Activite.PEU_ACTIF));}
-			if(nbPersonnes >= 4) { personnes.add(new Personne(4, "INGOLD", "Christian", "Le jogger fou !", formatter.parse("07/12/1986"), "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reflecta.ch%2Ffr%2Fa-propos%2Fequipe%2Fchristian-ingold&psig=AOvVaw12XQfKmhDWfEM-BcoH_YzD&ust=1643884354220000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPClqMro4PUCFQAAAAAdAAAAABAD", "Masculin", Genre.MASCULIN, 181, 80, 90, "Très actif", Activite.TRES_ACTIF));}
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+			if(nbPersonnes >= 1) { personnes.add(new Personne(1, "FRANCISCO", "Jean-Philippe", "Le motard fou !", LocalDate.parse("27/11/1976", DateTimeFormatter.ofPattern("dd/MM/yyyy")), "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.linkedin.com%2Fin%2Fjean-philippe-francisco-425880132&psig=AOvVaw11zoYdMLmEjvhCWr5rql52&ust=1643883682623000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKCjz4rm4PUCFQAAAAAdAAAAABAK", "Masculin", Genre.MASCULIN, 183, 80, 100, "Sédentaire", Activite.SEDENTAIRE));}
+			if(nbPersonnes >= 2) { personnes.add(new Personne(2, "DOMBALD", "Steeve", "Le basketteur fou !", LocalDate.parse("21/11/1990", DateTimeFormatter.ofPattern("dd/MM/yyyy")), "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.linkedin.com%2Fin%2Fsteeve-dombald&psig=AOvVaw1Wr5yz1mbzb7LI0crndPlE&ust=1643883970371000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKDL8ZPn4PUCFQAAAAAdAAAAABAD", "Masculin", Genre.MASCULIN, 181, 91, 90, "Actif", Activite.ACTIF));}
+			if(nbPersonnes >= 3) { personnes.add(new Personne(3, "GUILLON", "Antonin", "Le roi des fous !", LocalDate.parse("28/04/1997", DateTimeFormatter.ofPattern("dd/MM/yyyy")), "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.linkedin.com%2Fin%2Fantonin-guillon-230718128&psig=AOvVaw3cf4M1Kpy5kj5PNb-eXglB&ust=1643884127294000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMDytN7n4PUCFQAAAAAdAAAAABAD", "Masculin", Genre.MASCULIN, 176, 75, 95, "Peu actif", Activite.PEU_ACTIF));}
+			if(nbPersonnes >= 4) { personnes.add(new Personne(4, "INGOLD", "Christian", "Le jogger fou !", LocalDate.parse("07/12/1986", DateTimeFormatter.ofPattern("dd/MM/yyyy")), "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reflecta.ch%2Ffr%2Fa-propos%2Fequipe%2Fchristian-ingold&psig=AOvVaw12XQfKmhDWfEM-BcoH_YzD&ust=1643884354220000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPClqMro4PUCFQAAAAAdAAAAABAD", "Masculin", Genre.MASCULIN, 181, 80, 90, "Très actif", Activite.TRES_ACTIF));}
 		return personnes;
 	}
 
