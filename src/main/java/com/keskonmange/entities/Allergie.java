@@ -21,10 +21,11 @@ public class Allergie
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-  @NotNull
+	@NotNull
 	@NotBlank
 	@Column(name = "libelle", length = 20, nullable = false)
 	private String libelle;
+  
 	@ManyToMany(mappedBy = "allergies")
 	private Set<Aliment> aliments;
 
