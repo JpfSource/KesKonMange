@@ -48,6 +48,8 @@ public class Groupe {
 								inverseJoinColumns = @JoinColumn(name = "personne_id", referencedColumnName = "id"))
 	private Set<Personne> groupePersonnes;
 
+	@OneToMany(mappedBy = "groupe")
+	private Set<Repas> repas;
 	
 //TODO: A ajouter plus tard après l'ajout des personnes.
 	/*

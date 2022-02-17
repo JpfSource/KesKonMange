@@ -41,8 +41,8 @@ public class Aliment
 	private Set<Allergie> allergies;
 	
 	/*@ManyToMany(mappedBy="aliment_plat")
-	private Set<Plat> plats;
-	*/
+	private Set<Plat> plats;*/
+	
 	
 	@Column(name = "nutriscore")
 	private int nutriscore;

@@ -11,12 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.keskonmange.enums.TypePlat;
 
 @Entity
@@ -26,19 +29,28 @@ public class Plat
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	@NotNull
 	@NotBlank
 	@Column(name = "LIBELLE", length = 150, nullable = false, unique = false)
 	private String libellePlat;
+	
 	@ManyToMany
 	@JoinTable(name = "ALIMENT_PLAT", joinColumns = @JoinColumn(name = "ID_PLAT", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ID_ALIMENT", referencedColumnName = "ID"))
 	private Set<Aliment> aliment_plat;
+	
 	@Basic
 	@Column(name = "TYPE_PLAT", length = 20, nullable = true, unique = false)
 	private String typePlatLibelle;
+	
 	@Transient
 	private TypePlat typePlat;
+	
+	@JsonIgnore
+	@ManyToOne
+	private Repas repas;
 
+	
 	public Plat()
 	{
 		this(null, null, null);
