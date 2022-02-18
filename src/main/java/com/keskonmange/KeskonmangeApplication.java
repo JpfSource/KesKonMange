@@ -1,5 +1,6 @@
 package com.keskonmange;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
@@ -26,5 +27,15 @@ public class KeskonmangeApplication
 		messageSource.setBasename("i18n/messages");
 //		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
+	}
+	
+	
+	/**
+	 * Création d'un modelMapper
+	 * @return
+	 */
+	@Bean	
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 }
