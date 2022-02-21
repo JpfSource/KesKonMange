@@ -37,7 +37,7 @@ public class Personne {
 	@Column(name = "NOM", length = 50, nullable = false, unique = false)
 	private String nom;
 
-  @NotNull
+	@NotNull
 	@NotBlank
 	@Column(name = "PRENOM", length = 50, nullable = false, unique = false)
 	private String prenom;
@@ -66,7 +66,6 @@ public class Personne {
 	@Column(name="POIDS", nullable = true, unique = false)
 	private Integer poids;
 
-	@NotNull
 	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
 	private Integer objectifCalorique;
 
@@ -84,8 +83,8 @@ public class Personne {
 	/* CONSTRUCTORS */
 	public Personne() {}
 
-	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
-		this(id, nom, prenom,
+	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
+		this(nom, prenom,
 				null, null, null,
 				null, null, null,
 				null, null, null,
@@ -94,7 +93,7 @@ public class Personne {
 
 	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
 			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
-			@NotNull Integer objectifCalorique, String activiteLibelle, Activite activite) {
+			Integer objectifCalorique, String activiteLibelle, Activite activite) {
 		this(null, nom, prenom,
 				description, dateNaissance, urlPhoto,
 				genreLibelle, genre, taille,
@@ -104,7 +103,7 @@ public class Personne {
 
 	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
 			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
-			@NotNull Integer objectifCalorique, String activiteLibelle, Activite activite) {
+			Integer objectifCalorique, String activiteLibelle, Activite activite) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -344,6 +343,7 @@ public class Personne {
 		if (activite != null) {
 			this.activiteLibelle = this.activite.getLibelle();
 		}
+
 	}
 
 }
