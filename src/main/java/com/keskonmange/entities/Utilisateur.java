@@ -1,10 +1,18 @@
 package com.keskonmange.entities;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.keskonmange.enums.Activite;
+import com.keskonmange.enums.Genre;
+import com.keskonmange.enums.Role;
 
 
 /**
@@ -27,10 +35,19 @@ public class Utilisateur extends Personne {
 	@Column(name = "PWD", nullable = false)
 	private String pwd;
 
+	@Basic
+	@Column(name = "ROLE", length = 20, nullable = true, unique = false)
+	private String roleLibelle;
+
+	@Transient
+	private Role role;
+	
+	
+	
 	public Utilisateur() {}
 	
-	public Utilisateur(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,String email, String pwd) {
-		super(id, nom, prenom);
+	public Utilisateur(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,String email, String pwd) {
+		super(nom, prenom);
 		this.email = email;
 		this.pwd = pwd;
 	}
@@ -57,4 +74,52 @@ public class Utilisateur extends Personne {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+	
+	
+	
+	
+	/**
+	 * @return the roleLibelle
+	 */
+	public String getRoleLibelle() {
+		return roleLibelle;
+	}
+
+	/**
+	 * @param roleLibelle the roleLibelle to set
+	 */
+	public void setRoleLibelle(String roleLibelle) {
+		this.roleLibelle = roleLibelle;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public Role getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	/* PERSISTENT METHODS */
+	@PostLoad
+	void fillTransient() {
+		if (!roleLibelle.isEmpty()) {
+			this.role = Role.of(roleLibelle);
+		}
+	}
+
+	@PrePersist
+	void fillPersistent() {
+		if (role != null) {
+			this.roleLibelle = this.role.getLibelle();
+		}
+	}
+	
+	
 }
