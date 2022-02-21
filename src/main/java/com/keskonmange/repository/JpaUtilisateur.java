@@ -10,5 +10,5 @@ import com.keskonmange.entities.Utilisateur;
 public interface JpaUtilisateur extends CrudRepository<Utilisateur, Integer> {
 
 	@Query("SELECT u FROM Utilisateur u WHERE u.email =:email ")
-	public Optional<Utilisateur> findUtilisateurByEmail(String email);
+	public Optional<Utilisateur> findByEmail(String email);
 }

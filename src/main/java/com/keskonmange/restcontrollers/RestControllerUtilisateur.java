@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.keskonmange.entities.Utilisateur;
+import com.keskonmange.enums.Role;
 import com.keskonmange.exceptions.ErreurUtilisateur;
 import com.keskonmange.services.ServiceUtilisateur;
 
@@ -33,7 +36,10 @@ public class RestControllerUtilisateur {
 	ServiceUtilisateur su;
 	
 	@Autowired
-    private MessageSource messageSource;	
+    private MessageSource messageSource;
+	
+	@Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	private void verifUtilisateur(Integer pid) throws ErreurUtilisateur {
 		if(su.findById(pid).isEmpty()){
@@ -41,6 +47,12 @@ public class RestControllerUtilisateur {
 		}
 	}
 		
+	private void verifEmail(String email) throws ErreurUtilisateur {
+		if(!su.findByEmail(email).isEmpty() ){
+			throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.email.found", new Object[]{email}, Locale.getDefault()));
+		}
+	}
+	
 	@GetMapping
 	public Iterable<Utilisateur> getAll(){
 		return su.findAll();
@@ -64,6 +76,35 @@ public class RestControllerUtilisateur {
 		return su.save(utilisateur);
 	}
 
+	@PostMapping("/signin")
+    public Utilisateur registerUser(@Valid @RequestBody Utilisateur user) throws ErreurUtilisateur{
+		verifEmail(user.getEmail());
+		user.setRole(Role.USER);
+		user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
+		return su.save(user);
+    }	
+
+	@PostMapping("/login")
+    public Utilisateur loginUser(@RequestBody Utilisateur user) throws ErreurUtilisateur{
+		Utilisateur userReturn = null;
+		
+		if (su.findByEmail(user.getEmail()).isPresent()) {
+			Utilisateur userDb = su.findByEmail(user.getEmail()).get();
+			
+			if(bCryptPasswordEncoder.matches(user.getPwd(), userDb.getPwd())) {
+				userReturn = userDb;
+			}
+			else {
+				throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.pwdko", new Object[]{user.getEmail()}, Locale.getDefault()));
+			}
+		}
+		else {
+			throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.email.notfound", new Object[]{user.getEmail()}, Locale.getDefault()));
+		}
+		return userReturn;
+    }	
+	
+	
 	@PutMapping("{id}")
 	public Utilisateur update(@RequestBody Utilisateur utilisateur, @PathVariable ("id") Integer pid) throws ErreurUtilisateur{
 		verifUtilisateur(pid);
