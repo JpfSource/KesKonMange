@@ -119,11 +119,11 @@ public class Groupe {
 	public Set<Score> getGroupeScores() {
 		return groupeScores;
 	}
-
+*/
 	public Set<Repas> getRepas() {
 		return repas;
 	}
-*/
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -165,9 +165,9 @@ public class Groupe {
 	public void setGroupeScores(Set<Score> groupeScores) {
 		this.groupeScores = groupeScores;
 	}
-
+*/
 	public void setRepas(Set<Repas> repas) {
 		this.repas = repas;
 	}
-*/
+
 }

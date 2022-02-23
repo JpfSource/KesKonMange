@@ -90,6 +90,22 @@ public class Repas
 		return typeRepas;
 	}
 
+	public Set<Plat> getPlats() {
+		return plats;
+	}
+
+	public Groupe getGroupe() {
+		return groupe;
+	}
+
+	public void setPlats(Set<Plat> plats) {
+		this.plats = plats;
+	}
+
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
+	}
+
 	public void setId(Integer id)
 	{
 		this.id = id;
