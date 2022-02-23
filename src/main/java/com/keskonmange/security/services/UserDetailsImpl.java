@@ -31,7 +31,8 @@ public class UserDetailsImpl implements UserDetails {
 		this.password = password;
 		this.authorities = authorities;
 	}
-	
+
+//************ SANS LES ROLES EN MAPPING **************************	
 	public static UserDetailsImpl build(Utilisateur user) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(user.getRoleLibelle()));
