@@ -11,4 +11,6 @@ public interface JpaUtilisateur extends CrudRepository<Utilisateur, Integer> {
 
 	@Query("SELECT u FROM Utilisateur u WHERE u.email =:email ")
 	public Optional<Utilisateur> findByEmail(String email);
+	
+	Boolean existsByEmail(String email);
 }

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @SpringBootApplication
 public class KeskonmangeApplication
@@ -34,8 +34,8 @@ public class KeskonmangeApplication
      * Permet l'utilisation de l'Autowired pour le cryptage du pwd.
      * @return
      */
-    @Bean
-    BCryptPasswordEncoder getBCE() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    BCryptPasswordEncoder getBCE() {
+//        return new BCryptPasswordEncoder();
+//    }
 }
