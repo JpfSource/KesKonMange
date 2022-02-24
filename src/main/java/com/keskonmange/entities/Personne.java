@@ -81,8 +81,8 @@ public class Personne {
 	/* CONSTRUCTORS */
 	public Personne() {}
 
-	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
-		this(id, nom, prenom,
+	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
+		this(nom, prenom,
 				null, null, null,
 				null, null, null,
 				null, null, null,
@@ -341,5 +341,6 @@ public class Personne {
 		if (activite != null) {
 			this.activiteLibelle = this.activite.getLibelle();
 		}
+
 	}
 }

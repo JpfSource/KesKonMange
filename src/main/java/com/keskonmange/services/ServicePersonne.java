@@ -47,7 +47,7 @@ public class ServicePersonne {
 			Double besoinsCaloriques = resultatNet * ratio;
 			Long r2 = Long.valueOf(Math.round(besoinsCaloriques));
 			Integer result = Integer.valueOf(r2.toString()); 
-			
+					
 			return result;
 		}
 		else {

@@ -113,6 +113,22 @@ public class Plat
 		this.typePlat = typePlat;
 	}
 	
+	public Set<Aliment> getAliment_plat() {
+		return aliment_plat;
+	}
+
+	public Repas getRepas() {
+		return repas;
+	}
+
+	public void setAliment_plat(Set<Aliment> aliment_plat) {
+		this.aliment_plat = aliment_plat;
+	}
+
+	public void setRepas(Repas repas) {
+		this.repas = repas;
+	}
+
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {
