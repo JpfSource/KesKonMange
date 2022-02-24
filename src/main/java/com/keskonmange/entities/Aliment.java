@@ -26,7 +26,7 @@ public class Aliment
 
 	@NotNull
 	@NotBlank
-	@Column(name = "ean", length = 30, nullable = false)
+	@Column(name = "ean", length = 40, nullable = false)
 	private String ean;
 
   	@NotNull
