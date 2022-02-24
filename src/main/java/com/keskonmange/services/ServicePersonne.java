@@ -41,8 +41,14 @@ public class ServicePersonne {
 						+ personne.getGenre().getComplement());
 			}
 			Double resultatNet = resultatBrut * personne.getActivite().getCoefficient();
-
-			return ((Long)Math.round(resultatNet * (personne.getObjectifCalorique() / 100))).intValue();
+			
+			Double ratio = (double)personne.getObjectifCalorique();
+			ratio = ratio / 100;
+			Double besoinsCaloriques = resultatNet * ratio;
+			Long r2 = Long.valueOf(Math.round(besoinsCaloriques));
+			Integer result = Integer.valueOf(r2.toString()); 
+			
+			return result;
 		}
 		else {
 			return null;

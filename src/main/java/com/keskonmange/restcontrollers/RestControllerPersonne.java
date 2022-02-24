@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -86,8 +87,17 @@ public class RestControllerPersonne
 			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notequals", new Object[]
 			{pid, personne.getId()}, Locale.getDefault()));
 		}
-		return sp.save(personne);
+		sp.save(personne);
+		return sp.findById(personne.getId()).get();
+				
 	}
+
+	@PutMapping("/recalcul")
+	public Integer recalcul(@RequestBody Personne personne) throws ErreurPersonne
+	{
+		return ServicePersonne.calculBesoinsCaloriques(personne);
+	}
+	
 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id")

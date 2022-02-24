@@ -21,18 +21,18 @@ public class Allergie
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	@NotNull
 	@NotBlank
-	@Column(name = "libelle", length = 20, nullable = false)
+	@Column(name = "libelle", length = 50)
 	private String libelle;
-  
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "allergies")
 	private Set<Aliment> aliments;
 
-	public Allergie(int id,@NotNull @NotBlank String libelle)
+	public Allergie(Integer id, @NotNull @NotBlank String libelle)
 	{
 		super();
 		this.id = id;
@@ -45,11 +45,11 @@ public class Allergie
 		this.aliments = new HashSet<>();
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

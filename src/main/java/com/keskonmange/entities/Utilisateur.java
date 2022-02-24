@@ -1,10 +1,14 @@
 package com.keskonmange.entities;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.keskonmange.enums.Role;
 
 
 /**
@@ -23,10 +27,19 @@ public class Utilisateur extends Personne {
 	@Column(name = "EMAIL", nullable = false)
 	private String email;
 	
-	
+	@NotNull
+	@NotBlank
 	@Column(name = "PWD", nullable = false)
 	private String pwd;
 
+	@Basic
+    @Column(name = "ROLE", length = 20, nullable = true, unique = false)
+    private String roleLibelle;
+
+    @Transient
+    private Role role;	
+	
+	
 	public Utilisateur() {}
 	
 	public Utilisateur(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,String email, String pwd) {

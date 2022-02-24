@@ -37,22 +37,11 @@ public class Personne {
 	@Column(name = "NOM", length = 50, nullable = false, unique = false)
 	private String nom;
 
-  @NotNull
+    @NotNull
 	@NotBlank
 	@Column(name = "PRENOM", length = 50, nullable = false, unique = false)
 	private String prenom;
 
-	@Column(name = "DESCRIPTION", nullable = true, unique = false)
-	private String description;
-
-	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
-	private LocalDate dateNaissance;
-
-	@Column(name = "URL_PHOTO", nullable = true, unique = false)
-	private String urlPhoto;
-
-
-	// Données de l'écran Morphologie
 	@Basic
 	@Column(name = "GENRE", length = 20, nullable = true, unique = false)
 	private String genreLibelle;
@@ -60,22 +49,30 @@ public class Personne {
 	@Transient
 	private Genre genre;
 
+	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
+	private LocalDate dateNaissance;
+
 	@Column(name="TAILLE", nullable = true, unique = false)
 	private Integer taille;
 
 	@Column(name="POIDS", nullable = true, unique = false)
 	private Integer poids;
 
-	@NotNull
 	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
 	private Integer objectifCalorique;
 
+	@Column(name = "URL_PHOTO", nullable = true, unique = false)
+	private String urlPhoto;
+	
 	@Basic
 	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
 	private String activiteLibelle;
 
 	@Transient
 	private Activite activite;
+	
+	@Column(name = "DESCRIPTION", nullable = true, unique = false)
+	private String description;
 
 	@Transient
 	private Integer besoinsCaloriques;
@@ -94,7 +91,7 @@ public class Personne {
 
 	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
 			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
-			@NotNull Integer objectifCalorique, String activiteLibelle, Activite activite) {
+			Integer objectifCalorique, String activiteLibelle, Activite activite) {
 		this(null, nom, prenom,
 				description, dateNaissance, urlPhoto,
 				genreLibelle, genre, taille,
@@ -104,7 +101,7 @@ public class Personne {
 
 	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
 			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
-			@NotNull Integer objectifCalorique, String activiteLibelle, Activite activite) {
+			Integer objectifCalorique, String activiteLibelle, Activite activite) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -345,5 +342,4 @@ public class Personne {
 			this.activiteLibelle = this.activite.getLibelle();
 		}
 	}
-
 }
