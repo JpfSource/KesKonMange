@@ -25,24 +25,25 @@ public class Allergie
 
 	@NotNull
 	@NotBlank
-	@Column(name = "libelle", length = 50)
+	@Column(name = "libelle", length = 50, nullable=false)
 	private String libelle;
 
+	/*
 	@JsonIgnore
 	@ManyToMany(mappedBy = "allergies")
 	private Set<Aliment> aliments;
-
+*/
 	public Allergie(Integer id, @NotNull @NotBlank String libelle)
 	{
 		super();
 		this.id = id;
 		this.libelle = libelle;
-		this.aliments = new HashSet<>();
+	//	this.aliments = new HashSet<>();
 	}
 
 	public Allergie() {
 		super();
-		this.aliments = new HashSet<>();
+//		this.aliments = new HashSet<>();
 	}
 
 	public Integer getId() {
@@ -60,7 +61,7 @@ public class Allergie
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-
+/*
 	public Set<Aliment> getAliments() {
 		return aliments;
 	}
@@ -68,9 +69,10 @@ public class Allergie
 	public void setAliments(Set<Aliment> aliments) {
 		this.aliments = aliments;
 	}
-
+*/
 	@Override
 	public String toString() {
-		return "Allergie [id=" + id + ", libelle=" + libelle + ", aliments=" + aliments + "]";
+		//return "Allergie [id=" + id + ", libelle=" + libelle + ", aliments=" + aliments + "]";
+		return "Allergie [id=" + id + ", libelle=" + libelle + "]";
 	}
 }

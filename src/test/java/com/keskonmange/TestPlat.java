@@ -42,7 +42,9 @@ public class TestPlat
 
 	private static List<Plat> getFewPlats(Integer nbPlats)
 	{
+		
 		List<Plat> plats = new ArrayList<Plat>();
+/*
 		if(nbPlats >= 1)
 		{
 			plats.add(new Plat(1, "LASAGNE", "Plat principal"));
@@ -59,6 +61,7 @@ public class TestPlat
 		{
 			plats.add(new Plat(4, "TIRAMISU", "Dessert"));
 		}
+*/		
 		return plats;
 	}
 	/* NON STATIC */

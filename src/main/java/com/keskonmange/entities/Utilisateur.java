@@ -1,8 +1,12 @@
 package com.keskonmange.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -26,13 +30,15 @@ import com.keskonmange.enums.Role;
 @Table(name = "UTILISATEUR")
 public class Utilisateur extends Personne {
 
+	/* FIELDS */
 	@NotNull
 	@NotBlank
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL", length = 150, nullable = false)
 	private String email;
 	
-	
-	@Column(name = "PWD", nullable = false)
+	@NotNull
+	@NotBlank
+	@Column(name = "PWD", length = 150, nullable = false)
 	private String pwd;
 
 	@Basic
@@ -41,24 +47,31 @@ public class Utilisateur extends Personne {
 
 	@Transient
 	private Role role;
+
+	
+	/* RELATIONS */
 	
 	
-	
-	public Utilisateur() {}
-	
-	public Utilisateur(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,String email, String pwd) {
-		super(nom, prenom);
-		this.email = email;
-		this.pwd = pwd;
+	/* CONSTRUCTORS */
+	public Utilisateur() {
+		super();
 	}
 
-	public Utilisateur(String email, String pwd) {
+	public Utilisateur(@NotNull @NotBlank String email, @NotNull @NotBlank String pwd) {
 		super();
 		this.email = email;
 		this.pwd = pwd;
 	}
 
+	public Utilisateur(@NotNull @NotBlank String email, @NotNull @NotBlank String pwd, String roleLibelle, Role role) {
+		super();
+		this.email = email;
+		this.pwd = pwd;
+		this.roleLibelle = roleLibelle;
+		this.role = role;
+	}
 
+	/* GETTERS & SETTERS */
 	public String getEmail() {
 		return email;
 	}
@@ -106,6 +119,9 @@ public class Utilisateur extends Personne {
 		this.role = role;
 	}
 
+	
+	/* PUBLIC METHODS */
+	
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {

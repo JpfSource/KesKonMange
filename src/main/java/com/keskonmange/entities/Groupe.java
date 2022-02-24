@@ -36,7 +36,7 @@ public class Groupe {
 	@Transient
 	private Integer besoinCalorique;
 	
-
+/*
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "ADMINISTRATEUR", joinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "id"), 
 							inverseJoinColumns = @JoinColumn(name = "utilisateur_id", referencedColumnName = "id"))
@@ -50,28 +50,12 @@ public class Groupe {
 
 	@OneToMany(mappedBy = "groupe")
 	private Set<Repas> repas;
-	
-//TODO: A ajouter plus tard après l'ajout des personnes.
-	/*
-	@OneToMany(mappedBy = "absenceGroupe")
-	private Set<Absence> absences;
-
-	@OneToMany(mappedBy = "repartitionCaloriqueGroupe")
-	private Set<RepartitionCalorique> repartitionCaloriques;
-
-	@ManyToMany
-	@JoinTable(name = "GROUPE_SCORE", joinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "id"), 
-								inverseJoinColumns = @JoinColumn(name = "score_id", referencedColumnName = "id"))
-	private Set<Score> groupeScores;
-
-	@OneToMany(mappedBy = "repasGroupe")
-	private Set<Repas> repas;
-*/
+*/	
 	public Groupe() {
 		this(null, null, null);
 	}
 
-	public Groupe(String nom, String urlPhoto) {
+	public Groupe(@NotNull @NotBlank String nom, String urlPhoto) {
 		this(null, nom, urlPhoto);
 	}
 
@@ -96,7 +80,7 @@ public class Groupe {
 		return urlPhoto;
 	}
 
-
+/*
 	public Set<Utilisateur> getAdministrateurs() {
 		return administrateurs;
 	}
@@ -105,24 +89,11 @@ public class Groupe {
 	public Set<Personne> getGroupePersonnes() {
 		return groupePersonnes;
 	}
-
 	
-/*
-	public Set<Absence> getAbsences() {
-		return absences;
-	}
-
-	public Set<RepartitionCalorique> getRepartitionCaloriques() {
-		return repartitionCaloriques;
-	}
-
-	public Set<Score> getGroupeScores() {
-		return groupeScores;
-	}
-*/
 	public Set<Repas> getRepas() {
 		return repas;
 	}
+*/
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -135,7 +106,7 @@ public class Groupe {
 	public void setUrlPhoto(String urlPhoto) {
 		this.urlPhoto = urlPhoto;
 	}
-
+/*
 	public void setAdministrateurs(Set<Utilisateur> administrateurs) {
 		this.administrateurs = administrateurs;
 	}
@@ -143,7 +114,7 @@ public class Groupe {
 	public void setGroupePersonnes(Set<Personne> groupePersonnes) {
 		this.groupePersonnes = groupePersonnes;
 	}
-
+*/
 
 	public Integer getBesoinCalorique() {
 		return besoinCalorique;
@@ -152,22 +123,9 @@ public class Groupe {
 	public void setBesoinCalorique(Integer besoinCalorique) {
 		this.besoinCalorique = besoinCalorique;
 	}
-	
-/*
-	public void setAbsences(Set<Absence> absences) {
-		this.absences = absences;
-	}
-
-	public void setRepartitionCaloriques(Set<RepartitionCalorique> repartitionCaloriques) {
-		this.repartitionCaloriques = repartitionCaloriques;
-	}
-
-	public void setGroupeScores(Set<Score> groupeScores) {
-		this.groupeScores = groupeScores;
-	}
-*/
+/*	
 	public void setRepas(Set<Repas> repas) {
 		this.repas = repas;
 	}
-
+*/
 }

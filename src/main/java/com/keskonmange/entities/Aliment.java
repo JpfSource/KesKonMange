@@ -1,5 +1,6 @@
 package com.keskonmange.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import java.util.Set;
@@ -20,9 +21,10 @@ import javax.validation.constraints.NotNull;
 @Table(name = "ALIMENT")
 public class Aliment
 {
+	/* FIELDS */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	@NotNull
 	@NotBlank
@@ -34,48 +36,53 @@ public class Aliment
 	@Column(name = "libelle", nullable = false)
 	private String libelle;
 		
-	@ManyToMany
-	@JoinTable(name="ALLERGIE_ALIMENT",
-			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
-			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
-	)
-	private Set<Allergie> allergies;
-	
 	@Column(name="image_url")
 	private String imgUrl;
-	
+  	
 	@Column(name = "energy_kcal_100g", nullable = false)
-	private double kcal_100g;
-	
+	private Double energyKcal100g;
+  	
 	@Column(name = "mots_cles")
 	private String tags;
 	
 	@Column(name = "date_maj")
-	private Date dateMaj;
-
+	private LocalDate dateMaj;
+	
+	/* RELATIONS */
+	@ManyToMany
+	@JoinTable(name="ALIMENT_ALLERGIE",
+			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
+			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
+	)
+	private Set<Allergie> alimentAllergies;
 	
 
-	public Aliment(int id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle,
-			String imgUrl, double kcal_100g, String tags, Date dateMaj) {
+	/* CONSTRUCTORS */
+	public Aliment() {
+		this(0, null, null, null, 0.0, null, null);
+	}
+
+	public Aliment(Integer id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle,
+			String imgUrl, Double energyKcal100g, String tags, LocalDate dateMaj) {
 		super();
 		this.id = id;
 		this.ean = ean;
 		this.libelle = libelle;
 		//this.allergies = new HashSet<>();
 		this.imgUrl = imgUrl;
-		this.kcal_100g = kcal_100g;
+		this.energyKcal100g = energyKcal100g;
 		this.tags = tags;
 		this.dateMaj = dateMaj;
 	}
-	public Aliment() {
-		this(0, null, null, null, 0.0, null, null);
-	}
 
+	
+	/* GETTERS & SETTERS */
+	
 	public int getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -94,7 +101,7 @@ public class Aliment
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-
+/*
 	public Set<Allergie> getAllergies() {
 		return this.allergies;
 	}
@@ -102,7 +109,7 @@ public class Aliment
 	public void setAllergies(Set<Allergie> allergies) {
 		this.allergies = allergies;
 	}
-
+*/
 	
 
 	public String getImgUrl() {
@@ -121,26 +128,29 @@ public class Aliment
 		this.tags = tags;
 	}
 
-	public Date getDateMaj() {
+	public LocalDate getDateMaj() {
 		return dateMaj;
 	}
 
-	public void setDateMaj(Date dateMaj) {
+	public void setDateMaj(LocalDate dateMaj) {
 		this.dateMaj = dateMaj;
 	}
 
-	public double getKcal_100g() {
-		return this.kcal_100g;
+	public double getEnergyKcal100g() {
+		return this.energyKcal100g;
 	}
 
-	public void setKcal_100g(double kcal_100g) {
-		this.kcal_100g = kcal_100g;
+	public void setEnergyKcal100g(Double energyKcal100g) {
+		this.energyKcal100g = energyKcal100g;
 	}
 
+	/* PUBLIC METHODS */
 	@Override
 	public String toString() {
-		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies + ", imgUrl="
-				+ imgUrl + ", kcal_100g=" + kcal_100g + ", tags=" + tags + ", dateMaj=" + dateMaj + "]";
+		/*return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies + ", imgUrl="
+				+ imgUrl + ", kcal_100g=" + kcal_100g + ", tags=" + tags + ", dateMaj=" + dateMaj + "]";*/
+		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", imgUrl="
+		+ imgUrl + ", energy_kcal_100g=" + energyKcal100g + ", tags=" + tags + ", dateMaj=" + dateMaj + "]";
 	}
 
 	

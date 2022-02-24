@@ -68,7 +68,7 @@ public class ServiceGroupe {
 	 */
 	public Groupe getBesoinCaloriqueGroupe(Groupe groupe) {
 		Integer besoinCal = 0 ;
-		if(groupe != null) {
+/*		if(groupe != null) {
 			if(groupe.getGroupePersonnes() != null) {
 				for(Personne pers : groupe.getGroupePersonnes()) {
 					Optional<Personne> op = sp.findById(pers.getId());
@@ -82,7 +82,7 @@ public class ServiceGroupe {
 			}
 			groupe.setBesoinCalorique(besoinCal);
 		}
-
+*/
 		return groupe;
 	}
 
@@ -104,9 +104,11 @@ public class ServiceGroupe {
 	 * @param pid (id de l'utilisateur)
 	 * @return Iterable<Groupe>
 	 */
+/*
 	public Iterable<Groupe> findByUtilisateurId(Integer pid){
 		return getBesoinCaloriqueGroupe(jpaGpe.findByUtilisateurId(jpaUser.findById(pid).get()));
 	}
+ */
 
 	/**
 	 * Méthode qui retourne le groupe dont le nom est passé en paramètre.
@@ -150,8 +152,10 @@ public class ServiceGroupe {
 	public void deleteById(Integer pid) {
 
 		Groupe gpeToDelete = jpaGpe.findById(pid).get(); 
+/*
 		gpeToDelete.getAdministrateurs().clear();
 		gpeToDelete.getGroupePersonnes().clear();
+*/
 		jpaGpe.save(gpeToDelete);
 
 		jpaGpe.deleteById(pid);

@@ -1,5 +1,6 @@
 package com.keskonmange.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -20,112 +21,114 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.keskonmange.enums.TypeRepas;
 
 @Entity
 @Table(name = "REPAS")
-public class Repas
-{
+public class Repas {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATE_REPAS")
-	private Date Date_Repas;
-	
+	@NotNull
+	@Column(name = "DATE_REPAS", nullable = false, unique = false)
+	private LocalDate Date_Repas;
+
 	@Basic
-	@Column(name = "TypeRepas", length = 20, nullable = true, unique = false)
+	@NotNull
+	@NotBlank
+	@Column(name = "TypeRepas", length = 20, nullable = false, unique = false)
 	private String typeRepasLibelle;
 	
 	@Transient
 	private TypeRepas typeRepas;
 	
-	@OneToMany(mappedBy = "repas")
+
+	public Repas() {
+		super();
+	}
+
+	public Repas(Integer id, @NotNull LocalDate date_Repas, @NotNull @NotBlank String typeRepasLibelle,
+			TypeRepas typeRepas) {
+		super();
+		this.id = id;
+		Date_Repas = date_Repas;
+		this.typeRepasLibelle = typeRepasLibelle;
+		this.typeRepas = typeRepas;
+	}
+
+	
+/*	@OneToMany(mappedBy = "repas")
 	private Set<Plat> plats;
 	
 	@JsonIgnore
 	@ManyToOne
 	private Groupe groupe;
+*/
 
-	public Repas()
-	{
-		this(null, null, null);
-	}
+	
 
-	public Repas(Date date_Repas,String typeRepasLibelle)
-	{
-		super();
-		this.Date_Repas = date_Repas;
-		this.typeRepasLibelle = typeRepasLibelle;
-	}
-
-	public Repas(Integer id,Date date_Repas,String typeRepasLibelle)
-	{
-		super();
-		this.id = id;
-		this.Date_Repas = date_Repas;
-		this.typeRepasLibelle = typeRepasLibelle;
-	}
-
-	public Integer getId()
-	{
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
 
-	public Date getDate_Repas()
-	{
-		return Date_Repas;
-	}
-
-	public String getTypeRepasLibelle()
-	{
-		return typeRepasLibelle;
-	}
-
-	public TypeRepas getTypeRepas()
-	{
-		return typeRepas;
-	}
-
-	public Set<Plat> getPlats() {
-		return plats;
-	}
-
-	public Groupe getGroupe() {
-		return groupe;
-	}
-
-	public void setPlats(Set<Plat> plats) {
-		this.plats = plats;
-	}
-
-	public void setGroupe(Groupe groupe) {
-		this.groupe = groupe;
-	}
-
-	public void setId(Integer id)
-	{
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public void setDate_Repas(Date date_Repas)
-	{
+	/**
+	 * @return the date_Repas
+	 */
+	public LocalDate getDate_Repas() {
+		return Date_Repas;
+	}
+
+	/**
+	 * @param date_Repas the date_Repas to set
+	 */
+	public void setDate_Repas(LocalDate date_Repas) {
 		Date_Repas = date_Repas;
 	}
 
-	public void setTypeRepasLibelle(String typeRepasLibelle)
-	{
+	/**
+	 * @return the typeRepasLibelle
+	 */
+	public String getTypeRepasLibelle() {
+		return typeRepasLibelle;
+	}
+
+	/**
+	 * @param typeRepasLibelle the typeRepasLibelle to set
+	 */
+	public void setTypeRepasLibelle(String typeRepasLibelle) {
 		this.typeRepasLibelle = typeRepasLibelle;
 	}
 
-	public void setTypeRepas(TypeRepas typeRepas)
-	{
+	/**
+	 * @return the typeRepas
+	 */
+	public TypeRepas getTypeRepas() {
+		return typeRepas;
+	}
+
+	/**
+	 * @param typeRepas the typeRepas to set
+	 */
+	public void setTypeRepas(TypeRepas typeRepas) {
 		this.typeRepas = typeRepas;
 	}
-	
+
 	
 	/* PERSISTENT METHODS */
 	@PostLoad
@@ -134,6 +137,7 @@ public class Repas
 			this.typeRepas = TypeRepas.of(typeRepasLibelle);
 		}
 	}
+
 
 	@PrePersist
 	void fillPersistent() {
