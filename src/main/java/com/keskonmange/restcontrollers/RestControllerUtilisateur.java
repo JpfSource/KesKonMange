@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -105,14 +106,20 @@ public class RestControllerUtilisateur {
 	}
 
 	
+	/**
+	 * Path pour le login et la génération du JWT.
+	 * 
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest user) {
-		System.out.println(user.getEmail() +" " +"pwd: " + user.getPwd());
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPwd()));
 		
-
-
+		Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPwd()));
+			
+		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		String jwt = jwtUtils.generateJwtToken(authentication);
@@ -121,10 +128,12 @@ public class RestControllerUtilisateur {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
+		
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
 												 roles));
+		
 
 	}
 	
