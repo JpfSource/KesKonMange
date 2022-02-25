@@ -3,22 +3,18 @@ package com.keskonmange.restcontrollers;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -82,7 +79,7 @@ public class RestControllerUtilisateur {
 		}
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public Iterable<Utilisateur> getAll() {
 		return su.findAll();
 	}
@@ -102,7 +99,7 @@ public class RestControllerUtilisateur {
 	@PostMapping("/signin")
 	public Utilisateur registerUser(@Valid @RequestBody Utilisateur user) throws ErreurUtilisateur {
 		verifEmail(user.getEmail());
-//		user.setRole(Role.USER);
+		user.setRole(Role.USER);
 		user.setPwd(encoder.encode(user.getPwd()));
 		return su.save(user);
 	}
@@ -119,7 +116,7 @@ public class RestControllerUtilisateur {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		String jwt = jwtUtils.generateJwtToken(authentication);
-		System.out.println();
+
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
@@ -130,6 +127,26 @@ public class RestControllerUtilisateur {
 												 roles));
 
 	}
+	
+	/**
+	 * Request qui permet de tester si le token est toujours valide.
+	 * @param token
+	 * @return
+	 */
+	@GetMapping("/connected")
+	public boolean isJwtValid(@RequestHeader(value="Authorization") String token)
+	{
+		if (token.startsWith("Bearer ")) {
+			String tokenCut = token.substring(7, token.length());
+//		String userNameToken = jwtUtils.getUserNameFromJwtToken(tokenCut);
+		Boolean respToken = jwtUtils.validateJwtToken(tokenCut);
+		return	respToken;
+		}
+		return false;
+	
+	}
+	
+	
 	
 //	@PostMapping("/login")
 //  public Utilisateur loginUser(@RequestBody Utilisateur user) throws ErreurUtilisateur {

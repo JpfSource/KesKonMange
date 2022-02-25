@@ -47,7 +47,7 @@ public class RestControllerPersonne
 		}
 	}
 
-	@GetMapping
+	@GetMapping("all")
 	public Iterable<Personne> getAll()
 	{
 		return sp.findAll();

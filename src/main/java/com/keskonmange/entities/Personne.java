@@ -17,6 +17,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.lang.Nullable;
+
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 
@@ -54,22 +56,27 @@ public class Personne {
 
 	// Données de l'écran Morphologie
 	@Basic
+	@Nullable
 	@Column(name = "GENRE", length = 20, nullable = true, unique = false)
 	private String genreLibelle;
 
 	@Transient
 	private Genre genre;
 
+	@Nullable
 	@Column(name="TAILLE", nullable = true, unique = false)
 	private Integer taille;
 
+	@Nullable
 	@Column(name="POIDS", nullable = true, unique = false)
 	private Integer poids;
 
+	@Nullable
 	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
 	private Integer objectifCalorique;
 
 	@Basic
+	@Nullable
 	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
 	private String activiteLibelle;
 

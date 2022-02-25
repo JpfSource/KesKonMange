@@ -3,6 +3,7 @@ package com.keskonmange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -53,7 +54,11 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-
+//TODO: Définir quelles sont les url auxquelles peut accéder l'USER une fois connecté.
+		/**
+		 * (HttpMethod.GET,"/api/utilisateurs/all").hasAnyAuthority("ADMIN","USER") -> autorise à avoir la liste de tous les utilisateur en GET
+		 * (HttpMethod.POST,"/api/groupes/**").hasAuthority("USER") --> autorise à ajouter un nouveau groupe
+		 */
 
 		http.cors().and().csrf().disable()
 				.exceptionHandling()
@@ -65,8 +70,12 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/utilisateurs/signup").permitAll()
 				.antMatchers("/api/utilisateurs/login").permitAll()
 				.antMatchers("/api/utilisateurs/logout").permitAll()
-				.antMatchers("/api/test/**").permitAll()
-				.antMatchers("/api/personnes/**").permitAll()
+				.antMatchers("/api/utilisateurs/connected").permitAll()
+//				.antMatchers("/api/personnes/**").permitAll()
+				.antMatchers("/api/personnes/**").hasAuthority("USER")
+				.antMatchers(HttpMethod.GET,"/api/utilisateurs/all").hasAuthority("USER")
+				.antMatchers(HttpMethod.DELETE,"/api/utilisateurs/**").hasAuthority("USER")
+				.antMatchers("/api/groupes/**").hasAuthority("USER")
 				.anyRequest().authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		
