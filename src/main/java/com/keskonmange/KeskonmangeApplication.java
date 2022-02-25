@@ -1,6 +1,5 @@
 package com.keskonmange;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
@@ -26,16 +25,7 @@ public class KeskonmangeApplication
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("i18n/messages");
-//		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
-	
-	/**
-     * Permet l'utilisation de l'Autowired pour le cryptage du pwd.
-     * @return
-     */
-//    @Bean
-//    BCryptPasswordEncoder getBCE() {
-//        return new BCryptPasswordEncoder();
-//    }
+
 }

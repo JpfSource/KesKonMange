@@ -1,5 +1,11 @@
 package com.keskonmange.security.payload;
 
+/**
+ * Classe qui permet de récupérer les données de connexion venant du client.
+ * 
+ * @author Christian Ingold
+ *
+ */
 public class LoginRequest {
 
 	private String email;
@@ -11,7 +17,6 @@ public class LoginRequest {
 	}
 	
 	
-
 	public LoginRequest(String email, String pwd) {
 		super();
 		this.email = email;

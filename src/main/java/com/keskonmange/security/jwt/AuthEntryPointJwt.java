@@ -13,11 +13,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 /**
- * Then we override the commence() method. This method will be triggerd anytime
- * unauthenticated User requests a secured HTTP resource and an
- * AuthenticationException is thrown.
+ * Classe qui permet de renvoyer une erreur et se déclecche à chaque demande d'un utilisateur non authentifié.
  * 
- * @author fogol
+ * @author Christian Ingold
  *
  */
 @Component

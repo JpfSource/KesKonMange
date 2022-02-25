@@ -9,7 +9,10 @@ import com.keskonmange.entities.Utilisateur;
 import com.keskonmange.repository.JpaUtilisateur;
 
 /**
- * @author fogol
+ * Classe qui gère les différentes opérations à appliquer aux données de
+ * l'utilisateur avant persistance en base de données.
+ * 
+ * @author Christian Ingold
  *
  */
 @Service
@@ -18,52 +21,53 @@ public class ServiceUtilisateur {
 	@Autowired
 	JpaUtilisateur ju;
 
-
 	/**
 	 * Méthode qui renvoie l'Utilisateur dont l'id est passé en paramètre.
+	 * 
 	 * @param pid
 	 * @return Optional<Utilisateur>
 	 */
-	public Optional<Utilisateur> findById(Integer pid){
+	public Optional<Utilisateur> findById(Integer pid) {
 		return ju.findById(pid);
 	}
 
 	/**
 	 * Méthode qui renvoie l'Utilisateur dont l'email est passé en paramètre.
-	 * @param email 
+	 * 
+	 * @param email
 	 * @return Optional<Utilisateur>
 	 */
-	public Optional<Utilisateur> findByEmail(String email){
+	public Optional<Utilisateur> findByEmail(String email) {
 		return ju.findByEmail(email);
 	}
 
-	
 	/**
 	 * Méthode qui renvoie la liste de tous les Utilisaters
+	 * 
 	 * @return Iterable<Utilisateur>
 	 */
-	public Iterable<Utilisateur> findAll(){
+	public Iterable<Utilisateur> findAll() {
 		return ju.findAll();
 	}
 
 	/**
-	 * Méthode qui sauvegarde (create & update) et renvoie l'Utilisateur de la base de données.
+	 * Méthode qui sauvegarde (create & update) et renvoie l'Utilisateur de la base
+	 * de données.
+	 * 
 	 * @param utilisateur
 	 * @return Utilisateur
 	 */
-	public Utilisateur save(Utilisateur utilisateur){
+	public Utilisateur save(Utilisateur utilisateur) {
 		return ju.save(utilisateur);
 	}
 
 	/**
 	 * Méthoe qui supprime l'Utilisateur de la base de données.
+	 * 
 	 * @param pid as id de l'Utilisateur
 	 */
-	public void deleteById(Integer pid){
+	public void deleteById(Integer pid) {
 		ju.deleteById(pid);
 	}
-	
-	
-
 
 }

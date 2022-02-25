@@ -10,14 +10,20 @@ import org.springframework.stereotype.Component;
 
 import com.keskonmange.security.services.UserDetailsImpl;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 /**
- * This class has 3 functions : 
- * generate a JWT from username, date, expiration, secret
- * get username from JWT
- * validate a JWT
- * @author fogol
+ * Classe qui a 3 fonctions principales : 
+ * ## générer le JWT avec le usernmae, la date d'expiration et le code secret
+ * ## récupérer le username du JWT
+ * ## valider le JWT
+ * 
+ * @author Christian Ingold
  *
  */
 @Component

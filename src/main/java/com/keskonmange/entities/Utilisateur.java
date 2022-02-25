@@ -1,14 +1,16 @@
 package com.keskonmange.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.keskonmange.enums.Activite;
-import com.keskonmange.enums.Genre;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.keskonmange.enums.Role;
 
 

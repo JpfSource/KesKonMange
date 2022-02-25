@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,7 +31,6 @@ public class UserDetailsImpl implements UserDetails {
 		this.authorities = authorities;
 	}
 
-//************ SANS LES ROLES EN MAPPING **************************	
 	public static UserDetailsImpl build(Utilisateur user) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(user.getRoleLibelle()));

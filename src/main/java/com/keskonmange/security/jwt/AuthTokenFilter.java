@@ -20,6 +20,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.keskonmange.security.services.UserDetailsServiceImpl;
 
+/**
+ * Classe qui filtre le JWT et les compare les données avec celles présentent en base de données afin d'y vérifier l'authenticité.
+ * @author Christian Ingold
+ *
+ */
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
 

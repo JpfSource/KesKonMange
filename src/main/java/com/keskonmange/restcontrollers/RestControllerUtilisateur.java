@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import com.keskonmange.entities.Utilisateur;
 import com.keskonmange.enums.Role;
@@ -111,14 +112,20 @@ public class RestControllerUtilisateur {
 	 * 
 	 * @param user
 	 * @return
+	 * @throws ErreurUtilisateur 
 	 * @throws Exception
 	 */
 	@PostMapping("/login")
-	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest user) {
-		
-		Authentication authentication = authenticationManager.authenticate(
+	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest user) throws ErreurUtilisateur {
+		Authentication authentication= null;
+		try {
+			authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPwd()));
 			
+		} catch (Exception e) {
+			throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.connectKO", null, Locale.getDefault()));
+		}
+
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
@@ -133,7 +140,6 @@ public class RestControllerUtilisateur {
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
 												 roles));
-		
 
 	}
 	

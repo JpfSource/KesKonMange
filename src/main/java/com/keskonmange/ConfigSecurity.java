@@ -54,7 +54,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-//TODO: Définir quelles sont les url auxquelles peut accéder l'USER une fois connecté.
+		//TODO: Définir quelles sont les url auxquelles peut accéder l'USER une fois connecté.
 		/**
 		 * (HttpMethod.GET,"/api/utilisateurs/all").hasAnyAuthority("ADMIN","USER") -> autorise à avoir la liste de tous les utilisateur en GET
 		 * (HttpMethod.POST,"/api/groupes/**").hasAuthority("USER") --> autorise à ajouter un nouveau groupe
@@ -71,7 +71,6 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/utilisateurs/login").permitAll()
 				.antMatchers("/api/utilisateurs/logout").permitAll()
 				.antMatchers("/api/utilisateurs/connected").permitAll()
-//				.antMatchers("/api/personnes/**").permitAll()
 				.antMatchers("/api/personnes/**").hasAuthority("USER")
 				.antMatchers(HttpMethod.GET,"/api/utilisateurs/all").hasAuthority("USER")
 				.antMatchers(HttpMethod.DELETE,"/api/utilisateurs/**").hasAuthority("USER")
@@ -79,16 +78,8 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		
-	
+		//POUR DESACTIVER LA SECURITE
 //		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
-		
-//    http.csrf().disable()
-//		.formLogin().loginProcessingUrl("/login").and()
-//		.logout().logoutUrl("/logout").invalidateHttpSession(true)
-//		.and().authorizeRequests()
-//		.antMatchers("/login").permitAll()
-//		.antMatchers("/logout").permitAll()
-//		.anyRequest().authenticated()
-//		.and().httpBasic();	// pour autoriser les API REST avec leur propres sécurités
+
 	}
 }
