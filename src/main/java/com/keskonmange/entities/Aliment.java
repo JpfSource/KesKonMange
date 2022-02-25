@@ -1,12 +1,11 @@
 package com.keskonmange.entities;
 
 import java.time.LocalDate;
-import java.util.Date;
-
+import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,125 +32,216 @@ public class Aliment
 
   	@NotNull
 	@NotBlank
-	@Column(name = "libelle", nullable = false)
+	@Column(name = "libelle", length = 200, nullable = false)
 	private String libelle;
 		
-	@Column(name="image_url")
+	@Column(name="image_url", nullable = true)
 	private String imgUrl;
   	
-	@Column(name = "energy_kcal_100g", nullable = false)
+	@Column(name = "energy_kcal_100g")
 	private Double energyKcal100g;
   	
-	@Column(name = "mots_cles")
-	private String tags;
+	@Column(name = "mots_cles", nullable = true)
+	private String motsCles;
 	
-	@Column(name = "date_maj")
+  	@NotNull
+	@Column(name = "date_maj", nullable = false)
 	private LocalDate dateMaj;
 	
+	
 	/* RELATIONS */
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="ALIMENT_ALLERGIE",
 			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
 	)
-	private Set<Allergie> alimentAllergies;
+	private Set<Allergie> alimentAllergies = new HashSet<Allergie>();
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="ALIMENT_SCORE",
+			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
+			inverseJoinColumns = @JoinColumn(name="ID_SCORE", referencedColumnName="ID")
+	)
+	private Set<Score> alimentScores = new HashSet<Score>();
+
 
 	/* CONSTRUCTORS */
-	public Aliment() {
-		this(0, null, null, null, 0.0, null, null);
-	}
 
-	public Aliment(Integer id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle,
-			String imgUrl, Double energyKcal100g, String tags, LocalDate dateMaj) {
+	public Aliment() {
+		super();
+	}
+	public Aliment(@NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
+			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj) {
+		super();
+		this.ean = ean;
+		this.libelle = libelle;
+		this.imgUrl = imgUrl;
+		this.energyKcal100g = energyKcal100g;
+		this.motsCles = motsCles;
+		this.dateMaj = dateMaj;
+	}
+	public Aliment(@NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
+			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj, Set<Allergie> alimentAllergies,
+			Set<Score> alimentScores) {
+		super();
+		this.ean = ean;
+		this.libelle = libelle;
+		this.imgUrl = imgUrl;
+		this.energyKcal100g = energyKcal100g;
+		this.motsCles = motsCles;
+		this.dateMaj = dateMaj;
+		this.alimentAllergies = alimentAllergies;
+		this.alimentScores = alimentScores;
+	}
+	public Aliment(Integer id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
+			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj) {
 		super();
 		this.id = id;
 		this.ean = ean;
 		this.libelle = libelle;
-		//this.allergies = new HashSet<>();
 		this.imgUrl = imgUrl;
 		this.energyKcal100g = energyKcal100g;
-		this.tags = tags;
+		this.motsCles = motsCles;
 		this.dateMaj = dateMaj;
+	}
+	public Aliment(Integer id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
+			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj, Set<Allergie> alimentAllergies,
+			Set<Score> alimentScores) {
+		super();
+		this.id = id;
+		this.ean = ean;
+		this.libelle = libelle;
+		this.imgUrl = imgUrl;
+		this.energyKcal100g = energyKcal100g;
+		this.motsCles = motsCles;
+		this.dateMaj = dateMaj;
+		this.alimentAllergies = alimentAllergies;
+		this.alimentScores = alimentScores;
 	}
 
 	
 	/* GETTERS & SETTERS */
 	
-	public int getId() {
-		return this.id;
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
 	}
-
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	/**
+	 * @return the ean
+	 */
 	public String getEan() {
-		return this.ean;
+		return ean;
 	}
-
+	/**
+	 * @param ean the ean to set
+	 */
 	public void setEan(String ean) {
 		this.ean = ean;
 	}
-	
+	/**
+	 * @return the libelle
+	 */
 	public String getLibelle() {
-		return this.libelle;
+		return libelle;
 	}
-
+	/**
+	 * @param libelle the libelle to set
+	 */
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-/*
-	public Set<Allergie> getAllergies() {
-		return this.allergies;
-	}
-
-	public void setAllergies(Set<Allergie> allergies) {
-		this.allergies = allergies;
-	}
-*/
-	
-
+	/**
+	 * @return the imgUrl
+	 */
 	public String getImgUrl() {
 		return imgUrl;
 	}
-
+	/**
+	 * @param imgUrl the imgUrl to set
+	 */
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-
-	public String getTags() {
-		return tags;
+	/**
+	 * @return the energyKcal100g
+	 */
+	public Double getEnergyKcal100g() {
+		return energyKcal100g;
 	}
-
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
-
-	public LocalDate getDateMaj() {
-		return dateMaj;
-	}
-
-	public void setDateMaj(LocalDate dateMaj) {
-		this.dateMaj = dateMaj;
-	}
-
-	public double getEnergyKcal100g() {
-		return this.energyKcal100g;
-	}
-
+	/**
+	 * @param energyKcal100g the energyKcal100g to set
+	 */
 	public void setEnergyKcal100g(Double energyKcal100g) {
 		this.energyKcal100g = energyKcal100g;
 	}
+	/**
+	 * @return the motsCles
+	 */
+	public String getMotsCles() {
+		return motsCles;
+	}
+	/**
+	 * @param motsCles the motsCles to set
+	 */
+	public void setMotsCles(String motsCles) {
+		this.motsCles = motsCles;
+	}
+	/**
+	 * @return the dateMaj
+	 */
+	public LocalDate getDateMaj() {
+		return dateMaj;
+	}
+	/**
+	 * @param dateMaj the dateMaj to set
+	 */
+	public void setDateMaj(LocalDate dateMaj) {
+		this.dateMaj = dateMaj;
+	}
+	/**
+	 * @return the alimentAllergies
+	 */
+	public Set<Allergie> getAlimentAllergies() {
+		return alimentAllergies;
+	}
+	/**
+	 * @param alimentAllergies the alimentAllergies to set
+	 */
+	public void setAlimentAllergies(Set<Allergie> alimentAllergies) {
+		this.alimentAllergies = alimentAllergies;
+	}
+	/**
+	 * @return the alimentScores
+	 */
+	public Set<Score> getAlimentScores() {
+		return alimentScores;
+	}
+	/**
+	 * @param alimentScores the alimentScores to set
+	 */
+	public void setAlimentScores(Set<Score> alimentScores) {
+		this.alimentScores = alimentScores;
+	}
+	
 
-	/* PUBLIC METHODS */
+	/* PUBLIC METHODS */	
 	@Override
 	public String toString() {
-		/*return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies + ", imgUrl="
-				+ imgUrl + ", kcal_100g=" + kcal_100g + ", tags=" + tags + ", dateMaj=" + dateMaj + "]";*/
-		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", imgUrl="
-		+ imgUrl + ", energy_kcal_100g=" + energyKcal100g + ", tags=" + tags + ", dateMaj=" + dateMaj + "]";
+		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", imgUrl=" + imgUrl
+				+ ", energyKcal100g=" + energyKcal100g + ", motsCles=" + motsCles + ", dateMaj=" + dateMaj + "]";
 	}
 
+	
+	/* PERSISTENT METHODS */
+
+	
 	
 }

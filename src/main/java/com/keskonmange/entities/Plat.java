@@ -1,10 +1,12 @@
 package com.keskonmange.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,14 +20,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.keskonmange.enums.TypePlat;
 
 @Entity
 @Table(name = "PLAT")
 public class Plat
 {
+	/* FIELDS */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -33,13 +34,8 @@ public class Plat
 	@NotNull
 	@NotBlank
 	@Column(name = "LIBELLE", length = 150, nullable = false, unique = false)
-	private String libellePlat;
+	private String libelle;
 	
-/*	
-	@ManyToMany
-	@JoinTable(name = "ALIMENT_PLAT", joinColumns = @JoinColumn(name = "ID_PLAT", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ID_ALIMENT", referencedColumnName = "ID"))
-	private Set<Aliment> aliment_plat;
-*/	
 	@Basic
 	@NotNull
 	@NotBlank
@@ -48,26 +44,65 @@ public class Plat
 	
 	@Transient
 	private TypePlat typePlat;
-/*
-	@JsonIgnore
+
+	
+	/* RELATIONS */
 	@ManyToOne
-	private Repas repas;
-*/
+	private Utilisateur createur;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="PLAT_ALIMENT",
+			joinColumns = @JoinColumn(name="ID_PLAT", referencedColumnName="ID"),
+			inverseJoinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID")
+	)
+	private Set<Aliment> platAliments = new HashSet<Aliment>();
+	
+	
+	/* CONSTRUCTORS */
 
 	public Plat() {
 		super();
 	}
-	
-	public Plat(Integer id, @NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle,
-			TypePlat typePlat) {
+	public Plat(@NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle, TypePlat typePlat,
+			Utilisateur createur) {
 		super();
-		this.id = id;
-		this.libellePlat = libellePlat;
+		this.libelle = libellePlat;
 		this.typePlatLibelle = typePlatLibelle;
 		this.typePlat = typePlat;
+		this.createur = createur;
 	}
-	
+	public Plat(@NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle, TypePlat typePlat,
+			Utilisateur createur, Set<Aliment> platAliments) {
+		super();
+		this.libelle = libellePlat;
+		this.typePlatLibelle = typePlatLibelle;
+		this.typePlat = typePlat;
+		this.createur = createur;
+		this.platAliments = platAliments;
+	}
+	public Plat(Integer id, @NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle,
+			TypePlat typePlat, Utilisateur createur) {
+		super();
+		this.id = id;
+		this.libelle = libellePlat;
+		this.typePlatLibelle = typePlatLibelle;
+		this.typePlat = typePlat;
+		this.createur = createur;
+	}
+	public Plat(Integer id, @NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle,
+			TypePlat typePlat, Utilisateur createur, Set<Aliment> platAliments) {
+		super();
+		this.id = id;
+		this.libelle = libellePlat;
+		this.typePlatLibelle = typePlatLibelle;
+		this.typePlat = typePlat;
+		this.createur = createur;
+		this.platAliments = platAliments;
+	}
 
+
+	/* GETTERS & SETTERS */
+	
 	/**
 	 * @return the id
 	 */
@@ -85,15 +120,15 @@ public class Plat
 	/**
 	 * @return the libellePlat
 	 */
-	public String getLibellePlat() {
-		return libellePlat;
+	public String getLibelle() {
+		return libelle;
 	}
 
 	/**
 	 * @param libellePlat the libellePlat to set
 	 */
-	public void setLibellePlat(String libellePlat) {
-		this.libellePlat = libellePlat;
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
 	}
 
 	/**
@@ -124,9 +159,45 @@ public class Plat
 		this.typePlat = typePlat;
 	}
 
+	/**
+	 * @return the createur
+	 */
+	public Utilisateur getCreateur() {
+		return createur;
+	}
+
+	/**
+	 * @param createur the createur to set
+	 */
+	public void setCreateur(Utilisateur createur) {
+		this.createur = createur;
+	}
+
+	/**
+	 * @return the platAliments
+	 */
+	public Set<Aliment> getPlatAliments() {
+		return platAliments;
+	}
+
+	/**
+	 * @param platAliments the platAliments to set
+	 */
+	public void setPlatAliments(Set<Aliment> platAliments) {
+		this.platAliments = platAliments;
+	}
+
 	
+	/* PUBLIC METHODS */	
 	
+	@Override
+	public String toString() {
+		return "Plat [id=" + id + ", libelle=" + libelle + ", typePlatLibelle=" + typePlatLibelle
+				+ ", typePlat=" + typePlat + ", createur=" + createur + "]";
+	}
+
 	/* PERSISTENT METHODS */
+
 	@PostLoad
 	void fillTransient() {
 		if (!typePlatLibelle.isEmpty()) {
@@ -134,11 +205,12 @@ public class Plat
 		}
 	}
 
-
 	@PrePersist
 	void fillPersistent() {
 		if (typePlat != null) {
 			this.typePlatLibelle = this.typePlat.getLibelle();
 		}
 	}
+
+	
 }

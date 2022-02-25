@@ -1,19 +1,15 @@
 package com.keskonmange.entities;
 
-import java.util.Set;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.keskonmange.enums.Activite;
-import com.keskonmange.enums.Genre;
 import com.keskonmange.enums.TypeScore;
 
 @Entity
 @Table(name = "SCORE")
 public class Score {
 
+	/* FIELDS */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -38,9 +34,23 @@ public class Score {
 	@Column(name = "URL_PHOTO", nullable = true)
 	private String urlPhoto;
 
+	/* RELATIONS */
+
+	
+	/* CONSTRUCTORS */
 	
 	public Score() {
 		super();
+	}
+
+	public Score(@NotNull @NotBlank String typeScoreLibelle, TypeScore typeScore, @NotNull String code,
+			@NotNull String libelle, String urlPhoto) {
+		super();
+		this.typeScoreLibelle = typeScoreLibelle;
+		this.typeScore = typeScore;
+		this.code = code;
+		this.libelle = libelle;
+		this.urlPhoto = urlPhoto;
 	}
 
 	public Score(Integer id, @NotNull @NotBlank String typeScoreLibelle, TypeScore typeScore, @NotNull String code,
@@ -53,8 +63,8 @@ public class Score {
 		this.libelle = libelle;
 		this.urlPhoto = urlPhoto;
 	}
-
 	
+	/* GETTERS & SETTERS */
 	/**
 	 * @return the id
 	 */
@@ -138,6 +148,13 @@ public class Score {
 	public void setUrlPhoto(String urlPhoto) {
 		this.urlPhoto = urlPhoto;
 	}
+	
+	/* PUBLIC METHODS */	
+	@Override
+	public String toString() {
+		return "Score [id=" + id + ", typeScoreLibelle=" + typeScoreLibelle + ", typeScore=" + typeScore + ", code="
+				+ code + ", libelle=" + libelle + ", urlPhoto=" + urlPhoto + "]";
+	}
 
 	
 	/* PERSISTENT METHODS */
@@ -155,5 +172,4 @@ public class Score {
 		}
 
 	}	
-	
 }

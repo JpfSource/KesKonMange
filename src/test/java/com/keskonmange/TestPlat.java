@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,6 +23,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindingResult;
 
 import com.keskonmange.entities.Plat;
+import com.keskonmange.entities.Utilisateur;
+import com.keskonmange.enums.TypePlat;
 import com.keskonmange.exceptions.ErreurPlat;
 import com.keskonmange.restcontrollers.RestControllerPlat;
 import com.keskonmange.services.ServicePlat;
@@ -44,24 +49,24 @@ public class TestPlat
 	{
 		
 		List<Plat> plats = new ArrayList<Plat>();
-/*
+
 		if(nbPlats >= 1)
 		{
-			plats.add(new Plat(1, "LASAGNE", "Plat principal"));
+			plats.add(new Plat(1, "LASAGNE", "Plat principal", TypePlat.PLAT_PRINCIPAL, new Utilisateur()));
 		}
 		if(nbPlats >= 2)
 		{
-			plats.add(new Plat(2, "BOEUF_BOURGUIGNON", "Plat principal"));
+			plats.add(new Plat(2, "BOEUF_BOURGUIGNON", "Plat principal", TypePlat.PLAT_PRINCIPAL, new Utilisateur()));
 		}
 		if(nbPlats >= 3)
 		{
-			plats.add(new Plat(3, "CAROTTES_RAPEES", "Entrée"));
+			plats.add(new Plat(3, "CAROTTES_RAPEES", "Entrée", TypePlat.ENTREE, new Utilisateur()));
 		}
 		if(nbPlats >= 4)
 		{
-			plats.add(new Plat(4, "TIRAMISU", "Dessert"));
+			plats.add(new Plat(4, "TIRAMISU", "Dessert", TypePlat.DESSERT, new Utilisateur()));
 		}
-*/		
+		
 		return plats;
 	}
 	/* NON STATIC */
@@ -81,10 +86,10 @@ public class TestPlat
 		when(spl.findAll()).thenReturn(TestPlat.getFewPlats(NB_MAX_PLATS));
 		List<Plat> plats = (List<Plat>) rcpl.getAll();
 		assertThat(plats.size()).isEqualTo(NB_MAX_PLATS);
-		assertThat(plats.get(0).getLibellePlat()).isEqualTo(platsStatic.get(0).getLibellePlat());
-		assertThat(plats.get(1).getLibellePlat()).isEqualTo(platsStatic.get(1).getLibellePlat());
-		assertThat(plats.get(2).getLibellePlat()).isEqualTo(platsStatic.get(2).getLibellePlat());
-		assertThat(plats.get(3).getLibellePlat()).isEqualTo(platsStatic.get(3).getLibellePlat());
+		assertThat(plats.get(0).getLibelle()).isEqualTo(platsStatic.get(0).getLibelle());
+		assertThat(plats.get(1).getLibelle()).isEqualTo(platsStatic.get(1).getLibelle());
+		assertThat(plats.get(2).getLibelle()).isEqualTo(platsStatic.get(2).getLibelle());
+		assertThat(plats.get(3).getLibelle()).isEqualTo(platsStatic.get(3).getLibelle());
 	}
 
 	@Test
@@ -96,7 +101,7 @@ public class TestPlat
 			Plat plat = rcpl.getOne(PID).get();
 			assertThatNoException();
 			assertThat(plat).isNotNull();
-			assertThat(plat.getLibellePlat()).isEqualTo(TestPlat.getOnePlat().getLibellePlat());
+			assertThat(plat.getLibelle()).isEqualTo(TestPlat.getOnePlat().getLibelle());
 		}
 		catch (ErreurPlat e)
 		{
@@ -111,12 +116,12 @@ public class TestPlat
 		try
 		{
 			Plat plat = new Plat();
-			plat.setLibellePlat(TestPlat.getOnePlat().getLibellePlat());
+			plat.setLibelle(TestPlat.getOnePlat().getLibelle());
 			BindingResult result = mock(BindingResult.class);
 			Plat plat2 = rcpl.create(plat, result);
 			assertThatNoException();
 			assertThat(plat2).isNotNull();
-			assertThat(plat2.getLibellePlat()).isEqualTo(TestPlat.getOnePlat().getLibellePlat());
+			assertThat(plat2.getLibelle()).isEqualTo(TestPlat.getOnePlat().getLibelle());
 		}
 		catch (ErreurPlat e)
 		{
@@ -131,12 +136,12 @@ public class TestPlat
 		try
 		{
 			Plat plat = rcpl.getOne(PID).get();
-			plat.setLibellePlat(TestPlat.getFewPlats(NB_MAX_PLATS).get(1).getLibellePlat());
+			plat.setLibelle(TestPlat.getFewPlats(NB_MAX_PLATS).get(1).getLibelle());
 			when(spl.save(any(Plat.class))).thenReturn(plat);
 			Plat p2 = rcpl.update(plat, PID);
 			assertThatNoException();
 			assertThat(p2).isNotNull();
-			assertThat(p2.getLibellePlat()).isEqualTo(TestPlat.getFewPlats(NB_MAX_PLATS).get(1).getLibellePlat());
+			assertThat(p2.getLibelle()).isEqualTo(TestPlat.getFewPlats(NB_MAX_PLATS).get(1).getLibelle());
 		}
 		catch (ErreurPlat e)
 		{

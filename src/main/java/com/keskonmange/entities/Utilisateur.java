@@ -1,21 +1,14 @@
 package com.keskonmange.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.keskonmange.enums.Activite;
-import com.keskonmange.enums.Genre;
 import com.keskonmange.enums.Role;
 
 
@@ -50,17 +43,12 @@ public class Utilisateur extends Personne {
 
 	
 	/* RELATIONS */
-	
+
 	
 	/* CONSTRUCTORS */
+
 	public Utilisateur() {
 		super();
-	}
-
-	public Utilisateur(@NotNull @NotBlank String email, @NotNull @NotBlank String pwd) {
-		super();
-		this.email = email;
-		this.pwd = pwd;
 	}
 
 	public Utilisateur(@NotNull @NotBlank String email, @NotNull @NotBlank String pwd, String roleLibelle, Role role) {
@@ -71,26 +59,37 @@ public class Utilisateur extends Personne {
 		this.role = role;
 	}
 
+	
 	/* GETTERS & SETTERS */
+	
+	/**
+	 * @return the email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
-	public String getPwd() {
-		return pwd;
-	}
-
+	/**
+	 * @param email the email to set
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
+	}
+
+	/**
+	 * @param pwd the pwd to set
+	 */
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
-	
-	
-	
+
 	/**
 	 * @return the roleLibelle
 	 */
@@ -120,7 +119,13 @@ public class Utilisateur extends Personne {
 	}
 
 	
-	/* PUBLIC METHODS */
+	/* PUBLIC METHODS */	
+	
+	@Override
+	public String toString() {
+		return "Utilisateur [email=" + email + ", pwd=" + pwd + ", roleLibelle=" + roleLibelle + ", role=" + role + "]";
+	}
+	
 	
 	/* PERSISTENT METHODS */
 	@PostLoad
@@ -136,6 +141,5 @@ public class Utilisateur extends Personne {
 			this.roleLibelle = this.role.getLibelle();
 		}
 	}
-	
 	
 }

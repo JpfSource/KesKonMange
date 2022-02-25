@@ -6,9 +6,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +26,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindingResult;
 
 import com.keskonmange.entities.Groupe;
+import com.keskonmange.entities.Personne;
+import com.keskonmange.entities.Utilisateur;
+import com.keskonmange.enums.Activite;
+import com.keskonmange.enums.Genre;
 import com.keskonmange.exceptions.ErreurGroupe;
 import com.keskonmange.restcontrollers.RestControllerGroupe;
 import com.keskonmange.services.ServiceGroupe;
+import com.keskonmange.utils.UtilDate;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -43,10 +54,10 @@ public class TestGroupe {
 	private static List<Groupe> getFewGroupes(Integer nbGroupes) {
 		List<Groupe> groupes = new ArrayList<Groupe>();
 		if (nbGroupes >= 1) {
-			groupes.add(new Groupe(1, "MON GROUPE 1", "google.fr"));
+			groupes.add(new Groupe(1, "MON GROUPE 1", "google.fr", 0, new Utilisateur()));
 		}
 		if (nbGroupes >= 2) {
-			groupes.add(new Groupe(2, "MON GROUPE 2", "yahoo.fr"));
+			groupes.add(new Groupe(2, "MON GROUPE 2", "yahoo.fr", 0, new Utilisateur()));
 		}
 		return groupes;
 	}
@@ -62,8 +73,8 @@ public class TestGroupe {
 	@Mock
 	ServiceGroupe gp;
 
-//	@Autowired
-//	private ServiceGroupe sg;
+	@Autowired
+	private ServiceGroupe sg;
 
 	// NON STATIC.METHODES.TESTS
 	@Test
@@ -168,18 +179,17 @@ public class TestGroupe {
 		}
 	}
 
-	/*
 	@Test
 	public void testGetBesoinCaloriqueGroupe() {
 		//given
-		Personne p1 = new Personne(1, "Pierre", "DUPONT", null, UtilDate.getNaissanceFromAge(45) , null, "Masculin", Genre.MASCULIN, 182, 82, 100, "Sédentaire", Activite.SEDENTAIRE);
-		Personne p2 = new Personne(2, "Valérie", "DUPONT", null, UtilDate.getNaissanceFromAge(16) , null, "Feminin", Genre.FEMININ, 182, 82, 100, "Sédentaire", Activite.SEDENTAIRE);
-
+		Personne p1 = new Personne(1, "DUPONT", "Pierre", "Masculin", Genre.MASCULIN, UtilDate.getNaissanceFromAge(45), 182, 82, 100, "", "Sédentaire", Activite.SEDENTAIRE, "The best guy", 0, new Utilisateur());
+		Personne p2 = new Personne(1, "DUPONT", "Valérie", "Féminin", Genre.FEMININ, UtilDate.getNaissanceFromAge(16), 182, 82, 100, "", "Sédentaire", Activite.SEDENTAIRE, "The best girl", 0, new Utilisateur());
+		
 		Set<Personne> personnes = new HashSet<Personne>();
 		personnes.add(p1);
 		personnes.add(p2);
 
-		Groupe gpe = new Groupe("Groupe Test", null);
+		Groupe gpe = new Groupe(4, "MON GROUPE 4", "google.fr", 0, new Utilisateur());
 
 		gpe.setGroupePersonnes(personnes);
 
@@ -187,5 +197,4 @@ public class TestGroupe {
 
 		assertThat(gpe.getBesoinCalorique() == 7432);
 	}
-*/
 }
