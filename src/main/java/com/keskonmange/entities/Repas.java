@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,41 +34,23 @@ public class Repas {
 	@NotNull
 	@NotBlank
 	@Column(name = "TypeRepas", length = 20, nullable = false, unique = false)
-	private String typeRepasLibelle;
-	
-	@Transient
 	private TypeRepas typeRepas;
 	
+	@Transient
+	private String typeRepasLibelle;
+	
+	
 	/* RELATIONS */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Groupe groupe;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Repas repas;
 	
 	
 	/* CONSTRUCTORS */
 	public Repas() {
 		super();
-	}
-	public Repas(@NotNull LocalDate date_Repas, @NotNull @NotBlank String typeRepasLibelle, TypeRepas typeRepas,
-			Groupe groupe, Repas repas) {
-		super();
-		Date_Repas = date_Repas;
-		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
-		this.groupe = groupe;
-		this.repas = repas;
-	}
-	public Repas(Integer id, @NotNull LocalDate date_Repas, @NotNull @NotBlank String typeRepasLibelle,
-			TypeRepas typeRepas, Groupe groupe, Repas repas) {
-		super();
-		this.id = id;
-		Date_Repas = date_Repas;
-		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
-		this.groupe = groupe;
-		this.repas = repas;
 	}
 
 	
@@ -157,15 +140,15 @@ public class Repas {
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {
-		if (!typeRepasLibelle.isEmpty()) {
-			this.typeRepas = TypeRepas.of(typeRepasLibelle);
+		if (typeRepas != null) {
+			this.typeRepasLibelle = this.typeRepas.getLibelle();
 		}
 	}
 
 	@PrePersist
 	void fillPersistent() {
-		if (typeRepas != null) {
-			this.typeRepasLibelle = this.typeRepas.getLibelle();
+		if (typeRepasLibelle != null) {
+			this.typeRepas = TypeRepas.of(typeRepasLibelle);
 		}
 	}
 

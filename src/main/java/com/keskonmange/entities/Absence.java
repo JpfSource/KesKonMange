@@ -3,10 +3,13 @@ package com.keskonmange.entities;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
@@ -27,17 +30,17 @@ public class Absence {
 	@NotNull
 	@NotBlank
 	@Column(name = "TYPE_REPAS", length = 20, nullable = false, unique = false)
-	private String typeRepasLibelle;
+	private TypeRepas typeRepas;
 
 	@Transient
-	private TypeRepas typeRepas;
+	private String typeRepasLibelle;
 
 	
 	/* RELATIONS */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Personne personne;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Groupe groupe;
 
 	
@@ -45,22 +48,6 @@ public class Absence {
 	
 	public Absence() {
 		super();
-	}
-	public Absence(@NotNull @NotBlank String typeRepasLibelle, TypeRepas typeRepas, Personne personne, Groupe groupe) {
-		super();
-		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
-		this.personne = personne;
-		this.groupe = groupe;
-	}
-	public Absence(Integer id, @NotNull @NotBlank String typeRepasLibelle, TypeRepas typeRepas, Personne personne,
-			Groupe groupe) {
-		super();
-		this.id = id;
-		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
-		this.personne = personne;
-		this.groupe = groupe;
 	}
 
 	
@@ -146,5 +133,18 @@ public class Absence {
 	}
 
 	/* PERSISTENT METHODS */		
+	@PostLoad
+	void fillTransient() {
+		if (typeRepas != null) {
+			this.typeRepasLibelle = this.typeRepas.getLibelle();
+		}
+	}
+
+	@PrePersist
+	void fillPersistent() {
+		if (typeRepasLibelle != null) {
+			this.typeRepas = TypeRepas.of(typeRepasLibelle);
+		}
+	}
 
 }

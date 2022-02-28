@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.keskonmange.entities.Groupe;
-import com.keskonmange.entities.Utilisateur;
 
 public interface JpaGroupe extends CrudRepository<Groupe, Integer> {
 

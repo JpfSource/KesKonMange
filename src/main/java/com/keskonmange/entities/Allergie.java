@@ -20,7 +20,7 @@ public class Allergie
 
 	@NotNull
 	@NotBlank
-	@Column(name = "libelle", length = 50, nullable=false)
+	@Column(name = "LIBELLE", length = 50, nullable=false)
 	private String libelle;
 
 	
@@ -31,15 +31,6 @@ public class Allergie
 	
 	public Allergie() {
 		super();
-	}
-	public Allergie(@NotNull @NotBlank String libelle) {
-		super();
-		this.libelle = libelle;
-	}
-	public Allergie(Integer id, @NotNull @NotBlank String libelle) {
-		super();
-		this.id = id;
-		this.libelle = libelle;
 	}
 
 	

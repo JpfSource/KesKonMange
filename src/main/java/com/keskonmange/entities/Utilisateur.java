@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 import com.keskonmange.enums.Role;
 
 
@@ -36,14 +37,13 @@ public class Utilisateur extends Personne {
 
 	@Basic
 	@Column(name = "ROLE", length = 20, nullable = true, unique = false)
-	private String roleLibelle;
-
-	@Transient
 	private Role role;
 
+	@Transient
+	private String roleLibelle;
+	
 	
 	/* RELATIONS */
-
 	
 	/* CONSTRUCTORS */
 
@@ -51,15 +51,7 @@ public class Utilisateur extends Personne {
 		super();
 	}
 
-	public Utilisateur(@NotNull @NotBlank String email, @NotNull @NotBlank String pwd, String roleLibelle, Role role) {
-		super();
-		this.email = email;
-		this.pwd = pwd;
-		this.roleLibelle = roleLibelle;
-		this.role = role;
-	}
 
-	
 	/* GETTERS & SETTERS */
 	
 	/**
@@ -118,27 +110,27 @@ public class Utilisateur extends Personne {
 		this.role = role;
 	}
 
-	
 	/* PUBLIC METHODS */	
-	
+
 	@Override
 	public String toString() {
-		return "Utilisateur [email=" + email + ", pwd=" + pwd + ", roleLibelle=" + roleLibelle + ", role=" + role + "]";
+		return "Utilisateur [email=" + email + ", pwd=" + pwd + ", roleLibelle=" + roleLibelle
+				+ ", role=" + role + "]";
 	}
 	
 	
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {
-		if (!roleLibelle.isEmpty()) {
-			this.role = Role.of(roleLibelle);
+		if (role != null) {
+			this.roleLibelle = this.role.getLibelle();
 		}
 	}
 
 	@PrePersist
 	void fillPersistent() {
-		if (role != null) {
-			this.roleLibelle = this.role.getLibelle();
+		if (roleLibelle != null) {
+			this.role = Role.of(roleLibelle);
 		}
 	}
 	

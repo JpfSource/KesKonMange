@@ -41,21 +41,21 @@ public class Groupe {
 	
 	/* RELATIONS */
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="GROUPE_PERSONNE",
 			joinColumns = @JoinColumn(name="ID_GROUPE", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_PERSONNE", referencedColumnName="ID")
 	)
 	private Set<Personne> groupePersonnes = new HashSet<Personne>();
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="GROUPE_SCORE",
 			joinColumns = @JoinColumn(name="ID_GROUPE", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_SCORE", referencedColumnName="ID")
 	)
 	private Set<Score> groupeScores = new HashSet<Score>();
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Utilisateur administrateur;
 
 	/* CONSTRUCTORS */
@@ -63,43 +63,6 @@ public class Groupe {
 	public Groupe() {
 		super();
 	}
-	public Groupe(@NotNull @NotBlank String nom, String urlPhoto, Integer besoinCalorique, Utilisateur administrateur) {
-		super();
-		this.nom = nom;
-		this.urlPhoto = urlPhoto;
-		this.besoinCalorique = besoinCalorique;
-		this.administrateur = administrateur;
-	}
-	public Groupe(@NotNull @NotBlank String nom, String urlPhoto, Integer besoinCalorique,
-			Set<Personne> groupePersonnes, Set<Score> groupeScores, Utilisateur administrateur) {
-		super();
-		this.nom = nom;
-		this.urlPhoto = urlPhoto;
-		this.besoinCalorique = besoinCalorique;
-		this.groupePersonnes = groupePersonnes;
-		this.groupeScores = groupeScores;
-		this.administrateur = administrateur;
-	}
-	public Groupe(Integer id, @NotNull @NotBlank String nom, String urlPhoto, Integer besoinCalorique, Utilisateur administrateur) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.urlPhoto = urlPhoto;
-		this.besoinCalorique = besoinCalorique;
-		this.administrateur = administrateur;
-	}
-	public Groupe(Integer id, @NotNull @NotBlank String nom, String urlPhoto, Integer besoinCalorique,
-			Set<Personne> groupePersonnes, Set<Score> groupeScores, Utilisateur administrateur) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.urlPhoto = urlPhoto;
-		this.besoinCalorique = besoinCalorique;
-		this.groupePersonnes = groupePersonnes;
-		this.groupeScores = groupeScores;
-		this.administrateur = administrateur;
-	}
-
 	
 	/* GETTERS & SETTERS */
 

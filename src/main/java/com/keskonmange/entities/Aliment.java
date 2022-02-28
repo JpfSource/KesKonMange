@@ -27,37 +27,37 @@ public class Aliment
 
 	@NotNull
 	@NotBlank
-	@Column(name = "ean", length = 40, nullable = false)
+	@Column(name = "EAN", length = 40, nullable = false)
 	private String ean;
 
   	@NotNull
 	@NotBlank
-	@Column(name = "libelle", length = 200, nullable = false)
+	@Column(name = "LIBELLE", length = 200, nullable = false)
 	private String libelle;
 		
-	@Column(name="image_url", nullable = true)
-	private String imgUrl;
+	@Column(name="IMAGE_URL", nullable = true)
+	private String imageUrl;
   	
-	@Column(name = "energy_kcal_100g")
+	@Column(name = "ENERGY_KCAL_100G")
 	private Double energyKcal100g;
   	
-	@Column(name = "mots_cles", nullable = true)
+	@Column(name = "MOTS_CLES", nullable = true)
 	private String motsCles;
 	
   	@NotNull
-	@Column(name = "date_maj", nullable = false)
+	@Column(name = "DATE_MAJ", nullable = false)
 	private LocalDate dateMaj;
 	
 	
 	/* RELATIONS */
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="ALIMENT_ALLERGIE",
 			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
 	)
 	private Set<Allergie> alimentAllergies = new HashSet<Allergie>();
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="ALIMENT_SCORE",
 			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_SCORE", referencedColumnName="ID")
@@ -69,54 +69,6 @@ public class Aliment
 
 	public Aliment() {
 		super();
-	}
-	public Aliment(@NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
-			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj) {
-		super();
-		this.ean = ean;
-		this.libelle = libelle;
-		this.imgUrl = imgUrl;
-		this.energyKcal100g = energyKcal100g;
-		this.motsCles = motsCles;
-		this.dateMaj = dateMaj;
-	}
-	public Aliment(@NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
-			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj, Set<Allergie> alimentAllergies,
-			Set<Score> alimentScores) {
-		super();
-		this.ean = ean;
-		this.libelle = libelle;
-		this.imgUrl = imgUrl;
-		this.energyKcal100g = energyKcal100g;
-		this.motsCles = motsCles;
-		this.dateMaj = dateMaj;
-		this.alimentAllergies = alimentAllergies;
-		this.alimentScores = alimentScores;
-	}
-	public Aliment(Integer id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
-			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj) {
-		super();
-		this.id = id;
-		this.ean = ean;
-		this.libelle = libelle;
-		this.imgUrl = imgUrl;
-		this.energyKcal100g = energyKcal100g;
-		this.motsCles = motsCles;
-		this.dateMaj = dateMaj;
-	}
-	public Aliment(Integer id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle, String imgUrl,
-			Double energyKcal100g, String motsCles, @NotNull LocalDate dateMaj, Set<Allergie> alimentAllergies,
-			Set<Score> alimentScores) {
-		super();
-		this.id = id;
-		this.ean = ean;
-		this.libelle = libelle;
-		this.imgUrl = imgUrl;
-		this.energyKcal100g = energyKcal100g;
-		this.motsCles = motsCles;
-		this.dateMaj = dateMaj;
-		this.alimentAllergies = alimentAllergies;
-		this.alimentScores = alimentScores;
 	}
 
 	
@@ -161,14 +113,14 @@ public class Aliment
 	/**
 	 * @return the imgUrl
 	 */
-	public String getImgUrl() {
-		return imgUrl;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 	/**
 	 * @param imgUrl the imgUrl to set
 	 */
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	/**
 	 * @return the energyKcal100g
@@ -235,7 +187,7 @@ public class Aliment
 	/* PUBLIC METHODS */	
 	@Override
 	public String toString() {
-		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", imgUrl=" + imgUrl
+		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", imageUrl=" + imageUrl
 				+ ", energyKcal100g=" + energyKcal100g + ", motsCles=" + motsCles + ", dateMaj=" + dateMaj + "]";
 	}
 

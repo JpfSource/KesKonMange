@@ -17,10 +17,10 @@ public class RepartitionCalorique {
 	@Basic
 	@NotNull
 	@Column(name = "TYPE_REPAS", length = 20, nullable = false, unique = false)
-	private String typeRepasLibelle;
+	private TypeRepas typeRepas;
 
 	@Transient
-	private TypeRepas typeRepas;
+	private String typeRepasLibelle;
 
 	@NotNull
 	@Column(name = "POURCENTAGE", nullable = false)
@@ -28,7 +28,7 @@ public class RepartitionCalorique {
 
 	
 	/* RELATIONS */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Groupe groupe;
 	
 	
@@ -36,23 +36,6 @@ public class RepartitionCalorique {
 	
 	public RepartitionCalorique() {
 		super();
-	}
-	public RepartitionCalorique(@NotNull String typeRepasLibelle, TypeRepas typeRepas, @NotNull Double pourcentage,
-			Groupe groupe) {
-		super();
-		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
-		this.pourcentage = pourcentage;
-		this.groupe = groupe;
-	}
-	public RepartitionCalorique(Integer id, @NotNull String typeRepasLibelle, TypeRepas typeRepas,
-			@NotNull Double pourcentage, Groupe groupe) {
-		super();
-		this.id = id;
-		this.typeRepasLibelle = typeRepasLibelle;
-		this.typeRepas = typeRepas;
-		this.pourcentage = pourcentage;
-		this.groupe = groupe;
 	}
 
 	
@@ -132,15 +115,15 @@ public class RepartitionCalorique {
 	
 	@PostLoad
 	void fillTransient() {
-		if (!typeRepasLibelle.isEmpty()) {
-			this.typeRepas = TypeRepas.of(typeRepasLibelle);
+		if (typeRepas != null) {
+			this.typeRepasLibelle = this.typeRepas.getLibelle();
 		}
 	}
 
 	@PrePersist
 	void fillPersistent() {
-		if (typeRepas != null) {
-			this.typeRepasLibelle = this.typeRepas.getLibelle();
+		if (typeRepasLibelle != null) {
+			this.typeRepas = TypeRepas.of(typeRepasLibelle);
 		}
 	}
 	

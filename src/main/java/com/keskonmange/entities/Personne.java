@@ -1,6 +1,7 @@
 package com.keskonmange.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -22,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 
@@ -46,13 +48,14 @@ public class Personne {
 	@Column(name = "PRENOM", length = 50, nullable = false, unique = false)
 	private String prenom;
 
-	@Basic
-	@Column(name = "GENRE", length = 20, nullable = true, unique = false)
+	@Transient
 	private String genreLibelle;
 
-	@Transient
+	@Basic
+	@Column(name = "GENRE", length = 20, nullable = true, unique = false)
 	private Genre genre;
 
+	@Past
 	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
 	private LocalDate dateNaissance;
 
@@ -65,14 +68,14 @@ public class Personne {
 	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
 	private Integer objectifCalorique;
 
-	@Column(name = "URL_PHOTO", nullable = true, unique = false)
+	@Column(name = "URL_PHOTO", nullable = true, unique = false, columnDefinition = "varchar(255) default 'https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg'")
 	private String urlPhoto;
 	
-	@Basic
-	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
+	@Transient
 	private String activiteLibelle;
 
-	@Transient
+	@Basic
+	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
 	private Activite activite;
 	
 	@Column(name = "DESCRIPTION", nullable = true, unique = false)
@@ -83,108 +86,23 @@ public class Personne {
 
 	
 	/* RELATIONS */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(columnDefinition="integer", name="createur_id", nullable = true)
 	private Utilisateur createur;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
+
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="PERSONNE_ALLERGIE",
 			joinColumns = @JoinColumn(name="ID_PERSONNE", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
 	)
-	private Set<Allergie> personneAllergies;
-	
+	private Set<Allergie> personneAllergies = new HashSet<Allergie>();
 
+	
 	/* CONSTRUCTORS */
 
 	public Personne() {
 		super();
 	}
-	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String genreLibelle, Genre genre,
-			LocalDate dateNaissance, Integer taille, Integer poids, Integer objectifCalorique, String urlPhoto,
-			String activiteLibelle, Activite activite, String description, Integer besoinsCaloriques,
-			Utilisateur createur) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-		this.genreLibelle = genreLibelle;
-		this.genre = genre;
-		this.dateNaissance = dateNaissance;
-		this.taille = taille;
-		this.poids = poids;
-		this.objectifCalorique = objectifCalorique;
-		this.urlPhoto = urlPhoto;
-		this.activiteLibelle = activiteLibelle;
-		this.activite = activite;
-		this.description = description;
-		this.besoinsCaloriques = besoinsCaloriques;
-		this.createur = createur;
-	}
-	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String genreLibelle, Genre genre,
-			LocalDate dateNaissance, Integer taille, Integer poids, Integer objectifCalorique, String urlPhoto,
-			String activiteLibelle, Activite activite, String description, Integer besoinsCaloriques,
-			Utilisateur createur, Set<Allergie> personneAllergies) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-		this.genreLibelle = genreLibelle;
-		this.genre = genre;
-		this.dateNaissance = dateNaissance;
-		this.taille = taille;
-		this.poids = poids;
-		this.objectifCalorique = objectifCalorique;
-		this.urlPhoto = urlPhoto;
-		this.activiteLibelle = activiteLibelle;
-		this.activite = activite;
-		this.description = description;
-		this.besoinsCaloriques = besoinsCaloriques;
-		this.createur = createur;
-		this.personneAllergies = personneAllergies;
-	}
-
-	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String genreLibelle,
-			Genre genre, LocalDate dateNaissance, Integer taille, Integer poids, Integer objectifCalorique,
-			String urlPhoto, String activiteLibelle, Activite activite, String description, Integer besoinsCaloriques,
-			Utilisateur createur) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.genreLibelle = genreLibelle;
-		this.genre = genre;
-		this.dateNaissance = dateNaissance;
-		this.taille = taille;
-		this.poids = poids;
-		this.objectifCalorique = objectifCalorique;
-		this.urlPhoto = urlPhoto;
-		this.activiteLibelle = activiteLibelle;
-		this.activite = activite;
-		this.description = description;
-		this.besoinsCaloriques = besoinsCaloriques;
-		this.createur = createur;
-	}
-	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String genreLibelle,
-			Genre genre, LocalDate dateNaissance, Integer taille, Integer poids, Integer objectifCalorique,
-			String urlPhoto, String activiteLibelle, Activite activite, String description, Integer besoinsCaloriques,
-			Utilisateur createur, Set<Allergie> personneAllergies) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.genreLibelle = genreLibelle;
-		this.genre = genre;
-		this.dateNaissance = dateNaissance;
-		this.taille = taille;
-		this.poids = poids;
-		this.objectifCalorique = objectifCalorique;
-		this.urlPhoto = urlPhoto;
-		this.activiteLibelle = activiteLibelle;
-		this.activite = activite;
-		this.description = description;
-		this.besoinsCaloriques = besoinsCaloriques;
-		this.createur = createur;
-		this.personneAllergies = personneAllergies;
-	}
-	
 		
 	/* GETTERS & SETTERS */
 
@@ -383,6 +301,7 @@ public class Personne {
 	public void setBesoinsCaloriques(Integer besoinsCaloriques) {
 		this.besoinsCaloriques = besoinsCaloriques;
 	}
+	
 
 	/**
 	 * @return the createur
@@ -401,6 +320,7 @@ public class Personne {
 	/**
 	 * @return the personneAllergies
 	 */
+	
 	public Set<Allergie> getPersonneAllergies() {
 		return personneAllergies;
 	}
@@ -408,6 +328,7 @@ public class Personne {
 	/**
 	 * @param personneAllergies the personneAllergies to set
 	 */
+	
 	public void setPersonneAllergies(Set<Allergie> personneAllergies) {
 		this.personneAllergies = personneAllergies;
 	}	
@@ -428,21 +349,21 @@ public class Personne {
 	
 	@PostLoad
 	void fillTransient() {
-		if (!genreLibelle.isEmpty()) {
-			this.genre = Genre.of(genreLibelle);
-		}
-		if (!activiteLibelle.isEmpty()) {
-			this.activite = Activite.of(activiteLibelle);
-		}
-	}
-
-	@PrePersist
-	void fillPersistent() {
 		if (genre != null) {
 			this.genreLibelle = this.genre.getLibelle();
 		}
 		if (activite != null) {
 			this.activiteLibelle = this.activite.getLibelle();
+		}
+	}
+
+	@PrePersist
+	void fillPersistent() {
+		if (genreLibelle != null) {
+			this.genre = Genre.of(genreLibelle);
+		}
+		if (activiteLibelle != null) {
+			this.activite = Activite.of(activiteLibelle);
 		}
 	}
 }

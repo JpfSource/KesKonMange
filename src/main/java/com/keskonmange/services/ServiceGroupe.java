@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Groupe;
-import com.keskonmange.entities.Personne;
 import com.keskonmange.repository.JpaGroupe;
 import com.keskonmange.repository.JpaUtilisateur;
 
@@ -67,8 +66,8 @@ public class ServiceGroupe {
 	 * @return groupe as Groupe
 	 */
 	public Groupe getBesoinCaloriqueGroupe(Groupe groupe) {
-		Integer besoinCal = 0 ;
-/*		if(groupe != null) {
+/*		Integer besoinCal = 0 ;
+		if(groupe != null) {
 			if(groupe.getGroupePersonnes() != null) {
 				for(Personne pers : groupe.getGroupePersonnes()) {
 					Optional<Personne> op = sp.findById(pers.getId());

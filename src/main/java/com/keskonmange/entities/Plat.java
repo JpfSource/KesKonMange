@@ -40,17 +40,17 @@ public class Plat
 	@NotNull
 	@NotBlank
 	@Column(name = "TYPE_PLAT", length = 20, nullable = false, unique = false)
-	private String typePlatLibelle;
+	private TypePlat typePlat;
 	
 	@Transient
-	private TypePlat typePlat;
+	private String typePlatLibelle;
 
 	
 	/* RELATIONS */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Utilisateur createur;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="PLAT_ALIMENT",
 			joinColumns = @JoinColumn(name="ID_PLAT", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID")
@@ -62,42 +62,6 @@ public class Plat
 
 	public Plat() {
 		super();
-	}
-	public Plat(@NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle, TypePlat typePlat,
-			Utilisateur createur) {
-		super();
-		this.libelle = libellePlat;
-		this.typePlatLibelle = typePlatLibelle;
-		this.typePlat = typePlat;
-		this.createur = createur;
-	}
-	public Plat(@NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle, TypePlat typePlat,
-			Utilisateur createur, Set<Aliment> platAliments) {
-		super();
-		this.libelle = libellePlat;
-		this.typePlatLibelle = typePlatLibelle;
-		this.typePlat = typePlat;
-		this.createur = createur;
-		this.platAliments = platAliments;
-	}
-	public Plat(Integer id, @NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle,
-			TypePlat typePlat, Utilisateur createur) {
-		super();
-		this.id = id;
-		this.libelle = libellePlat;
-		this.typePlatLibelle = typePlatLibelle;
-		this.typePlat = typePlat;
-		this.createur = createur;
-	}
-	public Plat(Integer id, @NotNull @NotBlank String libellePlat, @NotNull @NotBlank String typePlatLibelle,
-			TypePlat typePlat, Utilisateur createur, Set<Aliment> platAliments) {
-		super();
-		this.id = id;
-		this.libelle = libellePlat;
-		this.typePlatLibelle = typePlatLibelle;
-		this.typePlat = typePlat;
-		this.createur = createur;
-		this.platAliments = platAliments;
 	}
 
 
@@ -200,15 +164,15 @@ public class Plat
 
 	@PostLoad
 	void fillTransient() {
-		if (!typePlatLibelle.isEmpty()) {
-			this.typePlat = TypePlat.of(typePlatLibelle);
+		if (typePlat != null) {
+			this.typePlatLibelle = this.typePlat.getLibelle();
 		}
 	}
 
 	@PrePersist
 	void fillPersistent() {
-		if (typePlat != null) {
-			this.typePlatLibelle = this.typePlat.getLibelle();
+		if (typePlatLibelle != null) {
+			this.typePlat = TypePlat.of(typePlatLibelle);
 		}
 	}
 

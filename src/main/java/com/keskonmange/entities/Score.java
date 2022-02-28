@@ -18,10 +18,10 @@ public class Score {
 	@NotNull
 	@NotBlank
 	@Column(name = "TYPE_SCORE", length = 20, nullable = false, unique = false)
-	private String typeScoreLibelle;
+	private TypeScore typeScore;
 
 	@Transient
-	private TypeScore typeScore;
+	private String typeScoreLibelle;
 
 	@NotNull
 	@Column(name = "CODE", length = 5, nullable = false)
@@ -43,26 +43,6 @@ public class Score {
 		super();
 	}
 
-	public Score(@NotNull @NotBlank String typeScoreLibelle, TypeScore typeScore, @NotNull String code,
-			@NotNull String libelle, String urlPhoto) {
-		super();
-		this.typeScoreLibelle = typeScoreLibelle;
-		this.typeScore = typeScore;
-		this.code = code;
-		this.libelle = libelle;
-		this.urlPhoto = urlPhoto;
-	}
-
-	public Score(Integer id, @NotNull @NotBlank String typeScoreLibelle, TypeScore typeScore, @NotNull String code,
-			@NotNull String libelle, String urlPhoto) {
-		super();
-		this.id = id;
-		this.typeScoreLibelle = typeScoreLibelle;
-		this.typeScore = typeScore;
-		this.code = code;
-		this.libelle = libelle;
-		this.urlPhoto = urlPhoto;
-	}
 	
 	/* GETTERS & SETTERS */
 	/**
@@ -160,16 +140,15 @@ public class Score {
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {
-		if (!typeScoreLibelle.isEmpty()) {
-			this.typeScore = TypeScore.of(typeScoreLibelle);
+		if (typeScore != null) {
+			this.typeScoreLibelle = this.typeScore.getLibelle();
 		}
 	}
 
 	@PrePersist
 	void fillPersistent() {
-		if (typeScore != null) {
-			this.typeScoreLibelle = this.typeScore.getLibelle();
+		if (typeScoreLibelle != null) {
+			this.typeScore = TypeScore.of(typeScoreLibelle);
 		}
-
 	}	
 }
