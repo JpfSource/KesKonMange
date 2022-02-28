@@ -75,11 +75,12 @@ public class RestControllerGroupe {
 	 * @param pid
 	 * @return
 	 */
+/*
 	@GetMapping({"/utilisateur/{id}"})
 	public Iterable<Groupe> getAllGroupeByUtilisateur(@PathVariable("id") Integer pid){
 		return serviceGroupe.findByUtilisateurId(pid);
 	}
-	
+*/	
 
 	/**
 	 * Renvoie le JSON du groupe correspondant à l'id de l'URL.

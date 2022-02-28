@@ -10,8 +10,6 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.keskonmange.enums.Activite;
-import com.keskonmange.enums.Genre;
 import com.keskonmange.enums.Role;
 
 
@@ -26,58 +24,64 @@ import com.keskonmange.enums.Role;
 @Table(name = "UTILISATEUR")
 public class Utilisateur extends Personne {
 
+	/* FIELDS */
 	@NotNull
 	@NotBlank
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL", length = 150, nullable = false)
 	private String email;
 	
-	
-	@Column(name = "PWD", nullable = false)
+	@NotNull
+	@NotBlank
+	@Column(name = "PWD", length = 150, nullable = false)
 	private String pwd;
 
 	@Basic
 	@Column(name = "ROLE", length = 20, nullable = true, unique = false)
-	private String roleLibelle;
+	private Role role;
 
 	@Transient
-	private Role role;
+	private String roleLibelle;
 	
 	
+	/* RELATIONS */
 	
-	public Utilisateur() {}
-	
-	public Utilisateur(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom,String email, String pwd) {
-		super(nom, prenom);
-		this.email = email;
-		this.pwd = pwd;
-	}
+	/* CONSTRUCTORS */
 
-	public Utilisateur(String email, String pwd) {
+	public Utilisateur() {
 		super();
-		this.email = email;
-		this.pwd = pwd;
 	}
 
 
+	/* GETTERS & SETTERS */
+	
+	/**
+	 * @return the email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
-	public String getPwd() {
-		return pwd;
-	}
-
+	/**
+	 * @param email the email to set
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
+	}
+
+	/**
+	 * @param pwd the pwd to set
+	 */
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
-	
-	
-	
+
 	/**
 	 * @return the roleLibelle
 	 */
@@ -106,20 +110,28 @@ public class Utilisateur extends Personne {
 		this.role = role;
 	}
 
+	/* PUBLIC METHODS */	
+
+	@Override
+	public String toString() {
+		return "Utilisateur [email=" + email + ", pwd=" + pwd + ", roleLibelle=" + roleLibelle
+				+ ", role=" + role + "]";
+	}
+	
+	
 	/* PERSISTENT METHODS */
 	@PostLoad
 	void fillTransient() {
-		if (!roleLibelle.isEmpty()) {
-			this.role = Role.of(roleLibelle);
+		if (role != null) {
+			this.roleLibelle = this.role.getLibelle();
 		}
 	}
 
 	@PrePersist
 	void fillPersistent() {
-		if (role != null) {
-			this.roleLibelle = this.role.getLibelle();
+		if (roleLibelle != null) {
+			this.role = Role.of(roleLibelle);
 		}
 	}
-	
 	
 }

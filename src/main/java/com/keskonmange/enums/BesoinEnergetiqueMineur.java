@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 public enum BesoinEnergetiqueMineur {
 
+	FEMININ_AGE_00(Genre.FEMININ,  0, 0),
 	FEMININ_AGE_01(Genre.FEMININ,  1, 80),
 	FEMININ_AGE_02(Genre.FEMININ,  2, 81),
 	FEMININ_AGE_03(Genre.FEMININ,  3, 77),
@@ -21,6 +22,7 @@ public enum BesoinEnergetiqueMineur {
 	FEMININ_AGE_15(Genre.FEMININ, 15, 45),
 	FEMININ_AGE_16(Genre.FEMININ, 16, 44),
 	FEMININ_AGE_17(Genre.FEMININ, 17, 44),
+	MASCULIN_AGE_00(Genre.MASCULIN,  0, 0),
 	MASCULIN_AGE_01(Genre.MASCULIN,  1, 82),
 	MASCULIN_AGE_02(Genre.MASCULIN,  2, 84),
 	MASCULIN_AGE_03(Genre.MASCULIN,  3, 80),

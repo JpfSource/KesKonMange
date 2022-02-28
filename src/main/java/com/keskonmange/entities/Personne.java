@@ -1,22 +1,29 @@
 package com.keskonmange.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Past;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 
@@ -25,13 +32,12 @@ import com.keskonmange.enums.Genre;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Personne {
 
-	/* COLUMNS */
+	/* FIELDS */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false, unique = false)
 	private Integer id;
 
-	// Données de l'écran Identité
 	@NotNull
 	@NotBlank
 	@Column(name = "NOM", length = 50, nullable = false, unique = false)
@@ -42,13 +48,14 @@ public class Personne {
 	@Column(name = "PRENOM", length = 50, nullable = false, unique = false)
 	private String prenom;
 
-	@Basic
-	@Column(name = "GENRE", length = 20, nullable = true, unique = false)
+	@Transient
 	private String genreLibelle;
 
-	@Transient
+	@Basic
+	@Column(name = "GENRE", length = 20, nullable = true, unique = false)
 	private Genre genre;
 
+	@Past
 	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
 	private LocalDate dateNaissance;
 
@@ -61,14 +68,14 @@ public class Personne {
 	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
 	private Integer objectifCalorique;
 
-	@Column(name = "URL_PHOTO", nullable = true, unique = false)
+	@Column(name = "URL_PHOTO", nullable = true, unique = false, columnDefinition = "varchar(255) default 'https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg'")
 	private String urlPhoto;
 	
-	@Basic
-	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
+	@Transient
 	private String activiteLibelle;
 
-	@Transient
+	@Basic
+	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
 	private Activite activite;
 	
 	@Column(name = "DESCRIPTION", nullable = true, unique = false)
@@ -77,47 +84,26 @@ public class Personne {
 	@Transient
 	private Integer besoinsCaloriques;
 
+	
+	/* RELATIONS */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(columnDefinition="integer", name="createur_id", nullable = true)
+	private Utilisateur createur;
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name="PERSONNE_ALLERGIE",
+			joinColumns = @JoinColumn(name="ID_PERSONNE", referencedColumnName="ID"),
+			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
+	)
+	private Set<Allergie> personneAllergies = new HashSet<Allergie>();
+
+	
 	/* CONSTRUCTORS */
-	public Personne() {}
 
-	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom) {
-		this(nom, prenom,
-				null, null, null,
-				null, null, null,
-				null, null, null,
-				null);
-	}
-
-	public Personne(@NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
-			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
-			Integer objectifCalorique, String activiteLibelle, Activite activite) {
-		this(null, nom, prenom,
-				description, dateNaissance, urlPhoto,
-				genreLibelle, genre, taille,
-				poids, objectifCalorique,
-				activiteLibelle, activite);
-	}
-
-	public Personne(Integer id, @NotNull @NotBlank String nom, @NotNull @NotBlank String prenom, String description,
-			LocalDate dateNaissance, String urlPhoto, String genreLibelle, Genre genre, Integer taille, Integer poids,
-			Integer objectifCalorique, String activiteLibelle, Activite activite) {
+	public Personne() {
 		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.description = description;
-		this.dateNaissance = dateNaissance;
-		this.urlPhoto = urlPhoto;
-		this.genreLibelle = genreLibelle;
-		this.genre = genre;
-		this.taille = taille;
-		this.poids = poids;
-		this.objectifCalorique = objectifCalorique;
-		this.activiteLibelle = activiteLibelle;
-		this.activite = activite;
 	}
-
+		
 	/* GETTERS & SETTERS */
 
 	/**
@@ -163,48 +149,6 @@ public class Personne {
 	}
 
 	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * @return the dateNaissance
-	 */
-	public LocalDate getDateNaissance() {
-		return dateNaissance;
-	}
-
-	/**
-	 * @param dateNaissance the dateNaissance to set
-	 */
-	public void setDateNaissance(LocalDate dateNaissance) {
-		this.dateNaissance = dateNaissance;
-	}
-
-	/**
-	 * @return the urlPhoto
-	 */
-	public String getUrlPhoto() {
-		return urlPhoto;
-	}
-
-	/**
-	 * @param urlPhoto the urlPhoto to set
-	 */
-	public void setUrlPhoto(String urlPhoto) {
-		this.urlPhoto = urlPhoto;
-	}
-
-	/**
 	 * @return the genreLibelle
 	 */
 	public String getGenreLibelle() {
@@ -230,6 +174,20 @@ public class Personne {
 	 */
 	public void setGenre(Genre genre) {
 		this.genre = genre;
+	}
+
+	/**
+	 * @return the dateNaissance
+	 */
+	public LocalDate getDateNaissance() {
+		return dateNaissance;
+	}
+
+	/**
+	 * @param dateNaissance the dateNaissance to set
+	 */
+	public void setDateNaissance(LocalDate dateNaissance) {
+		this.dateNaissance = dateNaissance;
 	}
 
 	/**
@@ -275,6 +233,20 @@ public class Personne {
 	}
 
 	/**
+	 * @return the urlPhoto
+	 */
+	public String getUrlPhoto() {
+		return urlPhoto;
+	}
+
+	/**
+	 * @param urlPhoto the urlPhoto to set
+	 */
+	public void setUrlPhoto(String urlPhoto) {
+		this.urlPhoto = urlPhoto;
+	}
+
+	/**
 	 * @return the activiteLibelle
 	 */
 	public String getActiviteLibelle() {
@@ -303,6 +275,20 @@ public class Personne {
 	}
 
 	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
 	 * @return the besoinsCaloriques
 	 */
 	public Integer getBesoinsCaloriques() {
@@ -315,32 +301,69 @@ public class Personne {
 	public void setBesoinsCaloriques(Integer besoinsCaloriques) {
 		this.besoinsCaloriques = besoinsCaloriques;
 	}
+	
+
+	/**
+	 * @return the createur
+	 */
+	public Utilisateur getCreateur() {
+		return createur;
+	}
+
+	/**
+	 * @param createur the createur to set
+	 */
+	public void setCreateur(Utilisateur createur) {
+		this.createur = createur;
+	}
+
+	/**
+	 * @return the personneAllergies
+	 */
+	
+	public Set<Allergie> getPersonneAllergies() {
+		return personneAllergies;
+	}
+
+	/**
+	 * @param personneAllergies the personneAllergies to set
+	 */
+	
+	public void setPersonneAllergies(Set<Allergie> personneAllergies) {
+		this.personneAllergies = personneAllergies;
+	}	
+	
+	/* PUBLIC METHODS */	
 
 	@Override
-	public String toString()
-	{
-		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
+	public String toString() {
+		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", genreLibelle=" + genreLibelle
+				+ ", genre=" + genre + ", dateNaissance=" + dateNaissance + ", taille=" + taille + ", poids=" + poids
+				+ ", objectifCalorique=" + objectifCalorique + ", urlPhoto=" + urlPhoto + ", activiteLibelle="
+				+ activiteLibelle + ", activite=" + activite + ", description=" + description + ", besoinsCaloriques="
+				+ besoinsCaloriques + ", createur=" + createur + "]";
 	}
 
+	
 	/* PERSISTENT METHODS */
+	
 	@PostLoad
 	void fillTransient() {
-		if (!genreLibelle.isEmpty()) {
-			this.genre = Genre.of(genreLibelle);
-		}
-		if (!activiteLibelle.isEmpty()) {
-			this.activite = Activite.of(activiteLibelle);
-		}
-	}
-
-	@PrePersist
-	void fillPersistent() {
 		if (genre != null) {
 			this.genreLibelle = this.genre.getLibelle();
 		}
 		if (activite != null) {
 			this.activiteLibelle = this.activite.getLibelle();
 		}
+	}
 
+	@PrePersist
+	void fillPersistent() {
+		if (genreLibelle != null) {
+			this.genre = Genre.of(genreLibelle);
+		}
+		if (activiteLibelle != null) {
+			this.activite = Activite.of(activiteLibelle);
+		}
 	}
 }

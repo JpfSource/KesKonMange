@@ -1,11 +1,11 @@
 package com.keskonmange.entities;
 
-import java.util.Date;
-
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,128 +20,180 @@ import javax.validation.constraints.NotNull;
 @Table(name = "ALIMENT")
 public class Aliment
 {
+	/* FIELDS */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	@NotNull
 	@NotBlank
-	@Column(name = "ean", length = 40, nullable = false)
+	@Column(name = "EAN", length = 40, nullable = false)
 	private String ean;
 
   	@NotNull
 	@NotBlank
-	@Column(name = "libelle", nullable = false)
+	@Column(name = "LIBELLE", length = 200, nullable = false)
 	private String libelle;
 		
-	@ManyToMany
-	@JoinTable(name="ALLERGIE_ALIMENT",
+	@Column(name="IMAGE_URL", nullable = true)
+	private String imageUrl;
+  	
+	@Column(name = "ENERGY_KCAL_100G")
+	private Double energyKcal100g;
+  	
+	@Column(name = "MOTS_CLES", nullable = true)
+	private String motsCles;
+	
+  	@NotNull
+	@Column(name = "DATE_MAJ", nullable = false)
+	private LocalDate dateMaj;
+	
+	
+	/* RELATIONS */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name="ALIMENT_ALLERGIE",
 			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
 			inverseJoinColumns = @JoinColumn(name="ID_ALLERGIE", referencedColumnName="ID")
 	)
-	private Set<Allergie> allergies;
+	private Set<Allergie> alimentAllergies = new HashSet<Allergie>();
 	
-	@Column(name="image_url")
-	private String imgUrl;
-	
-	@Column(name = "energy_kcal_100g", nullable = false)
-	private double kcal_100g;
-	
-	@Column(name = "mots_cles")
-	private String tags;
-	
-	@Column(name = "date_maj")
-	private Date dateMaj;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name="ALIMENT_SCORE",
+			joinColumns = @JoinColumn(name="ID_ALIMENT", referencedColumnName="ID"),
+			inverseJoinColumns = @JoinColumn(name="ID_SCORE", referencedColumnName="ID")
+	)
+	private Set<Score> alimentScores = new HashSet<Score>();
 
-	
 
-	public Aliment(int id, @NotNull @NotBlank String ean, @NotNull @NotBlank String libelle,
-			String imgUrl, double kcal_100g, String tags, Date dateMaj) {
-		super();
-		this.id = id;
-		this.ean = ean;
-		this.libelle = libelle;
-		//this.allergies = new HashSet<>();
-		this.imgUrl = imgUrl;
-		this.kcal_100g = kcal_100g;
-		this.tags = tags;
-		this.dateMaj = dateMaj;
-	}
+	/* CONSTRUCTORS */
+
 	public Aliment() {
-		this(0, null, null, null, 0.0, null, null);
+		super();
 	}
 
-	public int getId() {
-		return this.id;
+	
+	/* GETTERS & SETTERS */
+	
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
 	}
-
-	public void setId(int id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	/**
+	 * @return the ean
+	 */
 	public String getEan() {
-		return this.ean;
+		return ean;
 	}
-
+	/**
+	 * @param ean the ean to set
+	 */
 	public void setEan(String ean) {
 		this.ean = ean;
 	}
-	
+	/**
+	 * @return the libelle
+	 */
 	public String getLibelle() {
-		return this.libelle;
+		return libelle;
 	}
-
+	/**
+	 * @param libelle the libelle to set
+	 */
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-
-	public Set<Allergie> getAllergies() {
-		return this.allergies;
+	/**
+	 * @return the imgUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
 	}
+	/**
+	 * @param imgUrl the imgUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	/**
+	 * @return the energyKcal100g
+	 */
+	public Double getEnergyKcal100g() {
+		return energyKcal100g;
+	}
+	/**
+	 * @param energyKcal100g the energyKcal100g to set
+	 */
+	public void setEnergyKcal100g(Double energyKcal100g) {
+		this.energyKcal100g = energyKcal100g;
+	}
+	/**
+	 * @return the motsCles
+	 */
+	public String getMotsCles() {
+		return motsCles;
+	}
+	/**
+	 * @param motsCles the motsCles to set
+	 */
+	public void setMotsCles(String motsCles) {
+		this.motsCles = motsCles;
+	}
+	/**
+	 * @return the dateMaj
+	 */
+	public LocalDate getDateMaj() {
+		return dateMaj;
+	}
+	/**
+	 * @param dateMaj the dateMaj to set
+	 */
+	public void setDateMaj(LocalDate dateMaj) {
+		this.dateMaj = dateMaj;
+	}
+	/**
+	 * @return the alimentAllergies
+	 */
+	public Set<Allergie> getAlimentAllergies() {
+		return alimentAllergies;
+	}
+	/**
+	 * @param alimentAllergies the alimentAllergies to set
+	 */
+	public void setAlimentAllergies(Set<Allergie> alimentAllergies) {
+		this.alimentAllergies = alimentAllergies;
+	}
+	/**
+	 * @return the alimentScores
+	 */
+	public Set<Score> getAlimentScores() {
+		return alimentScores;
+	}
+	/**
+	 * @param alimentScores the alimentScores to set
+	 */
+	public void setAlimentScores(Set<Score> alimentScores) {
+		this.alimentScores = alimentScores;
+	}
+	
 
-	public void setAllergies(Set<Allergie> allergies) {
-		this.allergies = allergies;
+	/* PUBLIC METHODS */	
+	@Override
+	public String toString() {
+		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", imageUrl=" + imageUrl
+				+ ", energyKcal100g=" + energyKcal100g + ", motsCles=" + motsCles + ", dateMaj=" + dateMaj + "]";
 	}
 
 	
+	/* PERSISTENT METHODS */
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-
-	public String getTags() {
-		return tags;
-	}
-
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
-
-	public Date getDateMaj() {
-		return dateMaj;
-	}
-
-	public void setDateMaj(Date dateMaj) {
-		this.dateMaj = dateMaj;
-	}
-
-	public double getKcal_100g() {
-		return this.kcal_100g;
-	}
-
-	public void setKcal_100g(double kcal_100g) {
-		this.kcal_100g = kcal_100g;
-	}
-
-	@Override
-	public String toString() {
-		return "Aliment [id=" + id + ", ean=" + ean + ", libelle=" + libelle + ", allergies=" + allergies + ", imgUrl="
-				+ imgUrl + ", kcal_100g=" + kcal_100g + ", tags=" + tags + ", dateMaj=" + dateMaj + "]";
-	}
-
+	
 	
 }

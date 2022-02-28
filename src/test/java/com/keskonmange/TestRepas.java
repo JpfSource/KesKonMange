@@ -8,9 +8,13 @@ import static org.mockito.Mockito.when;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindingResult;
 
+import com.keskonmange.entities.Groupe;
 import com.keskonmange.entities.Repas;
+import com.keskonmange.enums.TypeRepas;
 import com.keskonmange.exceptions.ErreurRepas;
 import com.keskonmange.restcontrollers.RestControllerRepas;
 import com.keskonmange.services.ServiceRepas;
@@ -46,29 +52,21 @@ public class TestRepas
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		List<Repas> repas = new ArrayList<Repas>();
-		try
+		if(nbRepas >= 1)
 		{
-			if(nbRepas >= 1)
-			{
-				repas.add(new Repas(1, formatter.parse("27/11/2021"), "Déjeuner"));
-			}
-			if(nbRepas >= 2)
-			{
-				repas.add(new Repas(2, formatter.parse("14/01/2022"), "Diner"));
-			}
-			if(nbRepas >= 3)
-			{
-				repas.add(new Repas(3, formatter.parse("01/07/2021"), "Petit Déjeuner"));
-			}
-			if(nbRepas >= 4)
-			{
-				repas.add(new Repas(4, formatter.parse("04/11/2021"), "Déjeuner"));
-			}
+			repas.add(new Repas(1, LocalDate.now(), "Déjeuner", TypeRepas.DEJEUNER, new Groupe(), new Repas()));
 		}
-		catch (ParseException e)
+		if(nbRepas >= 2)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			repas.add(new Repas(2, LocalDate.now(), "Diner", TypeRepas.DINER, new Groupe(), new Repas()));
+		}
+		if(nbRepas >= 3)
+		{
+			repas.add(new Repas(3, LocalDate.now(), "Petit déjeuner", TypeRepas.PETIT_DEJEUNER, new Groupe(), new Repas()));
+		}
+		if(nbRepas >= 4)
+		{
+			repas.add(new Repas(4, LocalDate.now(), "Déjeuner", TypeRepas.DEJEUNER, new Groupe(), new Repas()));
 		}
 		return repas;
 	}

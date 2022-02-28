@@ -1,6 +1,5 @@
 package com.keskonmange.entities;
 
-import java.time.LocalDate;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,129 +14,125 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 import com.keskonmange.enums.TypeRepas;
 
 @Entity
-@Table(name = "REPAS")
-public class Repas {
+@Table(name = "ABSENCE")
+public class Absence {
 	
 	/* FIELDS */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@NotNull
-	@Column(name = "DATE_REPAS", nullable = false, unique = false)
-	private LocalDate Date_Repas;
 
 	@Basic
 	@NotNull
 	@NotBlank
-	@Column(name = "TypeRepas", length = 20, nullable = false, unique = false)
+	@Column(name = "TYPE_REPAS", length = 20, nullable = false, unique = false)
 	private TypeRepas typeRepas;
-	
+
 	@Transient
 	private String typeRepasLibelle;
-	
+
 	
 	/* RELATIONS */
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Groupe groupe;
-	
+	private Personne personne;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Repas repas;
-	
+	private Groupe groupe;
+
 	
 	/* CONSTRUCTORS */
-	public Repas() {
+	
+	public Absence() {
 		super();
 	}
 
 	
 	/* GETTERS & SETTERS */
+	
 	/**
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
+
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	/**
-	 * @return the date_Repas
-	 */
-	public LocalDate getDate_Repas() {
-		return Date_Repas;
-	}
-	/**
-	 * @param date_Repas the date_Repas to set
-	 */
-	public void setDate_Repas(LocalDate date_Repas) {
-		Date_Repas = date_Repas;
-	}
+
 	/**
 	 * @return the typeRepasLibelle
 	 */
 	public String getTypeRepasLibelle() {
 		return typeRepasLibelle;
 	}
+
 	/**
 	 * @param typeRepasLibelle the typeRepasLibelle to set
 	 */
 	public void setTypeRepasLibelle(String typeRepasLibelle) {
 		this.typeRepasLibelle = typeRepasLibelle;
 	}
+
 	/**
 	 * @return the typeRepas
 	 */
 	public TypeRepas getTypeRepas() {
 		return typeRepas;
 	}
+
 	/**
 	 * @param typeRepas the typeRepas to set
 	 */
 	public void setTypeRepas(TypeRepas typeRepas) {
 		this.typeRepas = typeRepas;
 	}
+
+	/**
+	 * @return the personne
+	 */
+	public Personne getPersonne() {
+		return personne;
+	}
+
+	/**
+	 * @param personne the personne to set
+	 */
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
+	}
+
 	/**
 	 * @return the groupe
 	 */
 	public Groupe getGroupe() {
 		return groupe;
 	}
+
 	/**
 	 * @param groupe the groupe to set
 	 */
 	public void setGroupe(Groupe groupe) {
 		this.groupe = groupe;
 	}
-	/**
-	 * @return the repas
-	 */
-	public Repas getRepas() {
-		return repas;
-	}
-	/**
-	 * @param repas the repas to set
-	 */
-	public void setRepas(Repas repas) {
-		this.repas = repas;
-	}
-	
-	
-	/* PUBLIC METHODS */	
-	@Override
-	public String toString() {
-		return "Repas [id=" + id + ", Date_Repas=" + Date_Repas + ", typeRepasLibelle=" + typeRepasLibelle
-				+ ", typeRepas=" + typeRepas + ", groupe=" + groupe + ", repas=" + repas + "]";
-	}
 
 	
-	/* PERSISTENT METHODS */
+	/* PUBLIC METHODS */	
+	
+	@Override
+	public String toString() {
+		return "Absence [id=" + id + ", typeRepasLibelle=" + typeRepasLibelle + ", typeRepas=" + typeRepas
+				+ ", personne=" + personne + ", groupe=" + groupe + "]";
+	}
+
+	/* PERSISTENT METHODS */		
 	@PostLoad
 	void fillTransient() {
 		if (typeRepas != null) {

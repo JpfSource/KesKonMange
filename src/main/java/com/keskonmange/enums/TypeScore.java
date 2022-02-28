@@ -2,15 +2,15 @@ package com.keskonmange.enums;
 
 import java.util.stream.Stream;
 
-public enum TypeRepas
+public enum TypeScore
 {
-	PETIT_DEJEUNER("Petit Déjeuner"),
-	DEJEUNER("Déjeuner"),
-	DINER("Diner");
+	ECO_SCORE("EcoScore"),
+	NOVA_GROUP("NovaGroupe"),
+	NUTRI_SCORE("NutriScore");
 
 	private String libelle;
 
-	private TypeRepas(String libelle)
+	private TypeScore(String libelle)
 	{
 		this.libelle = libelle;
 	}
@@ -20,9 +20,9 @@ public enum TypeRepas
 		return libelle;
 	}
 
-	public static TypeRepas of(String libelle)
+	public static TypeScore of(String libelle)
 	{
-		return Stream.of(TypeRepas.values())
+		return Stream.of(TypeScore.values())
 				.filter(p -> p.getLibelle().equals(libelle))
 				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);
