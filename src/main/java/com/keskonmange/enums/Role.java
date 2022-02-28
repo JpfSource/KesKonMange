@@ -3,7 +3,7 @@ package com.keskonmange.enums;
 import java.util.stream.Stream;
 
 public enum Role {
-	ADMIN("Administrateur"), USER("Utilisateur");
+	ADMIN("ADMIN"), USER("USER");
 
 	private String libelle;
 

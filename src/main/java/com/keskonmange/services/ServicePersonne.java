@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Personne;
+import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.BesoinEnergetiqueMineur;
+import com.keskonmange.enums.Genre;
 import com.keskonmange.repository.JpaPersonne;
 import com.keskonmange.utils.UtilDate;
 
@@ -78,8 +80,41 @@ public class ServicePersonne {
 	}
 
 	public Personne save(Personne personne){
+
 		return jp.save(personne);
 	}
+	
+	public Personne updateIdentity(Personne personne, Integer pid) {
+        Personne pers = findById(pid).get();
+
+		pers.setNom(personne.getNom() ==  null ? pers.getNom() : personne.getNom());
+		pers.setPrenom(personne.getPrenom() ==  null ? pers.getPrenom() : personne.getPrenom());
+		pers.setDescription(personne.getDescription() ==  null ? pers.getNom() : personne.getDescription());
+		pers.setDateNaissance(personne.getDateNaissance() ==  null ? pers.getDateNaissance() : personne.getDateNaissance());
+		pers.setUrlPhoto(personne.getUrlPhoto()  ==  null ? pers.getUrlPhoto()  : personne.getUrlPhoto());
+
+		return jp.save(personne);
+	}
+	
+	public Personne updateMorphology(Personne personne, Integer pid) {
+        Personne pers = findById(pid).get();
+        System.out.println(pers);
+        
+		pers.setGenreLibelle(personne.getGenreLibelle() ==  null ? pers.getGenreLibelle() : personne.getGenreLibelle());
+        pers.setGenre(Genre.of(personne.getGenreLibelle()));
+        
+		pers.setTaille(personne.getTaille() ==  null ? pers.getTaille() : personne.getTaille());
+		pers.setPoids(personne.getPoids() ==  null ? pers.getPoids() : personne.getPoids());
+		
+		pers.setActiviteLibelle(personne.getActiviteLibelle() ==  null ? pers.getActiviteLibelle() : personne.getActiviteLibelle());
+        pers.setActivite(Activite.of(personne.getActiviteLibelle()));
+        
+        pers.setBesoinsCaloriques(personne.getBesoinsCaloriques());
+		pers.setObjectifCalorique(personne.getObjectifCalorique() ==  null ? pers.getObjectifCalorique() : personne.getObjectifCalorique());
+		
+		return jp.save(personne);
+	}
+
 
 	public void deleteById(Integer pid)
 	{

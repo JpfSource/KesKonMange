@@ -9,7 +9,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import com.keskonmange.enums.Role;
 
 
@@ -41,7 +40,6 @@ public class Utilisateur extends Personne {
 
 	@Transient
 	private String roleLibelle;
-	
 	
 	/* RELATIONS */
 	
@@ -81,12 +79,11 @@ public class Utilisateur extends Personne {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-
 	/**
 	 * @return the roleLibelle
 	 */
 	public String getRoleLibelle() {
-		return roleLibelle;
+		return roleLibelle;	
 	}
 
 	/**

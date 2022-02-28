@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.springframework.lang.Nullable;
 import javax.validation.constraints.Past;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
@@ -52,19 +53,23 @@ public class Personne {
 	private String genreLibelle;
 
 	@Basic
+	@Nullable
 	@Column(name = "GENRE", length = 20, nullable = true, unique = false)
 	private Genre genre;
 
+	@Nullable
 	@Past
 	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
 	private LocalDate dateNaissance;
 
-	@Column(name="TAILLE", nullable = true, unique = false)
+  @Column(name="TAILLE", nullable = true, unique = false)
 	private Integer taille;
 
+	@Nullable
 	@Column(name="POIDS", nullable = true, unique = false)
 	private Integer poids;
 
+	@Nullable
 	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
 	private Integer objectifCalorique;
 
@@ -75,6 +80,7 @@ public class Personne {
 	private String activiteLibelle;
 
 	@Basic
+	@Nullable
 	@Column(name = "ACTIVITE", length = 20, nullable = true, unique = false)
 	private Activite activite;
 	
