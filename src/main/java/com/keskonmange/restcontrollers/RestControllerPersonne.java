@@ -92,8 +92,8 @@ public class RestControllerPersonne
 			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notequals", new Object[]
 			{pid, personne.getId()}, Locale.getDefault()));
 		}
-		sp.save(personne);
-		return sp.findById(personne.getId()).get();
+		return sp.save(personne);
+		//return sp.findById(personne.getId()).get();
 				
 	}
 	

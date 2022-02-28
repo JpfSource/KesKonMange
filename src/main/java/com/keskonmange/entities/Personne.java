@@ -25,6 +25,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
 import javax.validation.constraints.Past;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 
@@ -62,7 +64,7 @@ public class Personne {
 	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
 	private LocalDate dateNaissance;
 
-  @Column(name="TAILLE", nullable = true, unique = false)
+	@Column(name="TAILLE", nullable = true, unique = false)
 	private Integer taille;
 
 	@Nullable
