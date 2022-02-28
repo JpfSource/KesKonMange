@@ -23,4 +23,3 @@ public enum Role {
 				.orElseThrow(IllegalArgumentException::new);
 	}
 }
-

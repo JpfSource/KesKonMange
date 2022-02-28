@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Groupe;
-import com.keskonmange.entities.Personne;
 import com.keskonmange.repository.JpaGroupe;
 import com.keskonmange.repository.JpaUtilisateur;
 
@@ -67,7 +66,7 @@ public class ServiceGroupe {
 	 * @return groupe as Groupe
 	 */
 	public Groupe getBesoinCaloriqueGroupe(Groupe groupe) {
-		Integer besoinCal = 0 ;
+/*		Integer besoinCal = 0 ;
 		if(groupe != null) {
 			if(groupe.getGroupePersonnes() != null) {
 				for(Personne pers : groupe.getGroupePersonnes()) {
@@ -82,7 +81,7 @@ public class ServiceGroupe {
 			}
 			groupe.setBesoinCalorique(besoinCal);
 		}
-
+*/
 		return groupe;
 	}
 
@@ -104,9 +103,11 @@ public class ServiceGroupe {
 	 * @param pid (id de l'utilisateur)
 	 * @return Iterable<Groupe>
 	 */
+/*
 	public Iterable<Groupe> findByUtilisateurId(Integer pid){
 		return getBesoinCaloriqueGroupe(jpaGpe.findByUtilisateurId(jpaUser.findById(pid).get()));
 	}
+ */
 
 	/**
 	 * Méthode qui retourne le groupe dont le nom est passé en paramètre.
@@ -150,8 +151,10 @@ public class ServiceGroupe {
 	public void deleteById(Integer pid) {
 
 		Groupe gpeToDelete = jpaGpe.findById(pid).get(); 
+/*
 		gpeToDelete.getAdministrateurs().clear();
 		gpeToDelete.getGroupePersonnes().clear();
+*/
 		jpaGpe.save(gpeToDelete);
 
 		jpaGpe.deleteById(pid);

@@ -84,13 +84,23 @@ public class RestControllerPersonne
 	Personne personne, @PathVariable("id")
 	Integer pid) throws ErreurPersonne
 	{
+		System.out.println("Id :" + personne.getId());		
+		System.out.println("On est entré avec "+ pid +" = "+ personne.toString());
 		verifPersonne(pid);
 		if(pid != personne.getId())
 		{
 			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notequals", new Object[]
 			{pid, personne.getId()}, Locale.getDefault()));
 		}
-		return sp.save(personne);
+		sp.save(personne);
+		return sp.findById(personne.getId()).get();
+				
+	}
+	
+	@PutMapping("/recalcul")
+	public Integer recalcul(@RequestBody Personne personne) throws ErreurPersonne
+	{
+		return ServicePersonne.calculBesoinsCaloriques(personne);
 	}
 
 	@PatchMapping("identite/{id}")

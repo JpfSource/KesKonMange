@@ -84,11 +84,11 @@ public class RestControllerAliment {
 		verifAliment(pid);
 		
 		Aliment aliment = sa.findById(pid).get();
-		sa.getAllergieByAliment(pid).forEach(al->{
+/*		sa.getAllergieByAliment(pid).forEach(al->{
 			al.getAliments().remove(aliment);
 			sal.save(al);
 		});
-	
+	*/
 		
 		sa.deleteById(pid);
 	}	

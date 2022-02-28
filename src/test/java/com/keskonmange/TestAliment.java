@@ -6,9 +6,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +26,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindingResult;
 
 import com.keskonmange.entities.Aliment;
+import com.keskonmange.entities.Allergie;
+import com.keskonmange.entities.Score;
 import com.keskonmange.exceptions.ErreurAliment;
 import com.keskonmange.restcontrollers.RestControllerAliment;
 import com.keskonmange.services.ServiceAliment;
@@ -32,6 +40,7 @@ public class TestAliment
 	// STATIC.DECLARATIONS
 	private static final Integer PID = 1;
 	private static final Integer NB_MAX_ALIMENTS = 4;
+	private static LocalDate d = LocalDate.now();
 	private static List<Aliment> alimentsStatic = TestAliment.getFewAliments(4);
 
 	// STATIC.METHODES
@@ -41,11 +50,13 @@ public class TestAliment
 	}
 	private static List<Aliment> getFewAliments(Integer nbAliments) {
 		List<Aliment> aliments = new ArrayList<Aliment>();
-		if(nbAliments >= 1) { aliments.add(new Aliment(1, 3700009215081L, "Salade macédoire", 1, 2, 3, 547));}
-		if(nbAliments >= 2) { aliments.add(new Aliment(2, 3083680904971L, "Poelée paysanne", 3, 2, 1, 459));}
-		if(nbAliments >= 3) { aliments.add(new Aliment(3, 3033210085175L, "Moussaka", 1, 3, 2, 535));}
-		if(nbAliments >= 4) { aliments.add(new Aliment(4, 5430001593013L, "Lasagnes bolognaises", 2, 1, 3, 858));}
+		
+		if(nbAliments >= 1) { aliments.add(new Aliment(1, "3700009215081", "Salade macédoire","", 547.0,"salade", d));}
+		if(nbAliments >= 2) { aliments.add(new Aliment(2, "3083680904971", "Poelée paysanne","", 459.0,"poelée", d));}
+		if(nbAliments >= 3) { aliments.add(new Aliment(3, "3033210085175", "Moussaka","", 535.0,"moussaka", d));}
+		if(nbAliments >= 4) { aliments.add(new Aliment(4, "5430001593013", "Lasagnes bolognaises","", 858.0,"lasagne", d));}
 		return aliments;
+
 	}
 
 
@@ -79,25 +90,25 @@ public class TestAliment
 		assertThat(aliments.get(2).getLibelle()).isEqualTo(alimentsStatic.get(2).getLibelle());
 		assertThat(aliments.get(3).getLibelle()).isEqualTo(alimentsStatic.get(3).getLibelle());
 
-		assertThat(aliments.get(0).getNutriscore()).isEqualTo(alimentsStatic.get(0).getNutriscore());
-		assertThat(aliments.get(1).getNutriscore()).isEqualTo(alimentsStatic.get(1).getNutriscore());
-		assertThat(aliments.get(2).getNutriscore()).isEqualTo(alimentsStatic.get(2).getNutriscore());
-		assertThat(aliments.get(3).getNutriscore()).isEqualTo(alimentsStatic.get(3).getNutriscore());
+		assertThat(aliments.get(0).getImgUrl()).isEqualTo(alimentsStatic.get(0).getImgUrl());
+		assertThat(aliments.get(1).getImgUrl()).isEqualTo(alimentsStatic.get(1).getImgUrl());
+		assertThat(aliments.get(2).getImgUrl()).isEqualTo(alimentsStatic.get(2).getImgUrl());
+		assertThat(aliments.get(3).getImgUrl()).isEqualTo(alimentsStatic.get(3).getImgUrl());
 
-		assertThat(aliments.get(0).getEcoscore()).isEqualTo(alimentsStatic.get(0).getEcoscore());
-		assertThat(aliments.get(1).getEcoscore()).isEqualTo(alimentsStatic.get(1).getEcoscore());
-		assertThat(aliments.get(2).getEcoscore()).isEqualTo(alimentsStatic.get(2).getEcoscore());
-		assertThat(aliments.get(3).getEcoscore()).isEqualTo(alimentsStatic.get(3).getEcoscore());
+		assertThat(aliments.get(0).getMotsCles()).isEqualTo(alimentsStatic.get(0).getMotsCles());
+		assertThat(aliments.get(1).getMotsCles()).isEqualTo(alimentsStatic.get(1).getMotsCles());
+		assertThat(aliments.get(2).getMotsCles()).isEqualTo(alimentsStatic.get(2).getMotsCles());
+		assertThat(aliments.get(3).getMotsCles()).isEqualTo(alimentsStatic.get(3).getMotsCles());
 
-		assertThat(aliments.get(0).getNovagroupe()).isEqualTo(alimentsStatic.get(0).getNovagroupe());
-		assertThat(aliments.get(1).getNovagroupe()).isEqualTo(alimentsStatic.get(1).getNovagroupe());
-		assertThat(aliments.get(2).getNovagroupe()).isEqualTo(alimentsStatic.get(2).getNovagroupe());
-		assertThat(aliments.get(3).getNovagroupe()).isEqualTo(alimentsStatic.get(3).getNovagroupe());
+		assertThat(aliments.get(0).getDateMaj()).isEqualTo(alimentsStatic.get(0).getDateMaj());
+		assertThat(aliments.get(1).getDateMaj()).isEqualTo(alimentsStatic.get(1).getDateMaj());
+		assertThat(aliments.get(2).getDateMaj()).isEqualTo(alimentsStatic.get(2).getDateMaj());
+		assertThat(aliments.get(3).getDateMaj()).isEqualTo(alimentsStatic.get(3).getDateMaj());
 
-		assertThat(aliments.get(0).getKcal_100g()).isEqualTo(alimentsStatic.get(0).getKcal_100g());
-		assertThat(aliments.get(1).getKcal_100g()).isEqualTo(alimentsStatic.get(1).getKcal_100g());
-		assertThat(aliments.get(2).getKcal_100g()).isEqualTo(alimentsStatic.get(2).getKcal_100g());
-		assertThat(aliments.get(3).getKcal_100g()).isEqualTo(alimentsStatic.get(3).getKcal_100g());
+		assertThat(aliments.get(0).getEnergyKcal100g()).isEqualTo(alimentsStatic.get(0).getEnergyKcal100g());
+		assertThat(aliments.get(1).getEnergyKcal100g()).isEqualTo(alimentsStatic.get(1).getEnergyKcal100g());
+		assertThat(aliments.get(2).getEnergyKcal100g()).isEqualTo(alimentsStatic.get(2).getEnergyKcal100g());
+		assertThat(aliments.get(3).getEnergyKcal100g()).isEqualTo(alimentsStatic.get(3).getEnergyKcal100g());
 	}
 
 	@Test
@@ -110,10 +121,10 @@ public class TestAliment
 			assertThat(aliment).isNotNull();
 			assertThat(aliment.getEan()).isEqualTo(TestAliment.getOneAliment().getEan());
 			assertThat(aliment.getLibelle()).isEqualTo(TestAliment.getOneAliment().getLibelle());
-			assertThat(aliment.getNutriscore()).isEqualTo(TestAliment.getOneAliment().getNutriscore());
-			assertThat(aliment.getEcoscore()).isEqualTo(TestAliment.getOneAliment().getEcoscore());
-			assertThat(aliment.getNovagroupe()).isEqualTo(TestAliment.getOneAliment().getNovagroupe());
-			assertThat(aliment.getKcal_100g()).isEqualTo(TestAliment.getOneAliment().getKcal_100g());
+			assertThat(aliment.getImgUrl()).isEqualTo(TestAliment.getOneAliment().getImgUrl());
+			assertThat(aliment.getMotsCles()).isEqualTo(TestAliment.getOneAliment().getMotsCles());
+			assertThat(aliment.getDateMaj()).isEqualTo(TestAliment.getOneAliment().getDateMaj());
+			assertThat(aliment.getEnergyKcal100g()).isEqualTo(TestAliment.getOneAliment().getEnergyKcal100g());
 		} catch (ErreurAliment e) {
 			e.printStackTrace();
 		}
@@ -128,10 +139,10 @@ public class TestAliment
 			Aliment aliment = new Aliment();
 			aliment.setEan(TestAliment.getOneAliment().getEan());
 			aliment.setLibelle(TestAliment.getOneAliment().getLibelle());
-			aliment.setNutriscore(TestAliment.getOneAliment().getNutriscore());
-			aliment.setEcoscore(TestAliment.getOneAliment().getEcoscore());
-			aliment.setNovagroupe(TestAliment.getOneAliment().getNovagroupe());
-			aliment.setKcal_100g(TestAliment.getOneAliment().getKcal_100g());
+			aliment.setImgUrl(TestAliment.getOneAliment().getImgUrl());
+			aliment.setMotsCles(TestAliment.getOneAliment().getMotsCles());
+			aliment.setDateMaj(TestAliment.getOneAliment().getDateMaj());
+			aliment.setEnergyKcal100g(TestAliment.getOneAliment().getEnergyKcal100g());
 			BindingResult result = mock(BindingResult.class);
 			Aliment p2 = rca.create(aliment, result);
 
@@ -140,10 +151,10 @@ public class TestAliment
 			assertThat(p2).isNotNull();
 			assertThat(p2.getEan()).isEqualTo(TestAliment.getOneAliment().getEan());
 			assertThat(p2.getLibelle()).isEqualTo(TestAliment.getOneAliment().getLibelle());
-			assertThat(p2.getNutriscore()).isEqualTo(TestAliment.getOneAliment().getNutriscore());
-			assertThat(p2.getEcoscore()).isEqualTo(TestAliment.getOneAliment().getEcoscore());
-			assertThat(p2.getNovagroupe()).isEqualTo(TestAliment.getOneAliment().getNovagroupe());
-			assertThat(p2.getKcal_100g()).isEqualTo(TestAliment.getOneAliment().getKcal_100g());
+			assertThat(p2.getImgUrl()).isEqualTo(TestAliment.getOneAliment().getImgUrl());
+			assertThat(p2.getMotsCles()).isEqualTo(TestAliment.getOneAliment().getMotsCles());
+			assertThat(p2.getDateMaj()).isEqualTo(TestAliment.getOneAliment().getDateMaj());
+			assertThat(p2.getEnergyKcal100g()).isEqualTo(TestAliment.getOneAliment().getEnergyKcal100g());
 		} catch (ErreurAliment e) {
 			e.printStackTrace();
 		}
@@ -158,10 +169,10 @@ public class TestAliment
 			Aliment aliment = rca.getOne(PID).get();
 			aliment.setEan(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getEan());
 			aliment.setLibelle(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getLibelle());
-			aliment.setNutriscore(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getNutriscore());
-			aliment.setEcoscore(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getEcoscore());
-			aliment.setNovagroupe(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getNovagroupe());
-			aliment.setKcal_100g(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getKcal_100g());
+			aliment.setImgUrl(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getImgUrl());
+			aliment.setMotsCles(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getMotsCles());
+			aliment.setDateMaj(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getDateMaj());
+			aliment.setEnergyKcal100g(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getEnergyKcal100g());
 			when(sa.save(any(Aliment.class))).thenReturn(aliment);
 			Aliment p2 = rca.update(aliment, PID);
 			assertThatNoException();
@@ -170,10 +181,10 @@ public class TestAliment
 
 			assertThat(p2.getEan()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getEan());
 			assertThat(p2.getLibelle()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getLibelle());
-			assertThat(p2.getNutriscore()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getNutriscore());
-			assertThat(p2.getEcoscore()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getEcoscore());
-			assertThat(p2.getNovagroupe()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getNovagroupe());
-			assertThat(p2.getKcal_100g()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getKcal_100g());
+			assertThat(p2.getImgUrl()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getImgUrl());
+			assertThat(p2.getMotsCles()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getMotsCles());
+			assertThat(p2.getDateMaj()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getDateMaj());
+			assertThat(p2.getEnergyKcal100g()).isEqualTo(TestAliment.getFewAliments(NB_MAX_ALIMENTS).get(1).getEnergyKcal100g());
 
 		} catch (ErreurAliment e) {
 			e.printStackTrace();

@@ -1,9 +1,9 @@
 package com.keskonmange.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import com.keskonmange.entities.Personne;
 import com.keskonmange.enums.Activite;
@@ -43,8 +43,14 @@ public class ServicePersonne {
 						+ personne.getGenre().getComplement());
 			}
 			Double resultatNet = resultatBrut * personne.getActivite().getCoefficient();
-
-			return ((Long)Math.round(resultatNet * (personne.getObjectifCalorique() / 100))).intValue();
+			
+			Double ratio = (double)personne.getObjectifCalorique();
+			ratio = ratio / 100;
+			Double besoinsCaloriques = resultatNet * ratio;
+			Long r2 = Long.valueOf(Math.round(besoinsCaloriques));
+			Integer result = Integer.valueOf(r2.toString()); 
+					
+			return result;
 		}
 		else {
 			return null;
