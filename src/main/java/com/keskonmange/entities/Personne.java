@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -25,8 +26,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
 import javax.validation.constraints.Past;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
+import com.keskonmange.enums.Role;
 
 @Entity
 @Table(name="PERSONNE")
@@ -62,7 +66,7 @@ public class Personne {
 	@Column(name="DATE_NAISSANCE", nullable = true, unique = false)
 	private LocalDate dateNaissance;
 
-  @Column(name="TAILLE", nullable = true, unique = false)
+	@Column(name="TAILLE", nullable = true, unique = false)
 	private Integer taille;
 
 	@Nullable
@@ -90,12 +94,25 @@ public class Personne {
 	@Transient
 	private Integer besoinsCaloriques;
 
+	@NotNull
+	@NotBlank
+	@Column(name = "EMAIL", length = 150, nullable = false)
+	private String email;
+	
+	@NotNull
+	@NotBlank
+	@Column(name = "PWD", length = 150, nullable = false)
+	private String pwd;
+
+	@Basic
+	@Column(name = "ROLE", length = 20, nullable = true, unique = false)
+	private Role role;
+
+	@Transient
+	private String roleLibelle;
+	
 	
 	/* RELATIONS */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(columnDefinition="integer", name="createur_id", nullable = true)
-	private Utilisateur createur;
-
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="PERSONNE_ALLERGIE",
 			joinColumns = @JoinColumn(name="ID_PERSONNE", referencedColumnName="ID"),
@@ -310,17 +327,59 @@ public class Personne {
 	
 
 	/**
-	 * @return the createur
+	 * @return the email
 	 */
-	public Utilisateur getCreateur() {
-		return createur;
+	public String getEmail() {
+		return email;
 	}
 
 	/**
-	 * @param createur the createur to set
+	 * @param email the email to set
 	 */
-	public void setCreateur(Utilisateur createur) {
-		this.createur = createur;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
+	}
+
+	/**
+	 * @param pwd the pwd to set
+	 */
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public Role getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	/**
+	 * @return the roleLibelle
+	 */
+	public String getRoleLibelle() {
+		return roleLibelle;
+	}
+
+	/**
+	 * @param roleLibelle the roleLibelle to set
+	 */
+	public void setRoleLibelle(String roleLibelle) {
+		this.roleLibelle = roleLibelle;
 	}
 
 	/**
@@ -347,7 +406,7 @@ public class Personne {
 				+ ", genre=" + genre + ", dateNaissance=" + dateNaissance + ", taille=" + taille + ", poids=" + poids
 				+ ", objectifCalorique=" + objectifCalorique + ", urlPhoto=" + urlPhoto + ", activiteLibelle="
 				+ activiteLibelle + ", activite=" + activite + ", description=" + description + ", besoinsCaloriques="
-				+ besoinsCaloriques + ", createur=" + createur + "]";
+				+ besoinsCaloriques + "]";
 	}
 
 	
@@ -361,6 +420,9 @@ public class Personne {
 		if (activite != null) {
 			this.activiteLibelle = this.activite.getLibelle();
 		}
+		if (role != null) {
+			this.roleLibelle = this.role.getLibelle();
+		}
 	}
 
 	@PrePersist
@@ -370,6 +432,9 @@ public class Personne {
 		}
 		if (activiteLibelle != null) {
 			this.activite = Activite.of(activiteLibelle);
+		}
+		if (roleLibelle != null) {
+			this.role = Role.of(roleLibelle);
 		}
 	}
 }

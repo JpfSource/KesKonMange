@@ -7,8 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.keskonmange.entities.Utilisateur;
-import com.keskonmange.repository.JpaUtilisateur;
+import com.keskonmange.entities.Personne;
+import com.keskonmange.repository.JpaPersonne;
+
 
 /**
  * Classe qui permet de charge les données de l'utilisateur venant du client et
@@ -21,12 +22,12 @@ import com.keskonmange.repository.JpaUtilisateur;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	JpaUtilisateur jpaUtilisateur;
+	JpaPersonne jpaUtilisateur;
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Utilisateur user = jpaUtilisateur.findByEmail(username).get();
+		Personne user = jpaUtilisateur.findByEmail(username).get();
 		if (user == null)
 			throw new UsernameNotFoundException("Utilisateur introuvable!");
 

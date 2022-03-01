@@ -55,9 +55,6 @@ public class Groupe {
 	)
 	private Set<Score> groupeScores = new HashSet<Score>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Utilisateur administrateur;
-
 	/* CONSTRUCTORS */
 
 	public Groupe() {
@@ -150,27 +147,13 @@ public class Groupe {
 		this.groupeScores = groupeScores;
 	}
 
-	/**
-	 * @return the administrateur
-	 */
-	public Utilisateur getAdministrateur() {
-		return administrateur;
-	}
-
-	/**
-	 * @param administrateur the administrateur to set
-	 */
-	public void setAdministrateur(Utilisateur administrateur) {
-		this.administrateur = administrateur;
-	}
-
 	
 	/* PUBLIC METHODS */	
 	
 	@Override
 	public String toString() {
 		return "Groupe [id=" + id + ", nom=" + nom + ", urlPhoto=" + urlPhoto + ", besoinCalorique=" + besoinCalorique
-				+ ", administrateur=" + administrateur + "]";
+				+ "]";
 	}
 	
 	/* PERSISTENT METHODS */

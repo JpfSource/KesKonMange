@@ -48,7 +48,7 @@ public class Plat
 	
 	/* RELATIONS */
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Utilisateur createur;
+	private Personne createur;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="PLAT_ALIMENT",
@@ -126,14 +126,14 @@ public class Plat
 	/**
 	 * @return the createur
 	 */
-	public Utilisateur getCreateur() {
+	public Personne getCreateur() {
 		return createur;
 	}
 
 	/**
 	 * @param createur the createur to set
 	 */
-	public void setCreateur(Utilisateur createur) {
+	public void setCreateur(Personne createur) {
 		this.createur = createur;
 	}
 

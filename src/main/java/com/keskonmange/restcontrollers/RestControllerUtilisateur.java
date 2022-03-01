@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
-import com.keskonmange.entities.Utilisateur;
+import com.keskonmange.entities.Personne;
 import com.keskonmange.enums.Role;
 import com.keskonmange.exceptions.ErreurUtilisateur;
-import com.keskonmange.repository.JpaUtilisateur;
+import com.keskonmange.repository.JpaPersonne;
 import com.keskonmange.security.jwt.JwtUtils;
 import com.keskonmange.security.payload.LoginRequest;
 import com.keskonmange.security.response.JwtResponse;
@@ -47,7 +47,7 @@ public class RestControllerUtilisateur {
 	AuthenticationManager authenticationManager;
 	
 	@Autowired
-	JpaUtilisateur userRepository;
+	JpaPersonne userRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -82,12 +82,12 @@ public class RestControllerUtilisateur {
 	}
 
 	@GetMapping("/all")
-	public Iterable<Utilisateur> getAll() {
+	public Iterable<Personne> getAll() {
 		return su.findAll();
 	}
 
 	@GetMapping("{id}")
-	public Optional<Utilisateur> getOne(@PathVariable("id") Integer pid) throws ErreurUtilisateur {
+	public Optional<Personne> getOne(@PathVariable("id") Integer pid) throws ErreurUtilisateur {
 		verifUtilisateur(pid);
 		return su.findById(pid);
 	}
@@ -99,7 +99,7 @@ public class RestControllerUtilisateur {
 	 * @throws ErreurUtilisateur
 	 */
 	@PostMapping("/signin")
-	public Utilisateur registerUser(@Valid @RequestBody Utilisateur user) throws ErreurUtilisateur {
+	public Personne registerUser(@Valid @RequestBody Personne user) throws ErreurUtilisateur {
 		verifEmail(user.getEmail());
 		user.setRole(Role.USER);
 		user.setPwd(encoder.encode(user.getPwd()));
@@ -186,7 +186,7 @@ public class RestControllerUtilisateur {
 	
 
 	@PutMapping("{id}")
-	public Utilisateur update(@RequestBody Utilisateur utilisateur, @PathVariable("id") Integer pid)
+	public Personne update(@RequestBody Personne utilisateur, @PathVariable("id") Integer pid)
 			throws ErreurUtilisateur {
 		verifUtilisateur(pid);
 		if (pid != utilisateur.getId()) {

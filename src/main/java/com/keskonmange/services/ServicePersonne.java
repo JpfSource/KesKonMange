@@ -80,10 +80,11 @@ public class ServicePersonne {
 	}
 
 	public Personne save(Personne personne){
-
-		return jp.save(personne);
+		personne = jp.save(personne);
+		personne.setBesoinsCaloriques(calculBesoinsCaloriques(personne));
+		return personne;
 	}
-	
+/*	
 	public Personne updateIdentity(Personne personne, Integer pid) {
         Personne pers = findById(pid).get();
 
@@ -114,7 +115,7 @@ public class ServicePersonne {
 		
 		return jp.save(personne);
 	}
-
+*/
 
 	public void deleteById(Integer pid)
 	{
