@@ -102,7 +102,7 @@ public class RestControllerPersonne
 	{
 		return ServicePersonne.calculBesoinsCaloriques(personne);
 	}
-
+/*
 	@PatchMapping("identite/{id}")
     public Personne updateIdentite(@RequestBody Personne personne, @PathVariable("id") Integer pid) throws ErreurPersonne
     {
@@ -150,7 +150,7 @@ public class RestControllerPersonne
 
         return sp.save(pers);
     }
-	
+*/	
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id")
 	Integer pid) throws ErreurPersonne

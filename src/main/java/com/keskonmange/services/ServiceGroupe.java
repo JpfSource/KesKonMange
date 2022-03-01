@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Groupe;
 import com.keskonmange.repository.JpaGroupe;
-import com.keskonmange.repository.JpaUtilisateur;
+import com.keskonmange.repository.JpaPersonne;
 
 /**
  * Classe Service groupe qui fait tous les traitements nécessaires et persiste les données du groupe.
@@ -16,13 +16,8 @@ import com.keskonmange.repository.JpaUtilisateur;
 @Service
 public class ServiceGroupe {
 
-
-
 	@Autowired
 	JpaGroupe jpaGpe;
-
-	@Autowired
-	JpaUtilisateur jpaUser;
 
 	@Autowired
 	ServicePersonne sp;

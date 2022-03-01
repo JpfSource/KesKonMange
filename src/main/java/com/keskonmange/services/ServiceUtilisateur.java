@@ -5,8 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.keskonmange.entities.Utilisateur;
-import com.keskonmange.repository.JpaUtilisateur;
+import com.keskonmange.entities.Personne;
+import com.keskonmange.repository.JpaPersonne;
+
 
 /**
  * Classe qui gère les différentes opérations à appliquer aux données de
@@ -19,7 +20,7 @@ import com.keskonmange.repository.JpaUtilisateur;
 public class ServiceUtilisateur {
 
 	@Autowired
-	JpaUtilisateur ju;
+	JpaPersonne ju;
 
 	/**
 	 * Méthode qui renvoie l'Utilisateur dont l'id est passé en paramètre.
@@ -27,7 +28,7 @@ public class ServiceUtilisateur {
 	 * @param pid
 	 * @return Optional<Utilisateur>
 	 */
-	public Optional<Utilisateur> findById(Integer pid) {
+	public Optional<Personne> findById(Integer pid) {
 		return ju.findById(pid);
 	}
 
@@ -37,7 +38,7 @@ public class ServiceUtilisateur {
 	 * @param email
 	 * @return Optional<Utilisateur>
 	 */
-	public Optional<Utilisateur> findByEmail(String email) {
+	public Optional<Personne> findByEmail(String email) {
 		return ju.findByEmail(email);
 	}
 
@@ -46,7 +47,7 @@ public class ServiceUtilisateur {
 	 * 
 	 * @return Iterable<Utilisateur>
 	 */
-	public Iterable<Utilisateur> findAll() {
+	public Iterable<Personne> findAll() {
 		return ju.findAll();
 	}
 
@@ -57,7 +58,7 @@ public class ServiceUtilisateur {
 	 * @param utilisateur
 	 * @return Utilisateur
 	 */
-	public Utilisateur save(Utilisateur utilisateur) {
+	public Personne save(Personne utilisateur) {
 		return ju.save(utilisateur);
 	}
 
