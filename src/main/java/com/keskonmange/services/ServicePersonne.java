@@ -53,7 +53,7 @@ public class ServicePersonne {
 			return result;
 		}
 		else {
-			return null;
+			return 0;
 		}
 	}
 
