@@ -1,0 +1,73 @@
+<div class="entete">
+    <div class="imgEntete">
+        <img [src]="person?.urlPhoto" alt="photo de profil"/>
+    </div>
+  
+    <div class="nameEntete">
+        <h3>{{person?.prenom}} {{person?.nom}}</h3>
+        <p> {{ person?.description }} </p>
+    </div>
+</div>
+  
+<div class="alimentDetails">
+    <div class="alimentEntete"> <!--photo+libelle+ean-->
+        <img [src]="aliment?.imgUrl" alt="photo de l'aliment"/>
+        <h3>{{aliment?.libelle}}</h3>
+        <p>{{aliment?.ean}}</p>
+    </div>
+  
+    <div class="alimentData"><!--allergènes+tags+energy+score-->
+        <table class="table tableAlimentData">
+   
+            <tbody>
+                <tr>
+    
+                    <td>Valeur énergétique (en Kcal/100g)</td>
+                    <td>{{aliment?.energyKcal100g}}</td>
+
+                </tr>
+                <tr>
+    
+                    <td>NutriScore</td>
+                    <td>{{getNutriscore().code}}</td>
+    
+                </tr>
+                <tr>
+    
+                    <td>EcoScore</td>
+                    <td>{{getEcoscore().code}}</td>
+    
+                </tr>
+                <tr>
+    
+                    <td>NovaGroupe</td>
+                    <td>{{getNovagroup().code}}</td>
+
+                </tr>
+            </tbody>
+    
+        </table>
+
+        <table class="table tableAlimentAllergie">
+   
+            <thead>
+                <tr>
+    
+                    <th>Allergie</th>
+    
+                </tr>
+            </thead>
+    
+            <tbody>
+                <tr class="dataRow" *ngFor="let allergie of aliment?.alimentAllergies">
+                    
+                    <td>{{ allergie?.libelle }}</td>
+          
+                </tr>
+            </tbody>
+    
+        </table>
+        
+        <p>{{ aliment?.motsCles }}</p>
+    </div>
+</div>

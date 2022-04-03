@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AlimentAllComponent } from './components/aliment/aliment-all/aliment-all.component';
+import { AlimentDetailsComponent } from './components/aliment/aliment-details/aliment-details.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { PersonIdentityComponent } from './components/person/person-identity/person-identity.component';
@@ -20,11 +22,19 @@ const routes: Routes = [
       {path: "plats", component: PersonPlatsComponent},
     ],
   },
+  {
+    path:"aliments", 
+    children: [
+      {path: ":id", component: AlimentAllComponent},
+      {path: ":pId/:aId", component: AlimentDetailsComponent}
+    ],
+  },
   {path: "plat",
   canActivate:[AuthGuard],
     children: [
       {path: ":id", component: ItemPlatComponent}
     ]},
+
   {path:"home" , component: HomeComponent},
   { path: "signin", component: AuthComponent },
   { path: "login", component: AuthComponent },

@@ -1,0 +1,48 @@
+<div class="entete">
+    <div class="imgEntete">
+        <img [src]="person?.urlPhoto" alt="photo de profil"/>
+    </div>
+  
+    <div class="nameEntete">
+        <h3>{{person?.prenom}} {{person?.nom}}</h3>
+        <p> {{ person?.description }} </p>
+    </div>
+</div>
+  
+<div class="aliments">
+  
+    <form>
+        <div class="search-bar">
+      <!-- bar de recherche -->
+        </div>
+    </form>
+    <table class="table table-bordered tableAliment">
+   
+        <thead>
+            <tr>
+
+                <th >Libellé</th>
+                <th >Valeur énergétique (kcal/100g)</th>
+                <th >NutriScore</th>
+                <th >EcoScore</th>
+                <th >NovaGroupe</th>
+                <th></th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr class="dataRow" *ngFor="let aliment of aliments$">
+        
+                <td>{{ aliment?.libelle }} &nbsp;</td>
+                <td>{{ aliment?.energyKcal100g }}</td>
+                <td>{{getNutriscore().code}}</td>
+                <td>{{getEcoscore().code}}</td>
+                <td>{{getNovagroup().code}}</td>
+                <!--<td routerLink="/aliments/{{ person?.id }}/{{ aliment?.id }}"><button class="btn btn-warning">Détails</button>  </td>
+                -->
+            </tr>
+        </tbody>
+
+    </table>
+</div>
