@@ -4,6 +4,8 @@ import { PersonService } from 'src/app/shared/services/person.service';
 import { Person } from 'src/app/shared/models/person';
 import { UserService } from 'src/app/shared/services/user.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon'
 
 @Component({
   selector: 'app-person',

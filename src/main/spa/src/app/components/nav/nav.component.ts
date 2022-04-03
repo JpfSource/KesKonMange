@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from 'src/app/shared/models/person';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -12,7 +13,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class NavComponent implements OnInit {
   @Input() public isLoggedIn!: boolean|null;
-
+  
   public person?: Person | null;
 
   constructor(

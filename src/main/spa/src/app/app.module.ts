@@ -17,6 +17,10 @@ import { BoardUserComponent } from './components/user/board-user/board-user.comp
 import { authInterceptorProviders } from './shared/helpers/auth.interceptor';
 import { CriteriaComponent } from './shared/criteria/criteria.component';
 import { NavComponent } from './components/nav/nav.component';
+//Material
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+
 
 
 
@@ -41,7 +45,9 @@ import { NavComponent } from './components/nav/nav.component';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

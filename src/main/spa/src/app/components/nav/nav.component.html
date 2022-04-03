@@ -8,6 +8,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
+
+
     <div class="collapse navbar-collapse" id="navbarsExample05">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link disabled" routerLink="" disabled routerLinkActive="active">Mon groupe</a></li>
@@ -16,19 +18,29 @@
       </ul>
       <p class="mb-2">{{ getPrenomNom() }} </p>
 
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img width="50" height="50" class="rounded-circle" [src]="person?.urlPhoto" alt="Photo de profil" />
-          </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" routerLink="identity" routerLinkActive="active">Identité</a></li>
-            <li><a class="dropdown-item" routerLink="morphology" routerLinkActive="active">Morphologie</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
-          </ul>
-        </div>
+        <img width="50" height="50" class="rounded-circle" [src]="person?.urlPhoto" alt="Photo de profil" />
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="matmenu-class">
+        <button mat-menu-item routerLink="identity">
+          <mat-icon>face</mat-icon>
+          <span>Identité</span>
+        </button>
+        <button mat-menu-item routerLink="morphology">
+          <mat-icon>accessibility</mat-icon>
+          <span>Morphologie</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Déconnexion</span>
+        </button>
+      </mat-menu>
     </div>
   </div>
+
 </nav>
 
 
