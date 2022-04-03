@@ -1,0 +1,157 @@
+<div class="card-body">
+  <form [formGroup]="morphologyForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="genre">Genre</label>
+      <select
+        class="form-control form-select"
+        id="genre"
+        (change)="onChangeData()"
+        formControlName="genre"
+        [ngClass]="{
+          'is-invalid':
+            (morphologyForm.get('genre')!.touched ||
+              morphologyForm.get('genre')!.dirty) &&
+            !morphologyForm.get('genre')!.valid
+        }"
+      >
+        <option value="" disabled>Sélectionnez votre genre</option>
+        <option value="FEMININ">Féminin</option>
+        <option value="MASCULIN">Masculin</option>
+      </select>
+      <span class="invalid-feedback">
+        <span *ngIf="morphologyForm.get('genre')!.errors?.['required']">
+          Veuillez entrer votre genre.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="poids">Poids</label>
+      <input
+        type="number"
+        class="form-control"
+        id="poids"
+        (input)="onChangeData()"
+        placeholder="poids"
+        formControlName="poids"
+        [ngClass]="{
+          'is-invalid':
+            (morphologyForm.get('poids')!.touched ||
+              morphologyForm.get('poids')!.dirty) &&
+            !morphologyForm.get('poids')!.valid
+        }"
+      />
+      <span class="invalid-feedback">
+        <span *ngIf="morphologyForm.get('poids')!.errors?.['required']">
+          Veuillez entrer votre poids.
+        </span>
+        <span *ngIf="morphologyForm.get('poids')!.errors?.['min']">
+          Le poids doit être supérieur à 10 kilos.
+        </span>
+        <span *ngIf="morphologyForm.get('poids')!.errors?.['max']">
+          Le poids doit être inférieur à 200 kilos.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="taille">Taille</label>
+      <input
+        type="number"
+        class="form-control"
+        id="taille"
+        (input)="onChangeData()"
+        placeholder="taille"
+        formControlName="taille"
+        [ngClass]="{
+          'is-invalid':
+            (morphologyForm.get('taille')!.touched ||
+              morphologyForm.get('taille')!.dirty) &&
+            !morphologyForm.get('taille')!.valid
+        }"
+      />
+      <span class="invalid-feedback">
+        <span *ngIf="morphologyForm.get('taille')!.errors?.['required']">
+          Veuillez entrer votre taille.
+        </span>
+        <span *ngIf="morphologyForm.get('taille')!.errors?.['min']">
+          La taille doit être supérieure à 60 centimères.
+        </span>
+        <span *ngIf="morphologyForm.get('taille')!.errors?.['max']">
+          La taille doit être inférieure à 250 centimères.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="activite">Activité</label>
+      <select
+        class="form-control form-select"
+        id="activite"
+        (change)="onChangeData()"
+        formControlName="activite"
+        [ngClass]="{
+          'is-invalid':
+            (morphologyForm.get('activite')!.touched ||
+              morphologyForm.get('activite')!.dirty) &&
+            !morphologyForm.get('activite')!.valid
+        }"
+      >
+        <option value="" disabled>Sélectionnez votre activité</option>
+        <option value="SEDENTAIRE">Sédentaire</option>
+        <option value="PEU_ACTIF">Peu actif</option>
+        <option value="ACTIF">Actif</option>
+        <option value="TRES_ACTIF">Très actif</option>
+      </select>
+      <span class="invalid-feedback">
+        <span *ngIf="morphologyForm.get('activite')!.errors?.['required']">
+          Veuillez entrer votre activité.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="objectifCalorique">Objectif Calorique</label>
+      <input
+        type="number"
+        class="form-control"
+        id="objectifCalorique"
+        (input)="onChangeData()"
+        placeholder="objectifCalorique"
+        formControlName="objectifCalorique"
+        [ngClass]="{
+          'is-invalid':
+            (morphologyForm.get('objectifCalorique')!.touched ||
+              morphologyForm.get('objectifCalorique')!.dirty) &&
+            !morphologyForm.get('objectifCalorique')!.valid
+        }"
+      />
+      <span class="invalid-feedback">
+        <span
+          *ngIf="morphologyForm.get('objectifCalorique')!.errors?.['required']"
+        >
+          Veuillez entrer votre objectif calorique.
+        </span>
+        <span *ngIf="morphologyForm.get('objectifCalorique')!.errors?.['min']">
+          L'objectif calorique doit être supérieur à 0%.
+        </span>
+        <span *ngIf="morphologyForm.get('objectifCalorique')!.errors?.['max']">
+          L'objectif calorique doit être inférieur à 200%.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="besoinsCaloriques">Besoins caloriques</label>
+      <input
+        style="pointer-events: none"
+        type="number"
+        class="form-control"
+        id="besoinsCaloriques"
+        placeholder="besoinsCaloriques"
+        formControlName="besoinsCaloriques"
+        readonly
+      />
+    </div>
+    <br />
+    <div class="alert alert-success text-center" role="alert" *ngIf="message">
+      {{message}}
+    </div>
+    <button type="submit" class="btn btn-success" (click)="goToMainView()">Valider</button>
+  </form>
+</div>

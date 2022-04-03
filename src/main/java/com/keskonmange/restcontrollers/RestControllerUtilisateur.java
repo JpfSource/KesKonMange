@@ -45,16 +45,15 @@ public class RestControllerUtilisateur {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	JpaPersonne userRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	@Autowired
 	JwtUtils jwtUtils;
-	
 
 	@Autowired
 	ServiceUtilisateur su;
@@ -64,6 +63,7 @@ public class RestControllerUtilisateur {
 
 	/**
 	 * Méthode qui permet de vérifier si l'utilisateur existe en base de données.
+	 * 
 	 * @param pid
 	 * @throws ErreurUtilisateur
 	 */
@@ -74,6 +74,12 @@ public class RestControllerUtilisateur {
 		}
 	}
 
+	/**
+	 * Méthode qui permet de vérifier si l'email existe en base de données.
+	 * 
+	 * @param email
+	 * @throws ErreurUtilisateur
+	 */
 	private void verifEmail(String email) throws ErreurUtilisateur {
 		if (!su.findByEmail(email).isEmpty()) {
 			throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.email.found",
@@ -92,8 +98,9 @@ public class RestControllerUtilisateur {
 		return su.findById(pid);
 	}
 
-
 	/**
+	 * Path pour l'enregistrement d'un utilisateur.
+	 * 
 	 * @param user
 	 * @return
 	 * @throws ErreurUtilisateur
@@ -106,84 +113,55 @@ public class RestControllerUtilisateur {
 		return su.save(user);
 	}
 
-	
 	/**
 	 * Path pour le login et la génération du JWT.
 	 * 
 	 * @param user
 	 * @return
-	 * @throws ErreurUtilisateur 
+	 * @throws ErreurUtilisateur
 	 * @throws Exception
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest user) throws ErreurUtilisateur {
-		Authentication authentication= null;
+		Authentication authentication = null;
 		try {
-			authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPwd()));
-			
+			authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPwd()));
+
 		} catch (Exception e) {
-			throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.connectKO", null, Locale.getDefault()));
+			throw new ErreurUtilisateur(
+					messageSource.getMessage("erreur.utilisateur.connectKO", null, Locale.getDefault()));
 		}
 
-		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
+
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-												 userDetails.getId(), 
-												 userDetails.getUsername(), 
-												 roles));
+
+		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
 
 	}
-	
+
 	/**
 	 * Request qui permet de tester si le token est toujours valide.
+	 * 
 	 * @param token
 	 * @return
 	 */
 	@GetMapping("/connected")
-	public boolean isJwtValid(@RequestHeader(value="Authorization") String token)
-	{
+	public boolean isJwtValid(@RequestHeader(value = "Authorization") String token) {
 		if (token.startsWith("Bearer ")) {
 			String tokenCut = token.substring(7, token.length());
 //		String userNameToken = jwtUtils.getUserNameFromJwtToken(tokenCut);
-		Boolean respToken = jwtUtils.validateJwtToken(tokenCut);
-		return	respToken;
+			Boolean respToken = jwtUtils.validateJwtToken(tokenCut);
+			return respToken;
 		}
 		return false;
-	
+
 	}
-	
-	
-	
-//	@PostMapping("/login")
-//  public Utilisateur loginUser(@RequestBody Utilisateur user) throws ErreurUtilisateur {
-//		Utilisateur userReturn = null;
-//		
-//		if (su.findByEmail(user.getEmail()).isPresent()) {
-//			Utilisateur userDb = su.findByEmail(user.getEmail()).get();
-//			
-//			if(encoder.matches(user.getPwd(), userDb.getPwd())) {
-//				userReturn = userDb;
-//			}
-//			else {
-//				throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.pwdko", new Object[]{user.getEmail()}, Locale.getDefault()));
-//
-//			}
-//		}
-//		else {
-//			throw new ErreurUtilisateur(messageSource.getMessage("erreur.utilisateur.email.notfound", new Object[]{user.getEmail()}, Locale.getDefault()));
-//		}
-//		return userReturn;
-//  }	
-	
 
 	@PutMapping("{id}")
 	public Personne update(@RequestBody Personne utilisateur, @PathVariable("id") Integer pid)

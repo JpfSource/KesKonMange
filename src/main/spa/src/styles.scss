@@ -1,0 +1,20 @@
+@import  "~font-awesome/css/font-awesome.css";
+
+body
+{
+    background-color: #fff3b0;
+    background-size: cover;
+    margin: 3%;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.btn-success {
+  color: #fff;
+    background-color: #2d6a4f;
+    border-color: #2d6a4f;
+}
+.btn-success:hover {
+  color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}

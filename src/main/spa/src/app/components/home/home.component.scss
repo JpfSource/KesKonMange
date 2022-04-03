@@ -1,0 +1,33 @@
+.presentation
+ {
+   position: relative;
+   display: flex;
+   margin: 0 auto;
+   align-items: center;
+   justify-content: center;
+   height: 300px;
+ }
+
+ .logo {
+   position: relative;
+   display: flex;
+   width: 30%;
+   align-items: center;
+   justify-content: center;
+   height: 300px;
+ }
+ .logo-log {
+   width: 400px;
+   padding-top: 10%;
+ }
+
+.btnLog {
+  position: relative;
+  display: flex;
+  width: 16%;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.btnLogOut {
+  margin-left: 13%;
+}

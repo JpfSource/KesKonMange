@@ -80,6 +80,14 @@ public class ServicePersonne {
 	}
 
 	public Personne save(Personne personne){
+//		System.out.println("Obj Cal = "+personne.getObjectifCalorique() +", url photo="+ personne.getUrlPhoto());
+//		if(personne.getObjectifCalorique() == null) {
+//		
+//			personne.setObjectifCalorique(100);
+//		}
+//		if(personne.getUrlPhoto() == null) {
+//			personne.setUrlPhoto("https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg");
+//		}
 		personne = jp.save(personne);
 		personne.setBesoinsCaloriques(calculBesoinsCaloriques(personne));
 		return personne;

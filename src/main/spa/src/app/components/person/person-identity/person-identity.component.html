@@ -1,0 +1,114 @@
+<div class="card-body">
+  <form [formGroup]="identityForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nom"
+        formControlName="nom"
+        [ngClass]="{
+          'is-invalid':
+            (identityForm.get('nom')!.touched ||
+              identityForm.get('nom')!.dirty) &&
+            !identityForm.get('nom')!.valid
+        }"
+      />
+      <span class="invalid-feedback">
+        <span *ngIf="identityForm.get('nom')!.errors?.['required']">
+          Veuillez entrer votre nom.
+        </span>
+        <span *ngIf="identityForm.get('nom')!.errors?.['minlength']">
+          Le nom doit avoir au moins 2 caractères.
+        </span>
+        <span *ngIf="identityForm.get('nom')!.errors?.['maxlength']">
+          Le nom doit avoir au max 50 caractères.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="prenom">Prénom</label>
+      <input
+        type="text"
+        class="form-control"
+        id="prenom"
+        placeholder="Prenom"
+        formControlName="prenom"
+        [ngClass]="{
+          'is-invalid':
+            (identityForm.get('prenom')!.touched ||
+              identityForm.get('prenom')!.dirty) &&
+            !identityForm.get('prenom')!.valid
+        }"
+      />
+      <span class="invalid-feedback">
+        <span *ngIf="identityForm.get('prenom')!.errors?.['required']">
+          Veuillez entrer votre prénom.
+        </span>
+        <span *ngIf="identityForm.get('prenom')!.errors?.['minlength']">
+          Le prénom doit avoir au moins 2 caractères.
+        </span>
+        <span *ngIf="identityForm.get('prenom')!.errors?.['maxlength']">
+          Le prénom doit avoir au max 50 caractères.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        formControlName="description"
+        [ngClass]="{
+          'is-invalid':
+            (identityForm.get('description')!.touched ||
+              identityForm.get('description')!.dirty) &&
+            !identityForm.get('description')!.valid
+        }"
+      />
+      <span class="invalid-feedback">
+        <span *ngIf="identityForm.get('description')!.errors?.['required']">
+          Veuillez entrer votre description.
+        </span>
+        <span *ngIf="identityForm.get('description')!.errors?.['minlength']">
+          La description doit avoir au moins 2 caractères.
+        </span>
+        <span *ngIf="identityForm.get('description')!.errors?.['maxlength']">
+          La description doit avoir au max 100 caractères.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="dateNaissance">Né(e) le</label>
+      <input
+        type="date"
+        class="form-control"
+        id="dateNaissance"
+        formControlName="dateNaissance"
+        [ngClass]="{
+          'is-invalid':
+            (identityForm.get('dateNaissance')!.touched ||
+              identityForm.get('dateNaissance')!.dirty) &&
+            !identityForm.get('dateNaissance')!.valid
+        }"
+      />
+      <span class="invalid-feedback">
+        <span *ngIf="identityForm.get('dateNaissance')!.errors?.['required']">
+          Veuillez entrer votre date de naissance.
+        </span>
+      </span>
+    </div>
+    <br />
+    <div class="alert alert-success text-center" role="alert" *ngIf="message">
+      {{message}}
+    </div>
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!identityForm.valid"
+      (click)="goToMainView()">
+    Valider
+    </button>
+  </form>
+</div>

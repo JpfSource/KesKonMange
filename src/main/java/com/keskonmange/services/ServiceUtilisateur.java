@@ -59,6 +59,14 @@ public class ServiceUtilisateur {
 	 * @return Utilisateur
 	 */
 	public Personne save(Personne utilisateur) {
+		System.out.println("Obj Cal = "+utilisateur.getObjectifCalorique() +", url photo="+ utilisateur.getUrlPhoto());
+		if(utilisateur.getObjectifCalorique() == null) {
+		
+			utilisateur.setObjectifCalorique(100);
+		}
+		if(utilisateur.getUrlPhoto() == null) {
+			utilisateur.setUrlPhoto("https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg");
+		}
 		return ju.save(utilisateur);
 	}
 

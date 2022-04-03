@@ -74,10 +74,10 @@ public class Personne {
 	private Integer poids;
 
 	@Nullable
-	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false, columnDefinition = "integer default 100")
+	@Column(name="OBJECTIF_CALORIQUE", nullable = true, unique = false)
 	private Integer objectifCalorique;
 
-	@Column(name = "URL_PHOTO", nullable = true, unique = false, columnDefinition = "varchar(255) default 'https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg'")
+	@Column(name = "URL_PHOTO", nullable = true, unique = false)
 	private String urlPhoto;
 	
 	@Transient

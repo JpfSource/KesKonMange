@@ -1,0 +1,34 @@
+<nav *ngIf="person" class="navbar navbar-expand-lg navbar-default fixed-top py-3" aria-label="Fifth navbar example">
+  <div class="container-fluid">
+    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+      <img id="logoKKM" src="assets/images/logos/logo-kkm-officiel-SansFond.png" alt="logoKKM">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample05">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link disabled" routerLink="" disabled routerLinkActive="active">Mon groupe</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="plats" routerLinkActive="active">Mes plats</a></li>
+        <li class="nav-item"><a class="nav-link disabled" routerLink="" disabled routerLinkActive="active">Aliments</a></li>
+      </ul>
+      <p class="mb-2">{{ getPrenomNom() }} </p>
+
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img width="50" height="50" class="rounded-circle" [src]="person?.urlPhoto" alt="Photo de profil" />
+          </a>
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" routerLink="identity" routerLinkActive="active">Identité</a></li>
+            <li><a class="dropdown-item" routerLink="morphology" routerLinkActive="active">Morphologie</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
+          </ul>
+        </div>
+    </div>
+  </div>
+</nav>
+
+

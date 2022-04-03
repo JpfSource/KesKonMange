@@ -1,0 +1,62 @@
+.entete {
+  position: relative;
+  margin: 3% auto;
+  width: 100%;
+  background-color: aqua;
+}
+
+.imgEntete img
+{
+  position: relative;
+  display: flex;
+  width: 200px;
+  height: 200px;
+  border-radius: 30%;
+}
+
+button {
+  margin: 10px;
+}
+
+.nameEntete {
+  position: relative;
+  color: aliceblue;
+  margin: 0 auto;
+  width: fit-content;
+  height: fit-content;
+  padding: 8px;
+  margin-top: -10%;
+  border-radius: 20%;
+  background-color: rgba(130, 182, 145, 0.952);
+  margin-left: 35%;
+  z-index: 1;
+}
+.nameEntete h3 {
+  font-size: 2rem;
+  padding: 20px;
+}
+.nameEntete p {
+  font-size: 1rem;
+  padding: 0 20px 0 30px;
+}
+
+.plats {
+  position: relative;
+  margin-top: 3%;
+}
+
+.listLogoTypePlat {
+  position: relative;
+}
+
+.form-check {
+  position: relative;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+
+table {
+  margin-bottom: 5%;
+}

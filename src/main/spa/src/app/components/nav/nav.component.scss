@@ -1,0 +1,112 @@
+#logoKKM {
+  width: 10%;
+}
+
+/* Classe principale de la barre de navigation */
+.navbar-default {
+  /* Couleur de fond de la barre de navigation */
+  background-color: #bcda39;
+  border-color: #E7E7E7;
+ }
+ /* Couleur des titres affichés dans la barre */
+ .navbar-default .navbar-brand {
+  color: #777;
+ }
+ /* Couleur utilisée lors du passage de la souris sur un titre de la barre */
+ .navbar-default .navbar-brand:hover,
+ .navbar-default .navbar-brand:focus {
+  color: #5E5E5E;
+ }
+ /* Couleur utilisée pour les liens */
+ .navbar-default .navbar-nav > li > a {
+  color: #777;
+ }
+ /* Couleur utilisée pour les liens lorsque la souris passe dessus */
+ .navbar-default .navbar-nav > li > a:hover,
+ .navbar-default .navbar-nav > li > a:focus {
+  color: #333;
+ }
+ /* Couleur utilisée pour le lien actif (celui qui est affiché sur la page) */
+ .navbar-default .navbar-nav > .active > a,
+ .navbar-default .navbar-nav > .active > a:hover,
+ .navbar-default .navbar-nav > .active > a:focus {
+  color: #555;
+  background-color: #E7E7E7;
+ }
+ /* Couleur utilisée pour un menu dépliant lorsqu'il est ouvert */
+ .navbar-default .navbar-nav > .open > a,
+ .navbar-default .navbar-nav > .open > a:hover,
+ .navbar-default .navbar-nav > .open > a:focus {
+  color: #555;
+  background-color: #D5D5D5;
+ }
+ /* Caret */
+ .navbar-default .navbar-nav > .dropdown > a .caret {
+  border-top-color: #777;
+  border-bottom-color: #777;
+ }
+ .navbar-default .navbar-nav > .dropdown > a:hover .caret,
+ .navbar-default .navbar-nav > .dropdown > a:focus .caret {
+  border-top-color: #333;
+  border-bottom-color: #333;
+ }
+ .navbar-default .navbar-nav > .open > a .caret,
+ .navbar-default .navbar-nav > .open > a:hover .caret,
+ .navbar-default .navbar-nav > .open > a:focus .caret {
+  border-top-color: #555;
+  border-bottom-color: #555;
+ }
+ /* Version mobile, le menu devient une icône qui déroule une liste avec le menu en vertical */
+ .navbar-default .navbar-toggler {
+  border-color: rgb(97, 46, 46);
+ }
+ .navbar-default .navbar-toggler:hover,
+ .navbar-default .navbar-toggler:focus {
+  background-color: rgb(172, 151, 151);
+ }
+ .navbar-default .navbar-toggler .icon-bar {
+  background-color: #CCC;
+ }
+ @media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  color: #777;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+  color: #333;
+  }
+ }
+
+
+// .myIdentity {
+//   color: #2d6a4f;
+// }
+
+// .profilPhoto {
+//   width: 300px;
+//   border-radius: 50%;
+// }
+
+// .photoPerson {
+//   position: relative;
+//   margin: 0 auto;
+//   width: 100px;
+//   margin-left: 13%;
+//   margin-top: -10%;
+//   z-index: 0;
+// }
+
+// .nameProfil {
+//   color: aliceblue;
+//   position: relative;
+//   margin: 0 auto;
+//   width: fit-content;
+//   height: fit-content;
+//   margin-top: -10%;
+//   padding: 8px;
+//   border-radius: 20%;
+//   background-color: #be6e46;
+//   margin-left: 36%;
+//   z-index: 1;
+// }
+

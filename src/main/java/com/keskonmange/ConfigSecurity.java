@@ -54,12 +54,6 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		//TODO: Définir quelles sont les url auxquelles peut accéder l'USER une fois connecté.
-		/**
-		 * (HttpMethod.GET,"/api/utilisateurs/all").hasAnyAuthority("ADMIN","USER") -> autorise à avoir la liste de tous les utilisateur en GET
-		 * (HttpMethod.POST,"/api/groupes/**").hasAuthority("USER") --> autorise à ajouter un nouveau groupe
-		 */
-
 		http.cors().and().csrf().disable()
 				.exceptionHandling()
 				.authenticationEntryPoint(unauthorizedHandler).and()

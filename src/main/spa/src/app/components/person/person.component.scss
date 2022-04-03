@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Redressed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap');
+
+form
+{
+  position: relative;
+  margin: 20px 90px 30px 90px;
+}
+
+.photoPerson {
+  position: relative;
+  margin: 0 auto;
+  width: 100px;
+  margin-top: 1%;
+  margin-left: 43%;
+  z-index: 0;
+}
+.profilPhoto {
+  width: 200px;
+  height: 280px;
+  border-radius: 90px;
+}
+
+.nameProfil {
+  font-family: 'Akaya Telivigala', cursive;
+  color: aliceblue;
+  position: relative;
+  margin: 0 auto;
+  width: fit-content;
+  height: fit-content;
+  margin-top: -3%;
+  padding: 8px;
+  border-radius: 20%;
+  background-color: rgba(130, 182, 145, 0.952);
+  margin-left: 35%;
+  z-index: 1;
+}
+
+.backProfil{
+  margin: 2% 16%
+}
+
+.myIdentity {
+  font-family: 'Akaya Telivigala', cursive;
+  margin: 2% 16%;
+  text-decoration: underline;
+}
+
+.btnNav {
+  margin-left: 13%;
+}

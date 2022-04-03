@@ -1,0 +1,42 @@
+<table class="table table-bordered tablePlatModif">
+  <thead>
+    <tr>
+
+      <th >Libellé</th>
+      <th >Aliments</th>
+      <th >Aliments</th>
+      <th >Type de plat</th>
+      <th >Nutri Score</th>
+      <th >Supprimer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="plat">
+      <td>{{ plat?.libelle }} &nbsp;</td>
+      <td>Mark</td>
+      <td>Mark</td>
+      <td>{{ plat?.typePlatLibelle }}</td>
+      <td> Nutri Score</td>
+      <td> <button class="btn btn-danger" (click)="deletePlat()">Supprimer</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">{{plat?.libelle}}:</label>
+    <input type="hidden" class="form-control" id="exampleFormControlInput1" placeholder="{{plat?.libelle}}">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Aliments</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+</form>
+
+<button type="button" class="btn btn-outline-secondary" (click)="goBack()">Retour</button>
