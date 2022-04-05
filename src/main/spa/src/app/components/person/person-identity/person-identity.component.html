@@ -1,9 +1,9 @@
-<div class="card-body">
-  <form [formGroup]="identityForm" (ngSubmit)="submitForm()">
+
+  <!--    > FormMaterial NOM    -->
     <div class="form-group">
-      <label for="nom">Nom</label>
-      <input
-        type="text"
+      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+        <mat-label>Nom</mat-label>
+        <input matInput type="text"
         class="form-control"
         id="nom"
         formControlName="nom"
@@ -12,23 +12,27 @@
             (identityForm.get('nom')!.touched ||
               identityForm.get('nom')!.dirty) &&
             !identityForm.get('nom')!.valid
-        }"
-      />
-      <span class="invalid-feedback">
-        <span *ngIf="identityForm.get('nom')!.errors?.['required']">
-          Veuillez entrer votre nom.
+        }">
+        <span class="invalid-feedback">
+          <span *ngIf="identityForm.get('nom')!.errors?.['required']">
+            Veuillez entrer votre nom.
+          </span>
+          <span *ngIf="identityForm.get('nom')!.errors?.['minlength']">
+            Le nom doit avoir au moins 2 caractères.
+          </span>
+          <span *ngIf="identityForm.get('nom')!.errors?.['maxlength']">
+            Le nom doit avoir au max 50 caractères.
+          </span>
         </span>
-        <span *ngIf="identityForm.get('nom')!.errors?.['minlength']">
-          Le nom doit avoir au moins 2 caractères.
-        </span>
-        <span *ngIf="identityForm.get('nom')!.errors?.['maxlength']">
-          Le nom doit avoir au max 50 caractères.
-        </span>
-      </span>
+      </mat-form-field>
     </div>
+
+
+    <!--    > FormMaterial PRENOM    -->
     <div class="form-group">
-      <label for="prenom">Prénom</label>
-      <input
+      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+        <mat-label>Prenom</mat-label>
+        <input matInput
         type="text"
         class="form-control"
         id="prenom"
@@ -39,23 +43,27 @@
             (identityForm.get('prenom')!.touched ||
               identityForm.get('prenom')!.dirty) &&
             !identityForm.get('prenom')!.valid
-        }"
-      />
-      <span class="invalid-feedback">
-        <span *ngIf="identityForm.get('prenom')!.errors?.['required']">
-          Veuillez entrer votre prénom.
+        }">
+        <span class="invalid-feedback">
+          <span *ngIf="identityForm.get('prenom')!.errors?.['required']">
+            Veuillez entrer votre prénom.
+          </span>
+          <span *ngIf="identityForm.get('prenom')!.errors?.['minlength']">
+            Le prénom doit avoir au moins 2 caractères.
+          </span>
+          <span *ngIf="identityForm.get('prenom')!.errors?.['maxlength']">
+            Le prénom doit avoir au max 50 caractères.
+          </span>
         </span>
-        <span *ngIf="identityForm.get('prenom')!.errors?.['minlength']">
-          Le prénom doit avoir au moins 2 caractères.
-        </span>
-        <span *ngIf="identityForm.get('prenom')!.errors?.['maxlength']">
-          Le prénom doit avoir au max 50 caractères.
-        </span>
-      </span>
+      </mat-form-field>
     </div>
+
+
+    <!--    > FormMaterial DESCRIPTION    -->
     <div class="form-group">
-      <label for="description">Description</label>
-      <input
+      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+        <mat-label>Description</mat-label>
+        <input matInput
         type="text"
         class="form-control"
         id="description"
@@ -65,23 +73,27 @@
             (identityForm.get('description')!.touched ||
               identityForm.get('description')!.dirty) &&
             !identityForm.get('description')!.valid
-        }"
-      />
-      <span class="invalid-feedback">
-        <span *ngIf="identityForm.get('description')!.errors?.['required']">
-          Veuillez entrer votre description.
+        }">
+        <span class="invalid-feedback">
+          <span *ngIf="identityForm.get('description')!.errors?.['required']">
+            Veuillez entrer votre description.
+          </span>
+          <span *ngIf="identityForm.get('description')!.errors?.['minlength']">
+            La description doit avoir au moins 2 caractères.
+          </span>
+          <span *ngIf="identityForm.get('description')!.errors?.['maxlength']">
+            La description doit avoir au max 100 caractères.
+          </span>
         </span>
-        <span *ngIf="identityForm.get('description')!.errors?.['minlength']">
-          La description doit avoir au moins 2 caractères.
-        </span>
-        <span *ngIf="identityForm.get('description')!.errors?.['maxlength']">
-          La description doit avoir au max 100 caractères.
-        </span>
-      </span>
+      </mat-form-field>
     </div>
+
+    
+    <!--    > FormMaterial DATE DE NAISSANCE    -->
     <div class="form-group">
-      <label for="dateNaissance">Né(e) le</label>
-      <input
+      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+        <mat-label>Date de naissance</mat-label>
+        <input matInput
         type="date"
         class="form-control"
         id="dateNaissance"
@@ -98,17 +110,19 @@
           Veuillez entrer votre date de naissance.
         </span>
       </span>
+      </mat-form-field>
     </div>
-    <br />
+
     <div class="alert alert-success text-center" role="alert" *ngIf="message">
       {{message}}
     </div>
-    <button
+
+
+    <div class="btn">
+      <button mat-stroked-button
       type="submit"
-      class="btn btn-success"
       [disabled]="!identityForm.valid"
-      (click)="goToMainView()">
-    Valider
-    </button>
-  </form>
-</div>
+      (click)="goToMainView()">Valider</button>
+    </div>
+
+
