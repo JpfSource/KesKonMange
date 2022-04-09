@@ -21,7 +21,7 @@ export class AuthComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false
   isSuccess = false;
-
+  hide = true;
   message!: string;
   error!: string;
 
