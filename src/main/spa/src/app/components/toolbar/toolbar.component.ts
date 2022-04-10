@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from 'src/app/shared/models/person';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -7,13 +6,14 @@ import { PersonService } from 'src/app/shared/services/person.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  selector: 'app-toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss']
 })
-export class NavComponent implements OnInit {
+export class ToolbarComponent implements OnInit {
+  @Output() toggleSidenav = new EventEmitter<void>();
   @Input() public isLoggedIn!: boolean|null;
-  
+
   public person?: Person | null;
 
   constructor(
@@ -51,6 +51,4 @@ export class NavComponent implements OnInit {
     this._authService.logout();
     this._router.navigateByUrl('/home');
   }
-
-
 }

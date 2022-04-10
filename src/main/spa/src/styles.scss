@@ -4,7 +4,7 @@ body
 {
     background-color: #fff3b0;
     background-size: cover;
-    margin: 3%;
+    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -19,5 +19,4 @@ body
     border-color: #198754;
 }
 
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%; }

@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
 
-    <mat-toolbar class="toolbar-form">
+    <mat-toolbar class="toolbar-form" >
       <span>{{ isSignupFormView? 'INSCRIPTION' : 'CONNEXION' }}</span>
       <span class="toolbar-form-spacer"></span>
       <img mat-card-image src="assets/images/logos/logo-kkm-officiel-SansFond.png" class="img-matcard" alt="Logo-kkm">
@@ -63,6 +63,8 @@
 
         <mat-checkbox formControlName="cdu" *ngIf="isSignupFormView">J'accepte les conditions d'utilisation <a class="disabled" href="#" disabled>CDU</a></mat-checkbox>
       </form>
+    </mat-card-content>
+
 
       <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
         <button mat-button class="btn btn-outline-secondary btn-lg me-5"
@@ -77,6 +79,39 @@
       <div class="alert alert-warning text-center" role="alert" *ngIf="error">
         {{error}}
       </div>
-    </mat-card-content>
+
   </mat-card>
 </div>
+
+<!-- Classes main-div and example-card are catagorized in .css file -->
+<!-- <div class="main-div">
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div class="login-box-header">
+          <img src="https://image.ibb.co/hDqa3p/codershood.png">
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="example-form">
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width">
+              <input matInput placeholder="Username"  name="username" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+          <td><mat-form-field class="example-full-width">
+            <input matInput placeholder="Password" type="password" name="password" required>
+          </mat-form-field></td>
+        </tr></table>
+      </form>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button  color="primary">Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div> -->
