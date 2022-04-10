@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { PersonIdentityComponent } from './components/person/person-identity/person-identity.component';
 import { PersonMorphologyComponent } from './components/person/person-morphology/person-morphology.component';
@@ -16,10 +15,11 @@ import { PersonPlatsComponent } from './components/plats/person-plats/person-pla
 import { BoardUserComponent } from './components/user/board-user/board-user.component';
 import { authInterceptorProviders } from './shared/helpers/auth.interceptor';
 import { CriteriaComponent } from './shared/criteria/criteria.component';
-import { NavComponent } from './components/nav/nav.component';
 //Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 
 
@@ -27,7 +27,6 @@ import { MaterialModule } from './material/material.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     FooterComponent,
     PersonComponent,
     PersonMorphologyComponent,
@@ -38,7 +37,8 @@ import { MaterialModule } from './material/material.module';
     PersonPlatsComponent,
     ItemPlatComponent,
     CriteriaComponent,
-    NavComponent
+    SidenavComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,

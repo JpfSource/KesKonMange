@@ -1,0 +1,33 @@
+<mat-toolbar>
+
+<button mat-button class="sidenav-toggle" (click)="toggleSidenav.emit()">
+  <mat-icon>menu</mat-icon>
+</button>
+
+<span class="example-spacer">
+</span>
+
+  <span class="nom-toolbar">{{ getPrenomNom() }} </span>
+
+  <img width="50" height="50" class="rounded-circle" [src]="person?.urlPhoto" alt="Photo de profil" />
+
+<button mat-icon-button [matMenuTriggerFor]="menu" >
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu" class="matmenu-class">
+  <button mat-menu-item routerLink="identity">
+    <mat-icon>face</mat-icon>
+    <span>Identité</span>
+  </button>
+  <button mat-menu-item routerLink="morphology">
+    <mat-icon>accessibility</mat-icon>
+    <span>Morphologie</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Déconnexion</span>
+  </button>
+</mat-menu>
+</mat-toolbar>
+

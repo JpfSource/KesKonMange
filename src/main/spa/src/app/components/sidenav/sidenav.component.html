@@ -1,0 +1,39 @@
+<mat-sidenav-container class="app-sidenav-container"
+                      [class.dark-theme]="isDarkTheme">
+  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10"
+               [opened]="!isScreenSmall"
+               [mode]="isScreenSmall ? 'over' : 'side'">
+    <mat-toolbar>
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <img id="logoKKM" src="assets/images/logos/logo-kkm-officiel-SansFond.png" alt="logoKKM">
+      </a>
+    </mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item>
+        <a matLine [routerLink]="['']" disabled>
+          <button mat-stroked-button color="primary"><mat-icon>groups</mat-icon>Groupe</button>
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine [routerLink]="['plats']">
+          <button mat-stroked-button color="primary"><mat-icon>restaurant</mat-icon> Plats</button>
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine [routerLink]="['']" disabled>
+           <button mat-stroked-button color="primary">Aliments</button>
+        </a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="app-sidenav-content">
+    <app-toolbar (toggleTheme)="toggleTheme()"
+                 (toggleSidenav)="sidenav.toggle()">
+    </app-toolbar>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</mat-sidenav-container>
