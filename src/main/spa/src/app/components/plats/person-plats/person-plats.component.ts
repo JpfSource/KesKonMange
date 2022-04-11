@@ -1,4 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { CriteriaComponent } from 'src/app/shared/criteria/criteria.component';
@@ -14,18 +17,22 @@ import { PlatService } from 'src/app/shared/services/plat.service';
 })
 export class PersonPlatsComponent implements OnInit, AfterViewInit {
 
-
   person!: Person | null;
   plats$ = new BehaviorSubject<Plat[]>([]);
   message!: string;
   typePlatInputSaved!: string;
   mesPlatsFiltres$ = new BehaviorSubject<Plat[]>([]);
-
-  @ViewChild(CriteriaComponent)
-  filterComponent!: CriteriaComponent;
   parentListFilter!: string;
 
-  typePlats: string[] = ["Entrée", "Plat principal", "Dessert", "Laitage", "Boisson", "Céréales"]
+  typePlats: string[] = ["Entrée", "Plat principal", "Dessert", "Laitage", "Boisson", "Céréales"];
+  displayedColumns: string[] = ['nom', 'type', 'actions'];
+  dataSource!: MatTableDataSource<Plat>;
+
+  @ViewChild(CriteriaComponent) filterComponent!: CriteriaComponent;
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort!: MatSort;
+
+
 
   constructor(
     private _personService: PersonService,
@@ -38,7 +45,9 @@ export class PersonPlatsComponent implements OnInit, AfterViewInit {
    * Méthode qui permet de récupérer dans le composant parent la valeur dans le composant fille (CriteriaComponent)
    */
   ngAfterViewInit(): void {
-    this.parentListFilter = this.filterComponent.listFilter;
+    //this.parentListFilter = this.filterComponent.listFilter;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
   private typeSelectedSubject = new BehaviorSubject<string>("");
@@ -69,6 +78,10 @@ export class PersonPlatsComponent implements OnInit, AfterViewInit {
     this._platService.findAll().subscribe(plats => {
       this.plats$.next(plats);
       this.mesPlatsFiltres$.next(plats);
+      //this.dataSource = new MatTableDataSource<Plat>(this.mesPlatsFiltres$.value)
+      this.dataSource = new MatTableDataSource<Plat>(plats);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -125,6 +138,14 @@ export class PersonPlatsComponent implements OnInit, AfterViewInit {
       setTimeout(() => this.message = "", 2500);
     });
 
+  }
+  /**
+   * Méthode qui permet de filtrer les éléments du tableau en fonction de la saisie.
+   * @param event
+   */
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
