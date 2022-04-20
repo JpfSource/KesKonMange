@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
@@ -110,9 +112,17 @@ public class Personne {
 
 	@Transient
 	private String roleLibelle;
+
 	
+    /* RELATIONS */
+
+	@OneToOne
+    @JoinColumn(name = "id_createur")
+    private Personne createur;
+     
+    @OneToMany(mappedBy = "createur", cascade = CascadeType.ALL)
+    private Set<Personne> personnesCreees = new HashSet<>();
 	
-	/* RELATIONS */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="PERSONNE_ALLERGIE",
 			joinColumns = @JoinColumn(name="ID_PERSONNE", referencedColumnName="ID"),
@@ -398,7 +408,37 @@ public class Personne {
 		this.personneAllergies = personneAllergies;
 	}	
 	
+	/**
+	 * @return the createur
+	 */
+	public Personne getCreateur() {
+		return createur;
+	}
+
+	/**
+	 * @param createur the createur to set
+	 */
+	public void setCreateur(Personne createur) {
+		this.createur = createur;
+	}
+
+	/**
+	 * @return the personnesCreees
+	 */
+	public Set<Personne> getPersonnesCreees() {
+		return personnesCreees;
+	}
+
+	/**
+	 * @param personnesCreees the personnesCreees to set
+	 */
+	public void setPersonnesCreees(Set<Personne> personnesCreees) {
+		this.personnesCreees = personnesCreees;
+	}	
+	
+		
 	/* PUBLIC METHODS */	
+
 
 	@Override
 	public String toString() {
