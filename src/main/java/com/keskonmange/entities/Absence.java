@@ -25,6 +25,7 @@ public class Absence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	// Test commit JPF !
 
 	@Basic
 	@NotNull
