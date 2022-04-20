@@ -3,6 +3,15 @@ $color-bgc: #2D6A4F;
 mat-toolbar{
   background-color: $color-bgc;
 }
+
+mat-nav-list {
+  margin-top: 30%;
+}
+
+mat-icon {
+  margin-top: 12%;
+}
+
 .app-sidenav-container {
   flex: 1;
   width: 100%;
@@ -28,15 +37,18 @@ mat-toolbar{
     margin: 50px;
 }
 
-#logoKKM {
-  margin: auto;
-  margin-top: 1rem;
-  width: 40%;
-}
-
 .btn-mat-list {
   background-color: $color-bgc;
 }
+
 .sidenav-list-item {
   color:#FFF3B0;
+}
+
+#logoKKM {
+  border-radius: 50%;
+  background-color: whitesmoke;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 45%;
 }

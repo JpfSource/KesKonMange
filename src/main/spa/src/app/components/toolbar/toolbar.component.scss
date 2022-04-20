@@ -1,6 +1,6 @@
 $iconWidth: 56px;
-$color-bgc: #bcda39;
-$color-secondary:white;
+$color-bgc: #be6e46;
+$color-secondary:#fff3b0;
 
 mat-toolbar{
   background-color: $color-bgc;
@@ -32,6 +32,6 @@ mat-toolbar{
     height: $iconWidth;
     width: $iconWidth;
     line-height: $iconWidth;
-    color: white;
+    color: #fff3b0;
   }
 }
