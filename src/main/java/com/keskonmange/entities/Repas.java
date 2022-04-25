@@ -45,7 +45,7 @@ public class Repas {
 	private Groupe groupe;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Repas repas;
+	private Plat plat;
 	
 	
 	/* CONSTRUCTORS */
@@ -116,16 +116,16 @@ public class Repas {
 		this.groupe = groupe;
 	}
 	/**
-	 * @return the repas
+	 * @return the plat
 	 */
-	public Repas getRepas() {
-		return repas;
+	public Plat getPlat() {
+		return plat;
 	}
 	/**
-	 * @param repas the repas to set
+	 * @param plat the plat to set
 	 */
-	public void setRepas(Repas repas) {
-		this.repas = repas;
+	public void setPlat(Plat plat) {
+		this.plat = plat;
 	}
 	
 	
@@ -133,7 +133,7 @@ public class Repas {
 	@Override
 	public String toString() {
 		return "Repas [id=" + id + ", Date_Repas=" + Date_Repas + ", typeRepasLibelle=" + typeRepasLibelle
-				+ ", typeRepas=" + typeRepas + ", groupe=" + groupe + ", repas=" + repas + "]";
+				+ ", typeRepas=" + typeRepas + ", groupe=" + groupe + ", plat=" + plat + "]";
 	}
 
 	
