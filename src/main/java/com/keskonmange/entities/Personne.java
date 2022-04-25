@@ -17,7 +17,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
@@ -29,7 +28,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
 import javax.validation.constraints.Past;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 import com.keskonmange.enums.Role;

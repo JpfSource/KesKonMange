@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Personne;
-import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.BesoinEnergetiqueMineur;
-import com.keskonmange.enums.Genre;
 import com.keskonmange.repository.JpaPersonne;
 import com.keskonmange.utils.UtilDate;
 
