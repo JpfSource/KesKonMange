@@ -4,6 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.keskonmange.entities.Repas;
 
-public interface JpaRepas extends CrudRepository<Repas, Integer>
-{
+public interface JpaRepas extends CrudRepository<Repas, Integer>{
 }
