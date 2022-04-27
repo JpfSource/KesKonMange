@@ -23,7 +23,13 @@ import com.keskonmange.security.services.UserDetailsServiceImpl;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
-
+	
+	private static final String[] AUTH_WHITE_LIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**"
+    };
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
 
@@ -54,6 +60,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
+
 		http.cors().and().csrf().disable()
 				.exceptionHandling()
 				.authenticationEntryPoint(unauthorizedHandler).and()
@@ -65,6 +72,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/utilisateurs/login").permitAll()
 				.antMatchers("/api/utilisateurs/logout").permitAll()
 				.antMatchers("/api/utilisateurs/connected").permitAll()
+				.antMatchers(AUTH_WHITE_LIST).permitAll()
 				.antMatchers("/api/personnes/**").hasAuthority("USER")
 				.antMatchers(HttpMethod.GET,"/api/utilisateurs/all").hasAuthority("USER")
 				.antMatchers(HttpMethod.DELETE,"/api/utilisateurs/**").hasAuthority("USER")
