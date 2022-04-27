@@ -1,11 +1,13 @@
 package com.keskonmange.services;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.keskonmange.entities.Absence;
 import com.keskonmange.entities.Groupe;
+import com.keskonmange.entities.RepartitionCalorique;
+import com.keskonmange.entities.Repas;
 import com.keskonmange.repository.JpaGroupe;
 
 /**
@@ -16,103 +18,29 @@ import com.keskonmange.repository.JpaGroupe;
 public class ServiceGroupe {
 
 	@Autowired
-	JpaGroupe jpaGpe;
+	JpaGroupe jg;
 
 	@Autowired
 	ServicePersonne sp;
 
-	/**
-	 * Méthode qui retourne des groupes de type Iterable dont la somme des besoins caloriques de chaque groupe a été valorisée.
-	 * 
-	 * Elle est utlisée par les méthodes findAll(), findByUtilisateurId(Integer pid).
-	 * 
-	 * @param groupes as Iterable<Groupe>
-	 * @return groupes as Iterable<Groupe>
-	 */
-	public Iterable<Groupe> getBesoinCaloriqueGroupe(Iterable<Groupe> groupes) {
-		for (Groupe groupe : groupes) {
-			getBesoinCaloriqueGroupe(groupe);
-		}
-		return groupes;
+	private static void setBesoinsCaloriques(Groupe groupe) {
+		groupe.setBesoinCalorique(0);
+		groupe.getGroupePersonnes().forEach(p -> {
+			ServicePersonne.setBesoinsCaloriques(p);
+			groupe.setBesoinCalorique(groupe.getBesoinCalorique() + p.getBesoinsCaloriques());
+		});
 	}
-
-	/**
-	 * Méthode qui retourne un groupe de type Optional dont la somme des besoins caloriques a été valorisée.
-	 * 
-	 * Elle est utlisée par les méthodes findAll(), findByUtilisateurId(Integer pid).
-	 * 
-	 * @param groupe as Optional<Groupe>
-	 * @return Optional<Groupe>
-	 */
-	public Optional<Groupe> getBesoinCaloriqueGroupe(Optional<Groupe> groupe) {
-		if(groupe != null && groupe.isPresent()) {
-			Groupe g = groupe.get();
-			getBesoinCaloriqueGroupe(g);
-		}
-		return groupe;
-	}
-
-
-	/**
-	 * Méthode qui retourne pour un groupe de type Groupe la somme des besoins caloriques valorisée.
-	 * 
-	 * @param groupe as Groupe
-	 * @return groupe as Groupe
-	 */
-	public Groupe getBesoinCaloriqueGroupe(Groupe groupe) {
-/*		Integer besoinCal = 0 ;
-		if(groupe != null) {
-			if(groupe.getGroupePersonnes() != null) {
-				for(Personne pers : groupe.getGroupePersonnes()) {
-					Optional<Personne> op = sp.findById(pers.getId());
-					if(op.isPresent()) {
-						Personne p = op.get();
-						if(p.getBesoinsCaloriques() != null) {
-							besoinCal += p.getBesoinsCaloriques();		
-						}
-					}
-				}
-			}
-			groupe.setBesoinCalorique(besoinCal);
-		}
-*/
-		return groupe;
-	}
-
-
+	
 	/**
 	 * Méthode qui retourne tous les groupes (Iterable<Groupe>) de la base de données.
 	 * (Les besoins caloriques sont valorisés dans le return).
 	 * 
 	 * @return Iterable<Groupe>
 	 */
-	public Iterable<Groupe> findAll(){	
-		return getBesoinCaloriqueGroupe(jpaGpe.findAll());
-	}
-
-	/**
-	 * Méthode qui retourne tous les groupes pour un utilisateur dont l'id est donné en paramètre.
-	 * (Les besoins caloriques sont valorisés dans le return).
-	 * 
-	 * @param pid (id de l'utilisateur)
-	 * @return Iterable<Groupe>
-	 */
-/*
-	public Iterable<Groupe> findByUtilisateurId(Integer pid){
-		return getBesoinCaloriqueGroupe(jpaGpe.findByUtilisateurId(jpaUser.findById(pid).get()));
-	}
- */
-
-	/**
-	 * Méthode qui retourne le groupe dont le nom est passé en paramètre.
-	 * 
-	 * @param nom du groupe
-	 * @return Optional<Groupe>
-	 */
-	public Optional<Groupe> findGroupeByNom(String nom) {
-		//		return jpaGpe.findGroupeByNom(nom);
-		return getBesoinCaloriqueGroupe(jpaGpe.findGroupeByNom(nom));
-
+	public Iterable<Groupe> findAll(){
+		Iterable<Groupe> groupes = jg.findAll();
+		groupes.forEach(g -> setBesoinsCaloriques(g));
+		return groupes;
 	}
 
 	/**
@@ -123,7 +51,9 @@ public class ServiceGroupe {
 	 * @return Optional<Groupe>
 	 */
 	public Optional<Groupe> findById(Integer pid) {
-		return getBesoinCaloriqueGroupe(jpaGpe.findById(pid));
+		Optional<Groupe> groupe = jg.findById(pid);
+		setBesoinsCaloriques(groupe.get());
+		return groupe;
 	}
 
 	/**
@@ -134,8 +64,9 @@ public class ServiceGroupe {
 	 * @return 
 	 */
 	public Groupe save(Groupe groupe) {
-		return getBesoinCaloriqueGroupe(jpaGpe.save(groupe));
-
+		Groupe groupeSaved = jg.save(groupe);
+		setBesoinsCaloriques(groupeSaved);
+		return groupeSaved;
 	}
 
 	/**
@@ -144,14 +75,37 @@ public class ServiceGroupe {
 	 */
 	public void deleteById(Integer pid) {
 
-		Groupe gpeToDelete = jpaGpe.findById(pid).get(); 
-/*
-		gpeToDelete.getAdministrateurs().clear();
-		gpeToDelete.getGroupePersonnes().clear();
-*/
-		jpaGpe.save(gpeToDelete);
+		// TODO
+		// => inclus Personnes
+		// => inclus Score
+		// => * Absence -> @Query
+		// => * Répartition calorique -> RepartitionCalorique.groupe
+		// => * Repas -> Repas.groupe
+		jg.deleteById(pid);
+	}
 
-		jpaGpe.deleteById(pid);
+	/**
+	 * Méthode qui retourne le groupe dont le nom est passé en paramètre.
+	 * 
+	 * @param nom du groupe
+	 * @return Optional<Groupe>
+	 */
+	public Optional<Groupe> findGroupeByNom(String nom) {
+		Optional<Groupe> groupe = jg.getGroupeByNom(nom);
+		setBesoinsCaloriques(groupe.get());
+		return groupe;
+	}
+
+	public Iterable<Absence> getAbsences(Integer id){
+		return jg.getAbsences(id);
+	}
+	
+	public Iterable<RepartitionCalorique> getRepartitionsCaloriques(Integer id){
+		return jg.getRepartitionsCaloriques(id);
+	}
+	
+	public Iterable<Repas> getRepas(Integer id){
+		return jg.getRepas(id);
 	}
 
 }

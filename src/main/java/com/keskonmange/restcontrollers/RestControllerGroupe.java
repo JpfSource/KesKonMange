@@ -27,10 +27,10 @@ import com.keskonmange.services.ServiceGroupe;
 @RequestMapping("api/groupes")
 public class RestControllerGroupe {
 
-	private String message; 
+	private String message;
 	
 	@Autowired
-	ServiceGroupe serviceGroupe;
+	ServiceGroupe sg;
 	
 	@Autowired
     private MessageSource messageSource;
@@ -41,7 +41,7 @@ public class RestControllerGroupe {
 	 * @throws ErreurGroupe
 	 */
 	private void verifGroupe(Integer pid) throws ErreurGroupe {
-		if(serviceGroupe.findById(pid).isEmpty()){
+		if(sg.findById(pid).isEmpty()){
 			throw new ErreurGroupe(messageSource.getMessage("erreur.groupe.notfound", new Object[]{pid}, Locale.getDefault()));
 		}
 	}
@@ -52,7 +52,7 @@ public class RestControllerGroupe {
 	 * @throws ErreurGroupe
 	 */
 	private void verifNomGroupe(Groupe groupe) throws ErreurGroupe {	
-	Optional<Groupe> groupeExistant = serviceGroupe.findGroupeByNom(groupe.getNom());
+	Optional<Groupe> groupeExistant = sg.findGroupeByNom(groupe.getNom());
 	if(groupeExistant.isPresent()) {
 		throw new ErreurGroupe(messageSource.getMessage("erreur.groupe.namealreadyexist", new Object[]{groupe.getNom()}, Locale.getDefault()));
 	}
@@ -65,23 +65,9 @@ public class RestControllerGroupe {
 	 */
 	@GetMapping
 	public Iterable<Groupe> getAll(){
-		return serviceGroupe.findAll();
+		return sg.findAll();
 	}
 	
-	// api/groupes/utilisateur/1
-	/**
-	 * Renvoie le JSON de tous les groupes dont l'id de l'utilisateur est passé paramètre de l'URL.
-	 * 
-	 * @param pid
-	 * @return
-	 */
-/*
-	@GetMapping({"/utilisateur/{id}"})
-	public Iterable<Groupe> getAllGroupeByUtilisateur(@PathVariable("id") Integer pid){
-		return serviceGroupe.findByUtilisateurId(pid);
-	}
-*/	
-
 	/**
 	 * Renvoie le JSON du groupe correspondant à l'id de l'URL.
 	 * 
@@ -92,7 +78,7 @@ public class RestControllerGroupe {
 	@GetMapping("{id}")
 	public Optional<Groupe> getOne(@PathVariable("id") Integer pid) throws ErreurGroupe{
 		verifGroupe(pid);
-		return serviceGroupe.findById(pid);
+		return sg.findById(pid);
 	}
 	
 	/**
@@ -107,14 +93,13 @@ public class RestControllerGroupe {
 	public Groupe create(@Valid @RequestBody Groupe groupe, BindingResult result) throws ErreurGroupe{
 		if(result.hasErrors()) {
 			message = "";
-			
 			result.getFieldErrors().forEach(e -> {
 				message += messageSource.getMessage("erreur.datalib", new Object[]{e.getField(), e.getDefaultMessage()}, Locale.getDefault());
 			});
 			throw new ErreurGroupe(message);
 		}
 		verifNomGroupe(groupe);
-		return serviceGroupe.save(groupe);
+		return sg.save(groupe);
 	}
 
 	/**
@@ -132,7 +117,7 @@ public class RestControllerGroupe {
 		if(pid != groupe.getId()) {
 			throw new ErreurGroupe(messageSource.getMessage("erreur.groupe.notequals", new Object[]{pid, groupe.getId()}, Locale.getDefault()));
 		}
-		return serviceGroupe.save(groupe);
+		return sg.save(groupe);
 	}
 
 	/**
@@ -143,8 +128,7 @@ public class RestControllerGroupe {
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer pid) throws ErreurGroupe{
 		verifGroupe(pid);
-		// TODO : Vérifier les suppressions des tables relationnelles
-		serviceGroupe.deleteById(pid);
+		sg.deleteById(pid);
 	}
 	
 	

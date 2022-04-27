@@ -12,25 +12,28 @@ import com.keskonmange.repository.JpaRepas;
 public class ServiceRepas
 {
 	@Autowired
-	JpaRepas jpr;
+	JpaRepas jr;
 
 	public Optional<Repas> findById(Integer pid)
 	{
-		return jpr.findById(pid);
+		return jr.findById(pid);
 	}
 
 	public Iterable<Repas> findAll()
 	{
-		return jpr.findAll();
+		return jr.findAll();
 	}
 
 	public Repas save(Repas repas)
 	{
-		return jpr.save(repas);
+		return jr.save(repas);
 	}
 
 	public void deleteById(Integer pid)
 	{
-		jpr.deleteById(pid);
+		// TODO
+		// => inclus Groupe
+		// => inclus Plat		
+		jr.deleteById(pid);
 	}
 }

@@ -39,7 +39,7 @@ public class ServiceUtilisateur {
 	 * @return Optional<Utilisateur>
 	 */
 	public Optional<Personne> findByEmail(String email) {
-		return ju.findByEmail(email);
+		return ju.getPersonneByEmail(email);
 	}
 
 	/**

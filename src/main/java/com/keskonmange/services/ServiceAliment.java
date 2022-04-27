@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Aliment;
-import com.keskonmange.entities.Allergie;
 import com.keskonmange.repository.JpaAliment;
 
 @Service
@@ -31,8 +30,7 @@ public class ServiceAliment {
 		ja.deleteById(pid);
 	}
 
-	public Iterable<Allergie> getAllergieByAliment(Integer pid){
-		return ja.getAllergieByAliment(pid);
+	public void getPlats(Integer pid){
+		ja.getPlats(pid);
 	}
-	
 }

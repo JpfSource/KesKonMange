@@ -27,72 +27,58 @@ import com.keskonmange.services.ServicePlat;
 @RequestMapping("api/plats")
 public class RestControllerPlat
 {
-	private String message;
+	private String message; 
+	
 	@Autowired
-	ServicePlat spl;
+	ServicePlat sp;
+	
 	@Autowired
 	private MessageSource messageSource;
 
-	private void verifPlat(Integer pid) throws ErreurPlat
-	{
-		if(spl.findById(pid).isEmpty())
-		{
-			throw new ErreurPlat(messageSource.getMessage("erreur.plat.notfound", new Object[]
-			{pid}, Locale.getDefault()));
+	private void verifPlat(Integer pid) throws ErreurPlat {
+		if(sp.findById(pid).isEmpty()) {
+			throw new ErreurPlat(messageSource.getMessage("erreur.plat.notfound", new Object[]{pid}, Locale.getDefault()));
 		}
 	}
 
 	@GetMapping
-	public Iterable<Plat> getAll()
-	{
-		return spl.findAll();
+	public Iterable<Plat> getAll() {
+		return sp.findAll();
 	}
 
 	@GetMapping("{id}")
-	public Optional<Plat> getOne(@PathVariable("id")
-	Integer pid) throws ErreurPlat
-	{
+	public Optional<Plat> getOne(@PathVariable("id") Integer pid) throws ErreurPlat {
 		verifPlat(pid);
-		return spl.findById(pid);
+		return sp.findById(pid);
 	}
 
 	@PostMapping
-	public Plat create(@Valid @RequestBody
-	Plat plat, BindingResult result) throws ErreurPlat
-	{
+	public Plat create(@Valid @RequestBody Plat plat, BindingResult result) throws ErreurPlat {
 		if(result.hasErrors())
 		{
 			message = "";
-			result.getFieldErrors().forEach(e ->
-			{
+			result.getFieldErrors().forEach(e -> {
 				message += messageSource.getMessage("erreur.datalib", new Object[]
 				{e.getField(), e.getDefaultMessage()}, Locale.getDefault());
 			});
 			throw new ErreurPlat(message);
 		}
-		return spl.save(plat);
+		return sp.save(plat);
 	}
 
 	@PutMapping("{id}")
-	public Plat update(@RequestBody
-	Plat plat, @PathVariable("id")
-	Integer pid) throws ErreurPlat
-	{
+	public Plat update(@RequestBody Plat plat, @PathVariable("id") Integer pid) throws ErreurPlat {
 		verifPlat(pid);
-		if(pid != plat.getId())
-		{
+		if(pid != plat.getId()) {
 			throw new ErreurPlat(messageSource.getMessage("erreur.personne.notequals", new Object[]
 			{pid, plat.getId()}, Locale.getDefault()));
 		}
-		return spl.save(plat);
+		return sp.save(plat);
 	}
 
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id")
-	Integer pid) throws ErreurPlat
-	{
+	public void delete(@PathVariable("id") Integer pid) throws ErreurPlat {
 		verifPlat(pid);
-		// TODO : Vérifier les suppressions des tables relationnelles
-		spl.deleteById(pid);
+		sp.deleteById(pid);
 	}
 }

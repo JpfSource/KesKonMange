@@ -6,31 +6,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.keskonmange.entities.Plat;
+import com.keskonmange.entities.Repas;
 import com.keskonmange.repository.JpaPlat;
 
 @Service
 public class ServicePlat
 {
 	@Autowired
-	JpaPlat jpl;
+	JpaPlat jp;
 
-	public Optional<Plat> findById(Integer pid)
-	{
-		return jpl.findById(pid);
+	public Optional<Plat> findById(Integer pid){
+		return jp.findById(pid);
 	}
 
-	public Iterable<Plat> findAll()
-	{
-		return jpl.findAll();
+	public Iterable<Plat> findAll(){
+		return jp.findAll();
 	}
 
-	public Plat save(Plat plat)
-	{
-		return jpl.save(plat);
+	public Plat save(Plat plat){
+		return jp.save(plat);
 	}
 
-	public void deleteById(Integer pid)
-	{
-		jpl.deleteById(pid);
+	public void deleteById(Integer pid){
+		// TODO
+		// => inclus Personne
+		// => inclus Aliment
+		// => * Repas -> Repas.plat
+		jp.deleteById(pid);
+	}
+	
+	public Iterable<Repas> getRepas(Integer id){
+		return jp.getRepas(id);
 	}
 }

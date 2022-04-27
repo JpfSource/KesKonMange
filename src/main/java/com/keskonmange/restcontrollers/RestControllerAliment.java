@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.keskonmange.entities.Aliment;
 import com.keskonmange.exceptions.ErreurAliment;
 import com.keskonmange.services.ServiceAliment;
-//import com.keskonmange.services.ServiceAllergie;
 
 @RestController
 @CrossOrigin
@@ -32,10 +31,6 @@ public class RestControllerAliment {
 	
 	@Autowired
 	ServiceAliment sa;
-	
-	//@Autowired
-	//ServiceAllergie sal;
-
 	
 	@Autowired
     private MessageSource messageSource;	
@@ -78,18 +73,9 @@ public class RestControllerAliment {
 		return sa.save(aliment);
 	}
 
-	//@SuppressWarnings("unlikely-arg-type")
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer pid) throws ErreurAliment{
 		verifAliment(pid);
-		
-		/*		Aliment aliment = sa.findById(pid).get();
-		sa.getAllergieByAliment(pid).forEach(al->{
-			al.getAliments().remove(aliment);
-			sal.save(al);
-		});
-	*/
-		
 		sa.deleteById(pid);
 	}	
 }

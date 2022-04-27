@@ -28,43 +28,36 @@ import com.keskonmange.services.ServiceRepas;
 public class RestControllerRepas
 {
 	private String message;
+	
 	@Autowired
 	ServiceRepas sr;
+	
 	@Autowired
 	private MessageSource messageSource;
 
-	private void verifRepas(Integer pid) throws ErreurRepas
-	{
-		if(sr.findById(pid).isEmpty())
-		{
+	private void verifRepas(Integer pid) throws ErreurRepas {
+		if(sr.findById(pid).isEmpty()) {
 			throw new ErreurRepas(messageSource.getMessage("erreur.repas.notfound", new Object[]
 			{pid}, Locale.getDefault()));
 		}
 	}
 
 	@GetMapping
-	public Iterable<Repas> getAll()
-	{
+	public Iterable<Repas> getAll() {
 		return sr.findAll();
 	}
 
 	@GetMapping("{id}")
-	public Optional<Repas> getOne(@PathVariable("id")
-	Integer pid) throws ErreurRepas
-	{
+	public Optional<Repas> getOne(@PathVariable("id") Integer pid) throws ErreurRepas {
 		verifRepas(pid);
 		return sr.findById(pid);
 	}
 
 	@PostMapping
-	public Repas create(@Valid @RequestBody
-	Repas repas, BindingResult result) throws ErreurRepas
-	{
-		if(result.hasErrors())
-		{
+	public Repas create(@Valid @RequestBody Repas repas, BindingResult result) throws ErreurRepas {
+		if(result.hasErrors()) {
 			message = "";
-			result.getFieldErrors().forEach(e ->
-			{
+			result.getFieldErrors().forEach(e -> {
 				message += messageSource.getMessage("erreur.datalib", new Object[]
 				{e.getField(), e.getDefaultMessage()}, Locale.getDefault());
 			});
@@ -74,13 +67,9 @@ public class RestControllerRepas
 	}
 
 	@PutMapping("{id}")
-	public Repas update(@RequestBody
-	Repas repas, @PathVariable("id")
-	Integer pid) throws ErreurRepas
-	{
+	public Repas update(@RequestBody Repas repas, @PathVariable("id") Integer pid) throws ErreurRepas {
 		verifRepas(pid);
-		if(pid != repas.getId())
-		{
+		if(pid != repas.getId()) {
 			throw new ErreurRepas(messageSource.getMessage("erreur.personne.notequals", new Object[]
 			{pid, repas.getId()}, Locale.getDefault()));
 		}
@@ -88,11 +77,8 @@ public class RestControllerRepas
 	}
 
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id")
-	Integer pid) throws ErreurRepas
-	{
+	public void delete(@PathVariable("id") Integer pid) throws ErreurRepas {
 		verifRepas(pid);
-		// TODO : Vérifier les suppressions des tables relationnelles
 		sr.deleteById(pid);
 	}
 }

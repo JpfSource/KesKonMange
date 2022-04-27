@@ -4,8 +4,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.keskonmange.entities.Absence;
+import com.keskonmange.entities.Groupe;
 import com.keskonmange.entities.Personne;
+import com.keskonmange.entities.Plat;
 import com.keskonmange.enums.BesoinEnergetiqueMineur;
 import com.keskonmange.repository.JpaPersonne;
 import com.keskonmange.utils.UtilDate;
@@ -15,7 +17,7 @@ public class ServicePersonne {
 
 	@Autowired
 	JpaPersonne jp;
-	
+
 	private static Boolean isPersonneOkForCalcul(Personne personne) {
 		return personne != null
 				&& personne.getDateNaissance() != null
@@ -55,76 +57,63 @@ public class ServicePersonne {
 		}
 	}
 
-	private static Iterable<Personne> calculBesoinsCaloriques(Iterable<Personne> personnes){
+	public static void setBesoinsCaloriques(Personne personne){
+		personne.setBesoinsCaloriques(calculBesoinsCaloriques(personne));
+	}
+
+	private static Iterable<Personne> setBesoinsCaloriques(Iterable<Personne> personnes){
 		for(Personne personne : personnes) {
-			personne.setBesoinsCaloriques(calculBesoinsCaloriques(personne));
+			setBesoinsCaloriques(personne);
 		}
 		return personnes;
 	}
-	private static Optional<Personne> calculBesoinsCaloriques(Optional<Personne> personne){
+	
+	private static Optional<Personne> setBesoinsCaloriques(Optional<Personne> personne){
 		if(personne != null && personne.isPresent()) {
-			personne.get().setBesoinsCaloriques(calculBesoinsCaloriques(personne.get()));
+			setBesoinsCaloriques(personne.get());
 		}
 		return personne;
 	}
-
+	
 	public Optional<Personne> findById(Integer pid){
-		return calculBesoinsCaloriques(jp.findById(pid));
+		return setBesoinsCaloriques(jp.findById(pid));
 	}
 
 	public Iterable<Personne> findAll(){
-		Iterable<Personne> personnes = jp.findAll();
-		return calculBesoinsCaloriques(personnes);
+		return setBesoinsCaloriques(jp.findAll());
 	}
 
 	public Personne save(Personne personne){
-//		System.out.println("Obj Cal = "+personne.getObjectifCalorique() +", url photo="+ personne.getUrlPhoto());
-//		if(personne.getObjectifCalorique() == null) {
-//		
-//			personne.setObjectifCalorique(100);
-//		}
-//		if(personne.getUrlPhoto() == null) {
-//			personne.setUrlPhoto("https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg");
-//		}
 		personne = jp.save(personne);
-		personne.setBesoinsCaloriques(calculBesoinsCaloriques(personne));
+		setBesoinsCaloriques(personne);
 		return personne;
 	}
-/*	
-	public Personne updateIdentity(Personne personne, Integer pid) {
-        Personne pers = findById(pid).get();
-
-		pers.setNom(personne.getNom() ==  null ? pers.getNom() : personne.getNom());
-		pers.setPrenom(personne.getPrenom() ==  null ? pers.getPrenom() : personne.getPrenom());
-		pers.setDescription(personne.getDescription() ==  null ? pers.getNom() : personne.getDescription());
-		pers.setDateNaissance(personne.getDateNaissance() ==  null ? pers.getDateNaissance() : personne.getDateNaissance());
-		pers.setUrlPhoto(personne.getUrlPhoto()  ==  null ? pers.getUrlPhoto()  : personne.getUrlPhoto());
-
-		return jp.save(personne);
-	}
-	
-	public Personne updateMorphology(Personne personne, Integer pid) {
-        Personne pers = findById(pid).get();
-        System.out.println(pers);
-        
-		pers.setGenreLibelle(personne.getGenreLibelle() ==  null ? pers.getGenreLibelle() : personne.getGenreLibelle());
-        pers.setGenre(Genre.of(personne.getGenreLibelle()));
-        
-		pers.setTaille(personne.getTaille() ==  null ? pers.getTaille() : personne.getTaille());
-		pers.setPoids(personne.getPoids() ==  null ? pers.getPoids() : personne.getPoids());
-		
-		pers.setActiviteLibelle(personne.getActiviteLibelle() ==  null ? pers.getActiviteLibelle() : personne.getActiviteLibelle());
-        pers.setActivite(Activite.of(personne.getActiviteLibelle()));
-        
-        pers.setBesoinsCaloriques(personne.getBesoinsCaloriques());
-		pers.setObjectifCalorique(personne.getObjectifCalorique() ==  null ? pers.getObjectifCalorique() : personne.getObjectifCalorique());
-		
-		return jp.save(personne);
-	}
-*/
 
 	public void deleteById(Integer pid)
 	{
+		// TODO
+		// => inclus createur
+		// => inclus Allergie
+		// => * Absence -> @Query
+		// => * Groupe -> Groupe.groupePersonnes
+		// => * Plat -> Plat.createur
 		jp.deleteById(pid);
 	}
+	
+	public Optional<Personne> getPersonneByEmail(String email){
+		return jp.getPersonneByEmail(email);
+	}
+	
+	public Iterable<Absence> getAbsences(Integer id){
+		return jp.getAbsences(id);
+	}
+
+	public Iterable<Groupe> getGroupes(Integer id){
+		return jp.getGroupes(id);
+	}
+
+	public Iterable<Plat> getPlats(Integer id){
+		return jp.getPlats(id);
+	}
+
 }
