@@ -23,7 +23,7 @@ public class ApplicationSwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.keskonmange")) 
-				.paths(PathSelectors.any())
+				.paths(PathSelectors.ant("/api/**"))
 				.build()
 				.apiInfo(apiDetails());
 	}
