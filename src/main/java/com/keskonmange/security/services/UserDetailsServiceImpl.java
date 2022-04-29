@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Personne user = jpaUtilisateur.findByEmail(username).get();
+		Personne user = jpaUtilisateur.getPersonneByEmail(username).get();
 		if (user == null)
 			throw new UsernameNotFoundException("Utilisateur introuvable!");
 
