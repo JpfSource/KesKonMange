@@ -13,7 +13,7 @@ import { TokenStorageService } from './token-storage.service';
  */
 export class AuthService {
 
-  private _urlAuth = environment.urlApi + '/api/utilisateurs';
+  private _urlAuth = environment.urlApi + '/api/personnes';
 
   public user$ = new BehaviorSubject<Person | null>(null);
   public isLoggedIn$ = new ReplaySubject<boolean>(1);
