@@ -70,10 +70,5 @@ public class ErreurController {
 	public String errorScoreException(ErreurScore e) {
 		return e.getMessage();
 	}
-	
-	@ExceptionHandler(value = { ErreurUtilisateur.class })
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public String errorUtilisateurException(ErreurUtilisateur e) {
-		return e.getMessage();
-	}
+
 }

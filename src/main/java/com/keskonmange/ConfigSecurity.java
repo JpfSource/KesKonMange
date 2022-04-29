@@ -67,15 +67,11 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests()
-				.antMatchers("/api/utilisateurs/signin").permitAll()
-				.antMatchers("/api/utilisateurs/signup").permitAll()
-				.antMatchers("/api/utilisateurs/login").permitAll()
-				.antMatchers("/api/utilisateurs/logout").permitAll()
-				.antMatchers("/api/utilisateurs/connected").permitAll()
+				.antMatchers("/api/personnes/signin").permitAll()
+				.antMatchers("/api/personnes/login").permitAll()
+				.antMatchers("/api/personnes/connected").permitAll()
 				.antMatchers(AUTH_WHITE_LIST).permitAll()
 				.antMatchers("/api/personnes/**").hasAuthority("USER")
-				.antMatchers(HttpMethod.GET,"/api/utilisateurs/all").hasAuthority("USER")
-				.antMatchers(HttpMethod.DELETE,"/api/utilisateurs/**").hasAuthority("USER")
 				.antMatchers("/api/groupes/**").hasAuthority("USER")
 				.anyRequest().authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
