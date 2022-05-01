@@ -22,6 +22,11 @@ import com.keskonmange.entities.Groupe;
 import com.keskonmange.exceptions.ErreurGroupe;
 import com.keskonmange.services.ServiceGroupe;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@Api(value = "CRUD Rest APIs for Groupe entity")
 @RestController
 @CrossOrigin
 @RequestMapping("api/groupes")
@@ -63,6 +68,7 @@ public class RestControllerGroupe {
 	 * Renvoie le JSON de la liste de tous les groupes.
 	 * @return
 	 */
+	@ApiOperation(value = "Get all groups", notes = "Returns a collection of group")
 	@GetMapping
 	public Iterable<Groupe> getAll(){
 		return sg.findAll();
@@ -75,8 +81,9 @@ public class RestControllerGroupe {
 	 * @return
 	 * @throws ErreurGroupe
 	 */
+	@ApiOperation(value = "Get group by id", notes = "Returns a group as per the id")
 	@GetMapping("{id}")
-	public Optional<Groupe> getOne(@PathVariable("id") Integer pid) throws ErreurGroupe{
+	public Optional<Groupe> getOne(@PathVariable("id") @ApiParam(name = "id", value = "Group id", example = "1") Integer pid) throws ErreurGroupe{
 		verifGroupe(pid);
 		return sg.findById(pid);
 	}
@@ -89,6 +96,7 @@ public class RestControllerGroupe {
 	 * @return
 	 * @throws ErreurGroupe
 	 */
+	@ApiOperation(value = "Create a group", notes = "Returns a group created")
 	@PostMapping
 	public Groupe create(@Valid @RequestBody Groupe groupe, BindingResult result) throws ErreurGroupe{
 		if(result.hasErrors()) {
@@ -111,8 +119,9 @@ public class RestControllerGroupe {
 	 * @return
 	 * @throws ErreurGroupe
 	 */
+	@ApiOperation(value = "Update group by id", notes = "Returns a group updated")
 	@PutMapping("{id}")
-	public Groupe update(@RequestBody Groupe groupe, @PathVariable ("id") Integer pid) throws ErreurGroupe {
+	public Groupe update(@RequestBody Groupe groupe, @PathVariable ("id") @ApiParam(name = "id", value = "Group id", example = "1") Integer pid) throws ErreurGroupe {
 		verifGroupe(pid);
 		if(pid != groupe.getId()) {
 			throw new ErreurGroupe(messageSource.getMessage("erreur.groupe.notequals", new Object[]{pid, groupe.getId()}, Locale.getDefault()));
@@ -125,8 +134,9 @@ public class RestControllerGroupe {
 	 * @param pid
 	 * @throws ErreurGroupe
 	 */
+	@ApiOperation(value = "Delete a group")
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") Integer pid) throws ErreurGroupe{
+	public void delete(@PathVariable("id") @ApiParam(name = "id", value = "Group id", example = "1") Integer pid) throws ErreurGroupe{
 		verifGroupe(pid);
 		sg.deleteById(pid);
 	}

@@ -22,6 +22,11 @@ import com.keskonmange.entities.Plat;
 import com.keskonmange.exceptions.ErreurPlat;
 import com.keskonmange.services.ServicePlat;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@Api(value = "CRUD Rest APIs for Plat entity")
 @RestController
 @CrossOrigin
 @RequestMapping("api/plats")
@@ -41,17 +46,20 @@ public class RestControllerPlat
 		}
 	}
 
+	@ApiOperation(value = "Get all plats", notes = "Returns a collection of plat")
 	@GetMapping
 	public Iterable<Plat> getAll() {
 		return sp.findAll();
 	}
 
+	@ApiOperation(value = "Get plat by id", notes = "Returns a plat as per the id")
 	@GetMapping("{id}")
-	public Optional<Plat> getOne(@PathVariable("id") Integer pid) throws ErreurPlat {
+	public Optional<Plat> getOne(@PathVariable("id") @ApiParam(name = "id", value = "Plat id", example = "1") Integer pid) throws ErreurPlat {
 		verifPlat(pid);
 		return sp.findById(pid);
 	}
 
+	@ApiOperation(value = "Create a plat", notes = "Returns a plat created")
 	@PostMapping
 	public Plat create(@Valid @RequestBody Plat plat, BindingResult result) throws ErreurPlat {
 		if(result.hasErrors())
@@ -66,8 +74,9 @@ public class RestControllerPlat
 		return sp.save(plat);
 	}
 
+	@ApiOperation(value = "Update a plat by id", notes = "Returns a plat updated")
 	@PutMapping("{id}")
-	public Plat update(@RequestBody Plat plat, @PathVariable("id") Integer pid) throws ErreurPlat {
+	public Plat update(@RequestBody Plat plat, @PathVariable("id") @ApiParam(name = "id", value = "Plat id", example = "1") Integer pid) throws ErreurPlat {
 		verifPlat(pid);
 		if(pid != plat.getId()) {
 			throw new ErreurPlat(messageSource.getMessage("erreur.personne.notequals", new Object[]
@@ -76,8 +85,9 @@ public class RestControllerPlat
 		return sp.save(plat);
 	}
 
+	@ApiOperation(value = "Delete a plat")
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") Integer pid) throws ErreurPlat {
+	public void delete(@PathVariable("id") @ApiParam(name = "id", value = "Plat id", example = "1") Integer pid) throws ErreurPlat {
 		verifPlat(pid);
 		sp.deleteById(pid);
 	}
