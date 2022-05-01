@@ -36,6 +36,11 @@ import com.keskonmange.security.response.JwtResponse;
 import com.keskonmange.security.services.UserDetailsImpl;
 import com.keskonmange.services.ServicePersonne;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@Api(value = "CRUD Rest APIs for Personne entity")
 @RestController
 @CrossOrigin
 @RequestMapping("api/personnes")
@@ -72,17 +77,20 @@ public class RestControllerPersonne
 		}
 	}
 
+	@ApiOperation(value = "Get all person", notes = "Returns a collection of Personne")
 	@GetMapping("all")
 	public Iterable<Personne> getAll() {
 		return sp.findAll();
 	}
 
+	@ApiOperation(value = "Get person by id", notes = "Returns a person as per the id")
 	@GetMapping("{id}")
-	public Optional<Personne> getOne(@PathVariable("id") Integer pid) throws ErreurPersonne {
+	public Optional<Personne> getOne(@PathVariable("id") @ApiParam(name = "id", value = "Person id", example ="1") Integer pid) throws ErreurPersonne {
 		verifPersonne(pid);
 		return sp.findById(pid);
 	}
 	
+	@ApiOperation(value = "Check if a person is connected", notes = "Returns a boolean of checking connexion")
 	@GetMapping("/connected")
 	public boolean isJwtValid(@RequestHeader(value = "Authorization") String token) {
 		if (token.startsWith("Bearer ")) {
@@ -92,7 +100,7 @@ public class RestControllerPersonne
 		return false;
 	}
 
-
+	@ApiOperation(value = "Create a person", notes = "Returns a person created")
 	@PostMapping
 	public Personne create(@Valid @RequestBody
 	Personne personne, BindingResult result) throws ErreurPersonne {
@@ -109,6 +117,7 @@ public class RestControllerPersonne
 		return sp.save(personne);
 	}
 
+	@ApiOperation(value = "Register a person as an user", notes = "Retruns a person registed")
 	@PostMapping("/signin")
 	public Personne registerUser(@Valid @RequestBody Personne user) throws ErreurPersonne {
 		verifEmail(user.getEmail());
@@ -117,6 +126,7 @@ public class RestControllerPersonne
 		return sp.save(user);
 	}
 	
+	@ApiOperation(value = "Log a user on the app", notes = "Returns a JWT of logged person (user)")
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest user) throws ErreurPersonne {
 		Authentication authentication = null;
@@ -138,9 +148,9 @@ public class RestControllerPersonne
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
 	}
 	
-	
+	@ApiOperation(value = "Update a data's person", notes = "Returns person updated")
 	@PutMapping("{id}")
-	public Personne update(@RequestBody Personne personne, @PathVariable("id") Integer pid) throws ErreurPersonne {
+	public Personne update(@RequestBody Personne personne, @PathVariable("id") @ApiParam(name = "id", value = "Person id", example = "1") Integer pid) throws ErreurPersonne {
 		verifPersonne(pid);
 		if(pid != personne.getId()){
 			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.notequals", new Object[]{pid, personne.getId()}, Locale.getDefault()));
@@ -148,13 +158,15 @@ public class RestControllerPersonne
 		return sp.save(personne);
 	}
 	
+	@ApiOperation(value = "Calculate a person's calorie requirement ", notes = "Returns a calorie requirement as an integer")
 	@PutMapping("/recalcul")
 	public Integer recalcul(@RequestBody Personne personne) throws ErreurPersonne {
 		return ServicePersonne.calculBesoinsCaloriques(personne);
 	}
 
+	@ApiOperation(value = "Delete a person")
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") Integer pid) throws ErreurPersonne {
+	public void delete(@PathVariable("id") @ApiParam(name = "id", value = "Person id", example = "1") Integer pid) throws ErreurPersonne {
 		verifPersonne(pid);
 		sp.deleteById(pid);
 	}

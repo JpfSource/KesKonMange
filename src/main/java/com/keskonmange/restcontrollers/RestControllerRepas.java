@@ -22,6 +22,11 @@ import com.keskonmange.entities.Repas;
 import com.keskonmange.exceptions.ErreurRepas;
 import com.keskonmange.services.ServiceRepas;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@Api(value = "CRUD Rest APIs for Repas entity")
 @RestController
 @CrossOrigin
 @RequestMapping("api/repas")
@@ -42,17 +47,20 @@ public class RestControllerRepas
 		}
 	}
 
+	@ApiOperation(value = "Get all repas", notes = "Returns a collection of Repas")
 	@GetMapping
 	public Iterable<Repas> getAll() {
 		return sr.findAll();
 	}
 
+	@ApiOperation(value = "Get a repas by id", notes = "Returns a Repas as per the id")
 	@GetMapping("{id}")
-	public Optional<Repas> getOne(@PathVariable("id") Integer pid) throws ErreurRepas {
+	public Optional<Repas> getOne(@PathVariable("id") @ApiParam(name = "id", value = "Repas id", example ="1") Integer pid) throws ErreurRepas {
 		verifRepas(pid);
 		return sr.findById(pid);
 	}
 
+	@ApiOperation(value = "Create a repas", notes = "Returns a Repas created")
 	@PostMapping
 	public Repas create(@Valid @RequestBody Repas repas, BindingResult result) throws ErreurRepas {
 		if(result.hasErrors()) {
@@ -66,8 +74,9 @@ public class RestControllerRepas
 		return sr.save(repas);
 	}
 
+	@ApiOperation(value = "Update repas by id", notes = "Returns a Repas updated")
 	@PutMapping("{id}")
-	public Repas update(@RequestBody Repas repas, @PathVariable("id") Integer pid) throws ErreurRepas {
+	public Repas update(@RequestBody Repas repas, @PathVariable("id") @ApiParam(name = "id", value = "Repas id", example ="1") Integer pid) throws ErreurRepas {
 		verifRepas(pid);
 		if(pid != repas.getId()) {
 			throw new ErreurRepas(messageSource.getMessage("erreur.personne.notequals", new Object[]
@@ -76,8 +85,9 @@ public class RestControllerRepas
 		return sr.save(repas);
 	}
 
+	@ApiOperation(value = "Delete a repas")
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") Integer pid) throws ErreurRepas {
+	public void delete(@PathVariable("id") @ApiParam(name = "id", value = "Repas id", example ="1") Integer pid) throws ErreurRepas {
 		verifRepas(pid);
 		sr.deleteById(pid);
 	}
