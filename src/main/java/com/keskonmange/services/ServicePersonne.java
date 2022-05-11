@@ -200,6 +200,8 @@ public class ServicePersonne {
 		return jp.getPlats(id);
 	}
 	
-
+	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id){
+		return jp.getAllPersonsCreatedByUser(id);
+	}
 
 }
