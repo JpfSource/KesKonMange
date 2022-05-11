@@ -17,8 +17,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -28,6 +28,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
 import javax.validation.constraints.Past;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
 import com.keskonmange.enums.Role;
@@ -94,14 +96,10 @@ public class Personne {
 	@Transient
 	private Integer besoinsCaloriques;
 
-	@NotNull
-	@NotBlank
-	@Column(name = "EMAIL", length = 150, nullable = false)
+	@Column(name = "EMAIL", length = 150, nullable = true)
 	private String email;
 	
-	@NotNull
-	@NotBlank
-	@Column(name = "PWD", length = 150, nullable = false)
+	@Column(name = "PWD", length = 150, nullable = true)
 	private String pwd;
 
 	@Basic
@@ -113,13 +111,14 @@ public class Personne {
 
 	
     /* RELATIONS */
-
-	@OneToOne
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_createur")
     private Personne createur;
      
-    @OneToMany(mappedBy = "createur", cascade = CascadeType.ALL)
-    private Set<Personne> personnesCreees = new HashSet<>();
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "createur", cascade = CascadeType.ALL)
+	private Set<Personne> personnesCreees = new HashSet<Personne>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="PERSONNE_ALLERGIE",

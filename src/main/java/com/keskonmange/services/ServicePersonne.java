@@ -79,6 +79,10 @@ public class ServicePersonne {
 		return setBesoinsCaloriques(jp.findById(pid));
 	}
 
+	public Iterable<Personne> findAllByCreator(Integer pid){
+		return setBesoinsCaloriques(jp.getPersonnesByCreator(pid));
+	}
+
 	public Iterable<Personne> findAll(){
 		return setBesoinsCaloriques(jp.findAll());
 	}

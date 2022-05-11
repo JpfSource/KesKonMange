@@ -15,6 +15,9 @@ public interface JpaPersonne extends CrudRepository<Personne, Integer> {
 	@Query("select p from Personne p where p.email =:email ")
 	public Optional<Personne> getPersonneByEmail(String email);
 		
+	@Query("select p from Personne p where p.createur.id = :id ")
+	public Iterable<Personne> getPersonnesByCreator(Integer id);
+	
 	@Query("select ab from Absence as ab where ab.personne.getId() = :id")
 	public Iterable<Absence> getAbsences(Integer id);
 
