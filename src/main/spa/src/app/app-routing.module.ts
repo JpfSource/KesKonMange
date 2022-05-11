@@ -4,6 +4,7 @@ import { AlimentAllComponent } from './components/aliment/aliment-all/aliment-al
 import { AlimentDetailsComponent } from './components/aliment/aliment-details/aliment-details.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
+import { PersonFamilleComponent } from './components/person/person-famille/person-famille.component';
 import { PersonIdentityComponent } from './components/person/person-identity/person-identity.component';
 import { PersonMorphologyComponent } from './components/person/person-morphology/person-morphology.component';
 import { PersonComponent } from './components/person/person.component';
@@ -20,10 +21,11 @@ const routes: Routes = [
       {path: "identity", component: PersonIdentityComponent},
       {path: "morphology", component: PersonMorphologyComponent},
       {path: "plats", component: PersonPlatsComponent},
+      {path: "maFamille", component: PersonFamilleComponent}
     ],
   },
   {
-    path:"aliments", 
+    path:"aliments",
     children: [
       {path: ":id", component: AlimentAllComponent},
       {path: ":pId/:aId", component: AlimentDetailsComponent}

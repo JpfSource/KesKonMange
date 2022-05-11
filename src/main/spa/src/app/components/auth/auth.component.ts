@@ -1,14 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDateFormats, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from 'src/app/shared/models/person';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { TokenStorageService } from 'src/app/shared/services/token-storage.service';
 
+export const MY_FORMAT = {
+  parse: {
+    dateInput: 'L',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'L',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMAT }
+  ]
 })
 export class AuthComponent implements OnInit {
 
@@ -46,6 +62,7 @@ export class AuthComponent implements OnInit {
     if (this._route.snapshot.routeConfig?.path == 'signin') {
       this.signinForm.addControl('prenom', this._fb.control('', [Validators.required, Validators.minLength(2)]));
       this.signinForm.addControl('nom', this._fb.control('', [Validators.required, Validators.minLength(2)]));
+      this.signinForm.addControl('dateNaissance', this._fb.control(''));
       this.signinForm.addControl('cdu', this._fb.control(false, Validators.requiredTrue));
       this.isSignupFormView = true;
     }

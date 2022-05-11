@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.keskonmange.entities.Absence;
 import com.keskonmange.entities.Groupe;
 import com.keskonmange.entities.Personne;
@@ -94,6 +95,15 @@ public class ServicePersonne {
 		setBesoinsCaloriques(personne);
 		return personne;
 	}
+	
+	public Personne savePersonCreatedByUser(Personne personne, Integer idCreateur){
+		Optional<Personne> creator = jp.findById(idCreateur);
+		if(personne.getUrlPhoto() == null) {personne.setUrlPhoto("https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg");}
+		personne.setCreateur(creator.get());
+		personne = jp.save(personne);
+		setBesoinsCaloriques(personne);
+		return personne;
+	}
 
 	public void deleteById(Integer pid)
 	{
@@ -120,6 +130,10 @@ public class ServicePersonne {
 
 	public Iterable<Plat> getPlats(Integer id){
 		return jp.getPlats(id);
+	}
+	
+	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id){
+		return jp.getAllPersonsCreatedByUser(id);
 	}
 
 }

@@ -96,6 +96,12 @@ public class RestControllerPersonne
 		return sp.findById(pid);
 	}
 	
+	@ApiOperation(value = "Get all persons created by an user", notes = "Returns a collection of Personne created by user per id")
+	@GetMapping("{id}/all")
+	public Iterable<Personne> getAllPersonsCreatedByUser(@PathVariable("id") @ApiParam(name = "id", value = "Person id", example ="1") Integer pid) {
+		return sp.getAllPersonsCreatedByUser(pid);
+	}
+	
 	@ApiOperation(value = "Check if a person is connected", notes = "Returns a boolean of checking connexion")
 	@GetMapping("/connected")
 	public boolean isJwtValid(@RequestHeader(value = "Authorization") String token) {
@@ -106,10 +112,10 @@ public class RestControllerPersonne
 		return false;
 	}
 
-	@ApiOperation(value = "Create a person", notes = "Returns a person created")
-	@PostMapping
+	@ApiOperation(value = "Create a person after user was connected", notes = "Returns a person created by a user")
+	@PostMapping("{id}/create")
 	public Personne create(@Valid @RequestBody
-	Personne personne, BindingResult result) throws ErreurPersonne {
+	Personne personne, @PathVariable("id") @ApiParam(name = "id", value = "Person id", example ="1") Integer idCreateur, BindingResult result) throws ErreurPersonne {
 		if(result.hasErrors())
 		{
 			message = "";
@@ -120,10 +126,10 @@ public class RestControllerPersonne
 			});
 			throw new ErreurPersonne(message);
 		}
-		return sp.save(personne);
+		return sp.savePersonCreatedByUser(personne, idCreateur);
 	}
 
-	@ApiOperation(value = "Register a person as an user", notes = "Retruns a person registed")
+	@ApiOperation(value = "Register a person as an user", notes = "Returns a person registed")
 	@PostMapping("/signin")
 	public Personne registerUser(@Valid @RequestBody Personne user) throws ErreurPersonne {
 		verifEmail(user.getEmail());

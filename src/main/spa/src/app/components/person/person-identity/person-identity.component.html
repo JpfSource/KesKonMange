@@ -1,7 +1,7 @@
-
+<div isFormToCreatePersonByUser = "isFormToCreatePersonByUser">
   <!--    > FormMaterial NOM    -->
     <div class="form-group">
-      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+      <mat-form-field appearance="outline" [formGroup]="identityForm">
         <mat-label>Nom</mat-label>
         <input matInput type="text"
         class="form-control"
@@ -88,7 +88,7 @@
       </mat-form-field>
     </div>
 
-    
+
     <!--    > FormMaterial DATE DE NAISSANCE    -->
     <div class="form-group">
       <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
@@ -124,5 +124,8 @@
       [disabled]="!identityForm.valid"
       (click)="goToMainView()">Valider</button>
     </div>
-
+  </div>
+    valid Form = {{identityForm.valid}}
+    isAddedForm = {{isFormToCreatePersonByUser}}
+    {{personAdd | json}}
 

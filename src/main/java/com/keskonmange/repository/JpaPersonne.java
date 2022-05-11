@@ -26,4 +26,7 @@ public interface JpaPersonne extends CrudRepository<Personne, Integer> {
 
 	@Query("select pl from Plat as pl where pl.createur.getId() = :id")
 	public Iterable<Plat> getPlats(Integer id);
+	
+	@Query("select p from Personne p where p.createur.getId() = :id")
+	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id);
 }

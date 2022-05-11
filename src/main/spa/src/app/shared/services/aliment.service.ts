@@ -10,22 +10,22 @@ import { Score } from '../models/score';
     providedIn: 'root'
 })
 export class AlimentService implements OnDestroy {
-    
+
     private _urlAliment = environment.urlApi + '/api/aliments';
 
     public aliment$ = new BehaviorSubject<Aliment>(new Aliment());
-  
+
     // A FAIRE DANS TOUTES LES REQUETES VERS LE BACK
-   
+
     textHeader = 'Bearer '+ this.tokenStorage.getToken()!;
-    
+
     httpOptions = {
         headers: new HttpHeaders({ 'Authorization':  this.textHeader})
     };
-    
-    constructor(private _http: HttpClient,private tokenStorage: TokenStorageService){    
+
+    constructor(private _http: HttpClient,private tokenStorage: TokenStorageService){
     }
-    
+
     ngOnDestroy(): void {
         this.aliment$.unsubscribe();
     }
@@ -51,7 +51,7 @@ export class AlimentService implements OnDestroy {
     }
 
     /**
-    * Méthode qui permet d'avoir les données d'une aliment dont l'id est passé en paramètre.
+    * Méthode qui permet d'avoir les données d'un aliment dont l'id est passé en paramètre.
     * @param alimentTag
     */
      public getAlimentByTag(alimentTag: String) {
@@ -62,4 +62,3 @@ export class AlimentService implements OnDestroy {
         return this._http.get<Score[]>(this._urlAliment+"/Score/"+aId, this.httpOptions);
     }
 }
-  

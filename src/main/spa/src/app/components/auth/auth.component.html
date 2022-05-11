@@ -33,6 +33,15 @@
           </mat-error>
         </mat-form-field>
 
+        <mat-form-field appearance="standard" *ngIf="isSignupFormView">
+          <mat-label>Date de naissance</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateNaissance">
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+
         <mat-form-field appearance="standard">
           <mat-label>Entrez votre email</mat-label>
           <input type="email" matInput formControlName="email"

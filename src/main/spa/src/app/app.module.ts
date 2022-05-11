@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { PersonFamilleComponent } from './components/person/person-famille/person-famille.component';
 
 
 
@@ -38,7 +39,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     ItemPlatComponent,
     CriteriaComponent,
     SidenavComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    PersonFamilleComponent
   ],
   imports: [
     BrowserModule,

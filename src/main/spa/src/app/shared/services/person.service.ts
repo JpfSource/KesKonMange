@@ -14,6 +14,7 @@ export class PersonService implements OnDestroy {
   private _urlPerson = environment.urlApi + '/api/personnes';
 
   public person$ = new BehaviorSubject<Person>(new Person());
+  public persons$ = new BehaviorSubject<Person[]>([]);
 
   // A FAIRE DANS TOUTES LES REQUETES VERS LE BACK
   textHeader = 'Bearer '+ this.tokenStorage.getToken()!;
@@ -32,7 +33,7 @@ export class PersonService implements OnDestroy {
   }
 
   /**
-   * Méthode qui retourne toutes les personnes présente en BdD.
+   * Méthode qui retourne toutes les personnes présentes en BdD.
    * @returns
    */
   public getPersonAll() {
@@ -81,5 +82,29 @@ export class PersonService implements OnDestroy {
       );
   }
 
+  /**
+   * Méthode qui permet de créer une personne par un utilisateur
+   * @param person
+   * @param idCreateur
+   * @returns
+   */
+  createPersonByUser(person: Person, idCreateur: number | undefined) {
+    return this._http.post<Person>(this._urlPerson + '/' + idCreateur + '/create', person, this.httpOptions)
+    .pipe(
+      tap(person => {
+        this.person$.next(person);
+      }
+      )
+    )
+  }
+
+/**
+ * Méthode qui retourne la liste de toutes les personnes créées par l'utilisateur.
+ * @param idCreateur
+ * @returns
+ */
+  getAllPersonsCreatedByUser(idCreateur: number) {
+    return this._http.get<Person[]>(this._urlPerson +'/' + idCreateur + '/all', this.httpOptions )
+  }
 
 }
