@@ -19,6 +19,11 @@ public class ServicePersonne {
 	@Autowired
 	JpaPersonne jp;
 
+	/**
+	 * Rnvoie un boolean pour s'assurer que le calcul sur les données d'une personne est possible.
+	 * @param personne
+	 * @return
+	 */
 	private static Boolean isPersonneOkForCalcul(Personne personne) {
 		return personne != null
 				&& personne.getDateNaissance() != null
@@ -29,6 +34,11 @@ public class ServicePersonne {
 				&& personne.getObjectifCalorique() != null;
 	}
 
+	/**
+	 * Renvoie le besoin calorique d'une personne en fonction des données saisies.
+	 * @param personne
+	 * @return
+	 */
 	public static Integer calculBesoinsCaloriques(Personne personne){
 		if (isPersonneOkForCalcul(personne)) {
 			Integer age = UtilDate.calculAge(personne.getDateNaissance());
@@ -58,10 +68,19 @@ public class ServicePersonne {
 		}
 	}
 
+	/**
+	 * SET de l'attribut BesoinsCaloriques d'une personne.
+	 * @param personne
+	 */
 	public static void setBesoinsCaloriques(Personne personne){
 		personne.setBesoinsCaloriques(calculBesoinsCaloriques(personne));
 	}
 
+	/**
+	 * SET de l'attribut BesoinsCaloriques d'une collection de personnes.
+	 * @param personnes
+	 * @return
+	 */
 	private static Iterable<Personne> setBesoinsCaloriques(Iterable<Personne> personnes){
 		for(Personne personne : personnes) {
 			setBesoinsCaloriques(personne);
@@ -76,18 +95,37 @@ public class ServicePersonne {
 		return personne;
 	}
 	
+	/**
+	 * Renvoie la personne dont l'identifiant est passé en paramètre.
+	 * @param pid
+	 * @return
+	 */
 	public Optional<Personne> findById(Integer pid){
 		return setBesoinsCaloriques(jp.findById(pid));
 	}
-
-	public Iterable<Personne> findAllByCreator(Integer pid){
-		return setBesoinsCaloriques(jp.getPersonnesByCreator(pid));
+	
+	/**
+	 * Renvoie toutes les personnes créées par un utilisateur dont l'identifiant est passé en paramètre.
+	 * @param id
+	 * @return
+	 */
+	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id){
+		return setBesoinsCaloriques(jp.getAllPersonsCreatedByUser(id));
 	}
 
+	/**
+	 * Renvoie toutes les personnes de la BDD.
+	 * @return
+	 */
 	public Iterable<Personne> findAll(){
 		return setBesoinsCaloriques(jp.findAll());
 	}
 
+	/**
+	 * Sauvegarde un utilisateur en base de données.
+	 * @param personne
+	 * @return
+	 */
 	public Personne save(Personne personne){
 		if(personne.getObjectifCalorique() == null) {personne.setObjectifCalorique(100);}
 		if(personne.getUrlPhoto() == null) {personne.setUrlPhoto("https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg");}
@@ -96,6 +134,12 @@ public class ServicePersonne {
 		return personne;
 	}
 	
+	/**
+	 * Sauvegarde une personne créée par un utilisateur dont l'identifiant est passé en paramètre.
+	 * @param personne
+	 * @param idCreateur
+	 * @return
+	 */
 	public Personne savePersonCreatedByUser(Personne personne, Integer idCreateur){
 		Optional<Personne> creator = jp.findById(idCreateur);
 		if(personne.getUrlPhoto() == null) {personne.setUrlPhoto("https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg");}
@@ -105,6 +149,10 @@ public class ServicePersonne {
 		return personne;
 	}
 
+	/**
+	 * Supprime de la BDD, la personne dont l'identifiant est passé en paramètre.
+	 * @param pid
+	 */
 	public void deleteById(Integer pid)
 	{
 		// TODO
@@ -116,24 +164,42 @@ public class ServicePersonne {
 		jp.deleteById(pid);
 	}
 	
+	/**
+	 * Renvoie la personne dont l'email est passé en paramètre.
+	 * @param email
+	 * @return
+	 */
 	public Optional<Personne> getPersonneByEmail(String email){
 		return jp.getPersonneByEmail(email);
 	}
 	
+	/**
+	 * Renvoie la liste des absences de la personne dont l'identifiant est passé en paramètre.
+	 * @param id
+	 * @return
+	 */
 	public Iterable<Absence> getAbsences(Integer id){
 		return jp.getAbsences(id);
 	}
 
-	public Iterable<Groupe> getGroupes(Integer id){
-		return jp.getGroupes(id);
+	/**
+	 * Renvoie la liste des groupes de la personne dont l'identifiant est passé en paramètre.
+	 * @param id
+	 * @return
+	 */
+	public Iterable<Groupe> getGroupesByPersonne(Integer id){
+		return jp.getGroupesByPersonne(id);
 	}
 
+	/**
+	 * Renvoie la liste des plats de la personne dont l'identifiant est passé en paramètre.
+	 * @param id
+	 * @return
+	 */
 	public Iterable<Plat> getPlats(Integer id){
 		return jp.getPlats(id);
 	}
 	
-	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id){
-		return jp.getAllPersonsCreatedByUser(id);
-	}
+
 
 }

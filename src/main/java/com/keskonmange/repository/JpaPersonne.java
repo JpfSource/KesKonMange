@@ -16,17 +16,15 @@ public interface JpaPersonne extends CrudRepository<Personne, Integer> {
 	public Optional<Personne> getPersonneByEmail(String email);
 		
 	@Query("select p from Personne p where p.createur.id = :id ")
-	public Iterable<Personne> getPersonnesByCreator(Integer id);
-	
-	@Query("select ab from Absence as ab where ab.personne.getId() = :id")
+	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id);
+
+	@Query("select ab from Absence ab where ab.personne.id = :id")
 	public Iterable<Absence> getAbsences(Integer id);
 
-	@Query("select gr from Groupe as gr where gr.groupePersonnes.getId() = :id")
-	public Iterable<Groupe> getGroupes(Integer id);
+	@Query("select gr from Groupe gr join gr.groupePersonnes as gp where gp.id = :id")
+	public Iterable<Groupe> getGroupesByPersonne(Integer id);
 
-	@Query("select pl from Plat as pl where pl.createur.getId() = :id")
+	@Query("select pl from Plat pl where pl.createur.id = :id")
 	public Iterable<Plat> getPlats(Integer id);
 	
-	@Query("select p from Personne p where p.createur.getId() = :id")
-	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id);
 }

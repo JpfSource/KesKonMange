@@ -32,7 +32,7 @@ export class PersonIdentityComponent implements OnInit {
     this.identityForm = this._fb.group({
       nom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       prenom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      description: ['', [Validators.minLength(2), Validators.maxLength(100)]],
       dateNaissance: ['', Validators.required],
       id: ['']
     });
@@ -47,8 +47,6 @@ export class PersonIdentityComponent implements OnInit {
       });
     }
     this.personId = this._userService.decodedToken.id;
-    console.log(this.personId);
-
   }
 
   submitForm() {
@@ -57,7 +55,6 @@ export class PersonIdentityComponent implements OnInit {
       this.message = "Modifications enregistrées avec succès !"
     }
     if (this.identityForm.valid && this.isFormToCreatePersonByUser == true) {
-      console.log("Dans le submoiForm de AddedForm");
       const pers = { ...this.person, ...this.identityForm.value };
       this._personService.createPersonByUser(pers, this.personId).subscribe(p => this.personAdd = p);
       this.message = "Données enregistrées avec succès !"

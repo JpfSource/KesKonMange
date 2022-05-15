@@ -77,12 +77,6 @@ public class RestControllerPersonne
 		}
 	}
 
-	@ApiOperation(value = "Get all person by creator id", notes = "Returns a collection of Personne")
-	@GetMapping("/creator/{id}")
-	public Iterable<Personne> getAllByCreator(@PathVariable("id") @ApiParam(name = "id", value = "Person id", example ="1") Integer pid) {
-		return sp.findAllByCreator(pid);
-	}
-
 	@ApiOperation(value = "Get all person", notes = "Returns a collection of Personne")
 	@GetMapping("all")
 	public Iterable<Personne> getAll() {
@@ -97,7 +91,7 @@ public class RestControllerPersonne
 	}
 	
 	@ApiOperation(value = "Get all persons created by an user", notes = "Returns a collection of Personne created by user per id")
-	@GetMapping("{id}/all")
+	@GetMapping("{id}/all-personnes")
 	public Iterable<Personne> getAllPersonsCreatedByUser(@PathVariable("id") @ApiParam(name = "id", value = "Person id", example ="1") Integer pid) {
 		return sp.getAllPersonsCreatedByUser(pid);
 	}

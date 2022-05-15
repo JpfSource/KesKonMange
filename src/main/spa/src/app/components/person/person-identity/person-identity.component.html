@@ -1,7 +1,9 @@
 <div isFormToCreatePersonByUser = "isFormToCreatePersonByUser">
+  <form class="mat-form" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+
   <!--    > FormMaterial NOM    -->
     <div class="form-group">
-      <mat-form-field appearance="outline" [formGroup]="identityForm">
+      <mat-form-field appearance="outline">
         <mat-label>Nom</mat-label>
         <input matInput type="text"
         class="form-control"
@@ -27,10 +29,9 @@
       </mat-form-field>
     </div>
 
-
     <!--    > FormMaterial PRENOM    -->
     <div class="form-group">
-      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+      <mat-form-field appearance="outline" >
         <mat-label>Prenom</mat-label>
         <input matInput
         type="text"
@@ -58,10 +59,9 @@
       </mat-form-field>
     </div>
 
-
     <!--    > FormMaterial DESCRIPTION    -->
     <div class="form-group">
-      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+      <mat-form-field appearance="outline">
         <mat-label>Description</mat-label>
         <input matInput
         type="text"
@@ -75,9 +75,6 @@
             !identityForm.get('description')!.valid
         }">
         <span class="invalid-feedback">
-          <span *ngIf="identityForm.get('description')!.errors?.['required']">
-            Veuillez entrer votre description.
-          </span>
           <span *ngIf="identityForm.get('description')!.errors?.['minlength']">
             La description doit avoir au moins 2 caractères.
           </span>
@@ -88,10 +85,9 @@
       </mat-form-field>
     </div>
 
-
     <!--    > FormMaterial DATE DE NAISSANCE    -->
     <div class="form-group">
-      <mat-form-field appearance="outline" [formGroup]="identityForm" (ngSubmit)="submitForm()">
+      <mat-form-field appearance="outline">
         <mat-label>Date de naissance</mat-label>
         <input matInput
         type="date"
@@ -117,13 +113,13 @@
       {{message}}
     </div>
 
-
     <div class="btn">
       <button mat-stroked-button
       type="submit"
       [disabled]="!identityForm.valid"
       (click)="goToMainView()">Valider</button>
     </div>
+  </form>
   </div>
     valid Form = {{identityForm.valid}}
     isAddedForm = {{isFormToCreatePersonByUser}}

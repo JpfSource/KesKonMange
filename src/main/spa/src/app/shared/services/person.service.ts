@@ -99,12 +99,12 @@ export class PersonService implements OnDestroy {
   }
 
 /**
- * Méthode qui retourne la liste de toutes les personnes créées par l'utilisateur.
+ * Méthode qui retourne la liste de toutes les personnes créées par un utilisateur.
  * @param idCreateur
  * @returns
  */
   getAllPersonsCreatedByUser(idCreateur: number) {
-    return this._http.get<Person[]>(this._urlPerson +'/' + idCreateur + '/all', this.httpOptions )
+    return this._http.get<Person[]>(this._urlPerson +'/' + idCreateur + '/all-personnes', this.httpOptions )
   }
 
 }
