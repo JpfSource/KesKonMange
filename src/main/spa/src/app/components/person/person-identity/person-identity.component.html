@@ -67,13 +67,7 @@
         type="text"
         class="form-control"
         id="description"
-        formControlName="description"
-        [ngClass]="{
-          'is-invalid':
-            (identityForm.get('description')!.touched ||
-              identityForm.get('description')!.dirty) &&
-            !identityForm.get('description')!.valid
-        }">
+        formControlName="description">
         <span class="invalid-feedback">
           <span *ngIf="identityForm.get('description')!.errors?.['minlength']">
             La description doit avoir au moins 2 caractères.
@@ -121,7 +115,4 @@
     </div>
   </form>
   </div>
-    valid Form = {{identityForm.valid}}
-    isAddedForm = {{isFormToCreatePersonByUser}}
-    {{personAdd | json}}
 

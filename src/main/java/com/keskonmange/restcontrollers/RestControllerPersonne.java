@@ -154,6 +154,20 @@ public class RestControllerPersonne
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
 	}
 	
+	@ApiOperation(value = "Update an user's password", notes = "Returns person updated")
+	@PutMapping("/resetPassword")
+	public Personne updatePassword(@RequestBody Personne user) throws ErreurPersonne {
+		Optional<Personne> personToUpdate = sp.getPersonneByEmail(user.getEmail());
+		if(personToUpdate.isPresent()) {
+			personToUpdate.get().setPwd(encoder.encode(user.getPwd()));
+			return sp.save(personToUpdate.get());
+		}
+		else {
+			throw new ErreurPersonne(messageSource.getMessage("erreur.personne.connectKO", null, Locale.getDefault()));
+		}
+
+	}
+	
 	@ApiOperation(value = "Update a data's person", notes = "Returns person updated")
 	@PutMapping("{id}")
 	public Personne update(@RequestBody Personne personne, @PathVariable("id") @ApiParam(name = "id", value = "Person id", example = "1") Integer pid) throws ErreurPersonne {

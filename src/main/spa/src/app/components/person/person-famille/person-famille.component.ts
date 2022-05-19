@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Person } from 'src/app/shared/models/person';
 import { PersonService } from 'src/app/shared/services/person.service';
@@ -25,7 +26,8 @@ export class PersonFamilleComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    private _personService: PersonService
+    private _personService: PersonService,
+    private _router: Router,
     ) { }
 
 
@@ -51,5 +53,9 @@ export class PersonFamilleComponent implements OnInit {
 
   deletePerson(personId: number) {
 
+  }
+
+  goToAddPersonForm(){
+    this._router.navigateByUrl("/person/maFamille/add")
   }
 }

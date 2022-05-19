@@ -9,8 +9,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.keskonmange.security.jwt.AuthEntryPointJwt;
 import com.keskonmange.security.jwt.AuthTokenFilter;
@@ -59,23 +61,23 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 
-//		http.cors().and().csrf().disable()
-//				.exceptionHandling()
-//				.authenticationEntryPoint(unauthorizedHandler).and()
-//				.sessionManagement()
-//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//				.authorizeRequests()
-//				.antMatchers("/api/personnes/signin").permitAll()
-//				.antMatchers("/api/personnes/login").permitAll()
-//				.antMatchers("/api/personnes/connected").permitAll()
-//				.antMatchers(AUTH_WHITE_LIST).permitAll()
-//				.antMatchers("/api/personnes/**").hasAuthority("USER")
-//				.antMatchers("/api/groupes/**").hasAuthority("USER")
-//				.anyRequest().authenticated();
-//		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.cors().and().csrf().disable()
+				.exceptionHandling()
+				.authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.authorizeRequests()
+				.antMatchers("/api/personnes/signin").permitAll()
+				.antMatchers("/api/personnes/login").permitAll()
+				.antMatchers("/api/personnes/connected").permitAll()
+				.antMatchers(AUTH_WHITE_LIST).permitAll()
+				.antMatchers("/api/personnes/**").hasAuthority("USER")
+				.antMatchers("/api/groupes/**").hasAuthority("USER")
+				.anyRequest().authenticated();
+		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		
 		//POUR DESACTIVER LA SECURITE
-		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+//		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
 
 	}
 }

@@ -21,6 +21,8 @@ import { MaterialModule } from './material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { PersonFamilleComponent } from './components/person/person-famille/person-famille.component';
+import { PersonFamilleAddFormComponent } from './components/person/person-famille/person-famille-add-form/person-famille-add-form.component';
+import { ResetPasswordFormComponent } from './components/auth/reset-password-form/reset-password-form.component';
 
 
 
@@ -40,7 +42,9 @@ import { PersonFamilleComponent } from './components/person/person-famille/perso
     CriteriaComponent,
     SidenavComponent,
     ToolbarComponent,
-    PersonFamilleComponent
+    PersonFamilleComponent,
+    PersonFamilleAddFormComponent,
+    ResetPasswordFormComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 /**
  * Classe qui a 3 fonctions principales : 
- * ## générer le JWT avec le usernmae, la date d'expiration et le code secret
+ * ## générer le JWT avec le username, la date d'expiration et le code secret
  * ## récupérer le username du JWT
  * ## valider le JWT
  * 
@@ -37,6 +37,11 @@ public class JwtUtils {
 	@Value("${keskonmange.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 	
+	/**
+	 * Génère le token avec comme données le nom d'utilisateur, la date d'expiration et la signature (code secret).
+	 * @param authentication
+	 * @return
+	 */
 	public String generateJwtToken(Authentication authentication) {
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 		return Jwts.builder()
@@ -48,10 +53,21 @@ public class JwtUtils {
 				.signWith(SignatureAlgorithm.HS256, jwtSecret)
 				.compact();
 	}
+	
+	/**
+	 * Récupère le nom d'utilisateur à partir du token.
+	 * @param token
+	 * @return
+	 */
 	public String getUserNameFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 	
+	/**
+	 * Vérifie la validité du token par rapport à la signature et à la date d'expiration.
+	 * @param authToken
+	 * @return
+	 */
 	public boolean validateJwtToken(String authToken) {
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
