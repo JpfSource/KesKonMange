@@ -42,7 +42,6 @@ export class PersonFamilleComponent implements OnInit {
     if (idCreateur != undefined) {
       this._personService.getAllPersonsCreatedByUser(idCreateur).subscribe(persons => {
         this.persons$.next(persons);
-        console.log("valeur du Behavior:", this.persons$.value);
 
         this.dataSource = new MatTableDataSource<Person>(persons);
         this.dataSource.sort = this.sort;
