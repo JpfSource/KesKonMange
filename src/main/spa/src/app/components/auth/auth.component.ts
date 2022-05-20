@@ -116,4 +116,7 @@ export class AuthComponent implements OnInit {
     setTimeout(()=> this._router.navigateByUrl('/login'), 1500);
   }
 
+  resetPasswordForm() : void {
+    this._router.navigateByUrl('/resetPassword');
+  }
 }

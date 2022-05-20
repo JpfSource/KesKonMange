@@ -34,14 +34,13 @@ export class ResetPasswordFormComponent implements OnInit {
   }
 
   submitForm(): void {
-    this._tokenStorage.saveToken("");
     if (this.resetPasswordForm.valid) {
       const p = { ...this.person, ...this.resetPasswordForm.value }
         this._authService
           .resetPassword(p)
           .subscribe({
             next: (data => {
-              this.message = "Inscription réussie !"
+              this.message = "Mot de passe modifié avec succès !"
               this.goToLogin();
             }),
             error: err => {

@@ -82,7 +82,7 @@
       </div>
 
       <div>
-        <a matLine [routerLink]="['resetPassword']">Mot de passe oublié ?</a>
+        <a matLine (click)="resetPasswordForm()">Mot de passe oublié ?</a>
       </div>
 
       <div class="alert alert-success text-center" role="alert" *ngIf="message">
