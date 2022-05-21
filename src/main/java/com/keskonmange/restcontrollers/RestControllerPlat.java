@@ -58,6 +58,12 @@ public class RestControllerPlat
 		verifPlat(pid);
 		return sp.findById(pid);
 	}
+	
+	@ApiOperation(value = "Get all persons created by an user", notes = "Returns a collection of Personne created by user per id")
+	@GetMapping("{id}/all-plats")
+	public Iterable<Plat> getAllPersonsCreatedByUser(@PathVariable("id") @ApiParam(name = "id", value = "Person id", example ="1") Integer pid) {
+		return sp.getAllPlatsCreatedByUser(pid);
+	}
 
 	@ApiOperation(value = "Create a plat", notes = "Returns a plat created")
 	@PostMapping

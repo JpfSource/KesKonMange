@@ -22,6 +22,10 @@ public class ServicePlat
 	public Iterable<Plat> findAll(){
 		return jp.findAll();
 	}
+	
+	public Iterable<Plat> getAllPlatsCreatedByUser(Integer id){
+		return jp.getAllPlatsCreatedByUser(id);
+	}
 
 	public Plat save(Plat plat){
 		return jp.save(plat);
