@@ -9,6 +9,7 @@ import { Plat } from '../models/plat';
 })
 export class PlatService {
 
+
   private _urlPlat = environment.urlApi + '/api/plats';
 
   public plat$ = new BehaviorSubject<Plat>(new Plat());
@@ -47,7 +48,11 @@ export class PlatService {
   }
 
   public findAll() {
-    return this._http.get<Plat[]>(environment.urlApi + '/api/plats')
+    return this._http.get<Plat[]>(this._urlPlat);
+  }
+
+  public getAllPlatsCreatedByUser(idCreateur: number) {
+    return this._http.get<Plat[]>(this._urlPlat +'/' + idCreateur + '/all-plats', this.httpOptions);
   }
 
   public deletePlat(id: number) {
