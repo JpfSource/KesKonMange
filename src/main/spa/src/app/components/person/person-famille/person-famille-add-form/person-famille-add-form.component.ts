@@ -44,11 +44,13 @@ export class PersonFamilleAddFormComponent implements OnInit {
   }
 
   submitForm() {
-
     if (this.personAddForm.valid) {
       const pers = { ...this.person, ...this.personAddForm.value };
       this._personService.createPersonByUser(pers, this.personId).subscribe(p => this.personAdd = p);
-      this.message = "Personne enregistrée avec succès !"
+      setTimeout(() => {
+        this.message = "Personne enregistrée avec succès !"
+      }, 1500);
+
     }
   }
 
