@@ -51,17 +51,7 @@ public class RestControllerGroupe {
 		}
 	}
 	
-	/**
-	 * Méthode qui vérifie si le nom de groupe est déjà présent en BdD.
-	 * @param groupe
-	 * @throws ErreurGroupe
-	 */
-	private void verifNomGroupe(Groupe groupe) throws ErreurGroupe {	
-	Optional<Groupe> groupeExistant = sg.findGroupeByNom(groupe.getNom());
-	if(groupeExistant.isPresent()) {
-		throw new ErreurGroupe(messageSource.getMessage("erreur.groupe.namealreadyexist", new Object[]{groupe.getNom()}, Locale.getDefault()));
-	}
-	}
+
 	
 	
 	/**
@@ -84,7 +74,6 @@ public class RestControllerGroupe {
 	@ApiOperation(value = "Get group by id", notes = "Returns a group as per the id")
 	@GetMapping("{id}")
 	public Optional<Groupe> getOne(@PathVariable("id") @ApiParam(name = "id", value = "Group id", example = "1") Integer pid) throws ErreurGroupe{
-		verifGroupe(pid);
 		return sg.findById(pid);
 	}
 	
@@ -99,15 +88,7 @@ public class RestControllerGroupe {
 	@ApiOperation(value = "Create a group", notes = "Returns a group created")
 	@PostMapping
 	public Groupe create(@Valid @RequestBody Groupe groupe, BindingResult result) throws ErreurGroupe{
-		if(result.hasErrors()) {
-			message = "";
-			result.getFieldErrors().forEach(e -> {
-				message += messageSource.getMessage("erreur.datalib", new Object[]{e.getField(), e.getDefaultMessage()}, Locale.getDefault());
-			});
-			throw new ErreurGroupe(message);
-		}
-		verifNomGroupe(groupe);
-		return sg.save(groupe);
+		return sg.createGroupe(groupe, result);
 	}
 
 	/**
@@ -122,11 +103,8 @@ public class RestControllerGroupe {
 	@ApiOperation(value = "Update group by id", notes = "Returns a group updated")
 	@PutMapping("{id}")
 	public Groupe update(@RequestBody Groupe groupe, @PathVariable ("id") @ApiParam(name = "id", value = "Group id", example = "1") Integer pid) throws ErreurGroupe {
-		verifGroupe(pid);
-		if(pid != groupe.getId()) {
-			throw new ErreurGroupe(messageSource.getMessage("erreur.groupe.notequals", new Object[]{pid, groupe.getId()}, Locale.getDefault()));
-		}
-		return sg.save(groupe);
+
+		return sg.updateGroupe(groupe, pid);
 	}
 
 	/**
@@ -137,7 +115,6 @@ public class RestControllerGroupe {
 	@ApiOperation(value = "Delete a group")
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") @ApiParam(name = "id", value = "Group id", example = "1") Integer pid) throws ErreurGroupe{
-		verifGroupe(pid);
 		sg.deleteById(pid);
 	}
 	

@@ -184,7 +184,7 @@ public class ServicePersonne {
 	 * @param personne
 	 * @return
 	 */
-	public Personne save(Personne personne){
+	private Personne save(Personne personne){
 		if(personne.getObjectifCalorique() == null) {personne.setObjectifCalorique(100);}
 		if(personne.getUrlPhoto() == null) {personne.setUrlPhoto("https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg");}
 		personne = jp.save(personne);

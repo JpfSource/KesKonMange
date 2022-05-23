@@ -1,0 +1,65 @@
+<div class="card-body">
+  <form class="mat-form" [formGroup]="groupForm" (ngSubmit)="submitForm()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Genre</mat-label>
+      <mat-select formControlName="genre">
+        <mat-option value="FEMININ">Féminin</mat-option>
+        <mat-option value="MASCULIN">Masculin</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Poids</mat-label>
+      <input matInput type="number"
+      formControlName="poids" min="10" max="200">
+      <span matSuffix>kg</span>
+      <mat-error *ngIf="groupForm.invalid">Le poids doit être compris entre 10 kg et 200 kg.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Taille</mat-label>
+      <input matInput type="number" (input)="onChangeData()"
+      formControlName="taille" min="60" max="250">
+      <span matSuffix>cm</span>
+      <mat-error *ngIf="groupForm.invalid">Le poids doit être comprise entre 60 cm et 250 cm.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Activité</mat-label>
+      <mat-select formControlName="activite">
+        <mat-option value="SEDENTAIRE">Sédentaire</mat-option>
+        <mat-option value="PEU_ACTIF">Peu actif</mat-option>
+        <mat-option value="ACTIF">Actif</mat-option>
+        <mat-option value="TRES_ACTIF">Très actif</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Objectif calorique</mat-label>
+      <input matInput type="number"
+      formControlName="objectifCalorique" min="0" max="200">
+      <span matSuffix>%</span>
+      <mat-error *ngIf="groupForm.invalid">Le poids doit être comprise entre 0% et 200%.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Besoins caloriques</mat-label>
+      <input matInput type="number"
+      formControlName="besoinsCaloriques">
+      <span matSuffix class="kcal">kcal</span>
+    </mat-form-field>
+
+    <br />
+
+    <div class="alert alert-success text-center" role="alert" *ngIf="message">
+      {{message}}
+    </div>
+    <div class="btn">
+      <button mat-stroked-button
+      type="submit"
+      [disabled]="!groupForm.valid"
+      (click)="goToMainView()">Valider</button>
+    </div>
+  </form>
+</div>
