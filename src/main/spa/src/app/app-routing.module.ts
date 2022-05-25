@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AlimentAllComponent } from './components/aliment/aliment-all/aliment-all.component';
 import { AlimentDetailsComponent } from './components/aliment/aliment-details/aliment-details.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { ResetPasswordFormComponent } from './components/auth/reset-password-form/reset-password-form.component';
 import { HomeComponent } from './components/home/home.component';
+import { PersonFamilleAddFormComponent } from './components/person/person-famille/person-famille-add-form/person-famille-add-form.component';
+import { PersonFamilleComponent } from './components/person/person-famille/person-famille.component';
 import { PersonIdentityComponent } from './components/person/person-identity/person-identity.component';
 import { PersonMorphologyComponent } from './components/person/person-morphology/person-morphology.component';
 import { PersonComponent } from './components/person/person.component';
@@ -17,28 +20,32 @@ const routes: Routes = [
     canActivate:[AuthGuard],
     component: PersonComponent,
     children: [
-      {path: "identity", component: PersonIdentityComponent},
-      {path: "morphology", component: PersonMorphologyComponent},
-      {path: "plats", component: PersonPlatsComponent},
+      { path: "identity", component: PersonIdentityComponent },
+      { path: "morphology", component: PersonMorphologyComponent },
+      { path: "plats", component: PersonPlatsComponent },
+      { path: "maFamille", component: PersonFamilleComponent },
+      { path: "maFamille/add", component: PersonFamilleAddFormComponent }
+
     ],
   },
   {
-    path:"aliments", 
+    path:"aliments",
     children: [
-      {path: ":id", component: AlimentAllComponent},
-      {path: ":pId/:aId", component: AlimentDetailsComponent}
+      { path: ":id", component: AlimentAllComponent },
+      { path: ":pId/:aId", component: AlimentDetailsComponent }
     ],
   },
-  {path: "plat",
-  canActivate:[AuthGuard],
+  { path: "plat",
+    canActivate:[AuthGuard],
     children: [
-      {path: ":id", component: ItemPlatComponent}
+      { path: ":id", component: ItemPlatComponent }
     ]},
 
-  {path:"home" , component: HomeComponent},
+  { path: "home" , component: HomeComponent },
   { path: "signin", component: AuthComponent },
   { path: "login", component: AuthComponent },
-  {path:"**", redirectTo: "home"}
+  { path: "resetPassword", component: ResetPasswordFormComponent},
+  { path: "**", redirectTo: "home" }
 ];
 
 @NgModule({

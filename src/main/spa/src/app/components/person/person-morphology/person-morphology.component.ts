@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Person } from 'src/app/shared/models/person';
@@ -11,6 +11,9 @@ import { PersonService } from 'src/app/shared/services/person.service';
   styleUrls: ['./person-morphology.component.scss']
 })
 export class PersonMorphologyComponent implements OnInit {
+
+  @Input()
+  isFormToCreatePersonByUser: boolean = false;
 
   morphologyForm!: FormGroup;
   person!: Person | null;
@@ -29,7 +32,7 @@ export class PersonMorphologyComponent implements OnInit {
       taille: ['', [Validators.required, Validators.min(60), Validators.max(250)]],
       activite: ['', [Validators.required]],
       objectifCalorique: ['', [Validators.required, Validators.min(0), Validators.max(200)]],
-      besoinsCaloriques: [''],
+      besoinsCaloriques: [{value:'', disabled:true}],
       id: ['']
     });
 
@@ -68,6 +71,10 @@ export class PersonMorphologyComponent implements OnInit {
   }
 
   goToMainView() : void {
-    setTimeout(()=> this._router.navigateByUrl("/person"), 1000);
+    if (!this.isFormToCreatePersonByUser) {
+      setTimeout(()=> this._router.navigateByUrl("/person"), 1000);
+    } else {
+      setTimeout(()=> this._router.navigateByUrl("/maFamille"), 1000);
+    }
   }
 }

@@ -15,7 +15,7 @@ import { PlatService } from 'src/app/shared/services/plat.service';
   templateUrl: './person-plats.component.html',
   styleUrls: ['./person-plats.component.scss']
 })
-export class PersonPlatsComponent implements OnInit, AfterViewInit {
+export class PersonPlatsComponent implements OnInit {
 
   person!: Person | null;
   plats$ = new BehaviorSubject<Plat[]>([]);
@@ -41,14 +41,6 @@ export class PersonPlatsComponent implements OnInit, AfterViewInit {
     private _router: Router
   ) { }
 
-  /**
-   * Méthode qui permet de récupérer dans le composant parent la valeur dans le composant fille (CriteriaComponent)
-   */
-  ngAfterViewInit(): void {
-    //this.parentListFilter = this.filterComponent.listFilter;
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-  }
 
   private typeSelectedSubject = new BehaviorSubject<string>("");
   typeSelectedAction$ = this.typeSelectedSubject.asObservable();
@@ -78,7 +70,6 @@ export class PersonPlatsComponent implements OnInit, AfterViewInit {
     this._platService.findAll().subscribe(plats => {
       this.plats$.next(plats);
       this.mesPlatsFiltres$.next(plats);
-      //this.dataSource = new MatTableDataSource<Plat>(this.mesPlatsFiltres$.value)
       this.dataSource = new MatTableDataSource<Plat>(plats);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

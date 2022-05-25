@@ -13,7 +13,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 /**
- * Classe qui permet de renvoyer une erreur et se déclecche à chaque demande d'un utilisateur non authentifié.
+ * Classe qui permet de renvoyer une erreur et se déclenche à chaque demande d'un utilisateur non authentifié.
  * 
  * @author Christian Ingold
  *

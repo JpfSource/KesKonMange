@@ -20,9 +20,7 @@ export class PersonComponent implements OnInit {
     private _personService : PersonService,
     private _route: ActivatedRoute,
     private _router : Router,
-    private _userService: UserService,
-    private _authService : AuthService,
-
+    private _userService: UserService
   ) { }
 
   getPrenomNom(){

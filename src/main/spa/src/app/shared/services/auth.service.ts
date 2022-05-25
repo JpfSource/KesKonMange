@@ -41,7 +41,14 @@ export class AuthService {
         }),
         catchError(this.handleError)
       );
-
+  }
+/**
+ * Réinitialisation du mot de passe d'un utilisateur.
+ * @param person
+ * @returns
+ */
+  resetPassword(person: Person): Observable<any> {
+    return this._http.put<Person>(this._urlAuth + '/resetPassword', person).pipe(catchError(this.handleError));
   }
 
   /**

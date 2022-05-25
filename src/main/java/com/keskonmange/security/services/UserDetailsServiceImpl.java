@@ -12,7 +12,7 @@ import com.keskonmange.repository.JpaPersonne;
 
 
 /**
- * Classe qui permet de charge les données de l'utilisateur venant du client et
+ * Classe qui permet de charger les données de l'utilisateur venant du client et
  * contrôle si l'utilisateur est présent en base de données.
  * 
  * @author Christian Ingold

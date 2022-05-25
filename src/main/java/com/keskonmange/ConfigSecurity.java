@@ -69,6 +69,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/api/personnes/signin").permitAll()
 				.antMatchers("/api/personnes/login").permitAll()
+				.antMatchers("/api/personnes/resetPassword").permitAll()
 				.antMatchers("/api/personnes/connected").permitAll()
 				.antMatchers(AUTH_WHITE_LIST).permitAll()
 				.antMatchers("/api/personnes/**").hasAuthority("USER")
