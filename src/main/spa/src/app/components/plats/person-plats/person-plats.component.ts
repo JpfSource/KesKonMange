@@ -9,6 +9,7 @@ import { Person } from 'src/app/shared/models/person';
 import { Plat } from 'src/app/shared/models/plat';
 import { PersonService } from 'src/app/shared/services/person.service';
 import { PlatService } from 'src/app/shared/services/plat.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-person-plats',
@@ -18,6 +19,7 @@ import { PlatService } from 'src/app/shared/services/plat.service';
 export class PersonPlatsComponent implements OnInit {
 
   person!: Person | null;
+  personId?: number;
   plats$ = new BehaviorSubject<Plat[]>([]);
   message!: string;
   typePlatInputSaved!: string;
@@ -38,12 +40,28 @@ export class PersonPlatsComponent implements OnInit {
     private _personService: PersonService,
     private _platService: PlatService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _userService: UserService,
   ) { }
 
 
   private typeSelectedSubject = new BehaviorSubject<string>("");
   typeSelectedAction$ = this.typeSelectedSubject.asObservable();
+
+  ngOnInit(): void {
+
+    // this._route.paramMap.subscribe(param => {
+    //   const personId = Number(param.get('id'));
+    //   if (personId != null && personId > 0) {
+    //     this._personService.getPersonById(personId);
+    //     this._personService.person$.subscribe((p: Person | null) => {
+    //       this.person = p;
+    //     });
+    //   }
+    // });
+    this.personId = this._userService.decodedToken.id;
+    this.getAllPlatsCreatedByUser(this.personId);
+  }
 
   /**
    * Méthode qui permet de filtrer la liste en fonction du type de plat
@@ -66,8 +84,9 @@ export class PersonPlatsComponent implements OnInit {
    * Méthode qui permet de récupérer tous les plats en BdD, en mettant à jour les observables
    * plats$ et mesPlatsFiltres$.
    */
-  getAllPlats(): void {
-    this._platService.findAll().subscribe(plats => {
+   getAllPlatsCreatedByUser(idCreateur: number | undefined): void {
+     if(idCreateur != undefined)
+    this._platService.getAllPlatsCreatedByUser(idCreateur).subscribe(plats => {
       this.plats$.next(plats);
       this.mesPlatsFiltres$.next(plats);
       this.dataSource = new MatTableDataSource<Plat>(plats);
@@ -104,18 +123,7 @@ export class PersonPlatsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this._route.paramMap.subscribe(param => {
-      const personId = Number(param.get('id'));
-      if (personId != null && personId > 0) {
-        this._personService.getPersonById(personId);
-        this._personService.person$.subscribe((p: Person | null) => {
-          this.person = p;
-        });
-      }
-    });
-    this.getAllPlats();
-  }
+
 
   /**
    * Méthode qui permet de supprimer un plat sélectionné dans la liste,
@@ -125,7 +133,7 @@ export class PersonPlatsComponent implements OnInit {
   public deletePlat(id: any): void {
     this._platService.deletePlat(id).subscribe(() => {
       this.message = "Plat supprimé avec succès !"
-      this.getAllPlats();
+      this.getAllPlatsCreatedByUser(this.personId);
       setTimeout(() => this.message = "", 2500);
     });
 

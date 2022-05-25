@@ -81,7 +81,7 @@
         <button mat-button type="submit" class="btn btn-dark btn-lg" [disabled]="!signinForm.valid" (click)="submitForm()">Valider</button>
       </div>
 
-      <div>
+      <div *ngIf="!isSignupFormView">
         <a matLine (click)="resetPasswordForm()">Mot de passe oublié ?</a>
       </div>
 

@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.keskonmange.enums.TypePlat;
 
 @Entity
@@ -47,6 +49,7 @@ public class Plat
 
 	
 	/* RELATIONS */
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Personne createur;
 	

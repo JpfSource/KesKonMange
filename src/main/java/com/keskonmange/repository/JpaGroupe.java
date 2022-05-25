@@ -15,13 +15,13 @@ public interface JpaGroupe extends CrudRepository<Groupe, Integer> {
 	@Query("select g from Groupe g where g.nom =:nom ")
 	public Optional<Groupe> getGroupeByNom(String nom);
 	
-	@Query("select ab from Absence as ab where ab.groupe.getId() = :id")
+	@Query("select ab from Absence ab where ab.groupe.id = :id")
 	public Iterable<Absence> getAbsences(Integer id);
 
-	@Query("select rc from RepartitionCalorique as rc where rc.groupe.getId() = :id")
+	@Query("select rc from RepartitionCalorique as rc where rc.groupe.id = :id")
 	public Iterable<RepartitionCalorique> getRepartitionsCaloriques(Integer id);
 
-	@Query("select re from Repas as re where re.groupe.getId() = :id")
+	@Query("select re from Repas re where re.groupe.id = :id")
 	public Iterable<Repas> getRepas(Integer id);
 
 }

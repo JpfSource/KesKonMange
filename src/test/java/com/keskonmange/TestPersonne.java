@@ -5,10 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindingResult;
+
 import com.keskonmange.entities.Personne;
 import com.keskonmange.enums.Activite;
 import com.keskonmange.enums.Genre;
@@ -138,7 +141,7 @@ public class TestPersonne {
 	}
 	
 	@Test
-	public void testGetOne() {
+	public void testGetOne() throws ErreurPersonne {
 		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
 		try {
 			Personne personne = rcp.getOne(PID).get();
@@ -168,7 +171,7 @@ public class TestPersonne {
 
 	@Test
 	public void testCreate() {
-		when(sp.save(any(Personne.class))).thenReturn(TestPersonne.getOnePersonne());
+		when(sp.savePersonCreatedByUser(any(Personne.class))).thenReturn(TestPersonne.getOnePersonne());
 	 
 		try {
 			Personne personne = new Personne();
@@ -263,7 +266,7 @@ public class TestPersonne {
 	} 
 	 
 	@Test
-	public void testDelete() {
+	public void testDelete() throws ErreurPersonne {
 		when(sp.findById(any(Integer.class))).thenReturn(Optional.of(TestPersonne.getOnePersonne()));
 		
 		try {

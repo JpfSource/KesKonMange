@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PersonService } from 'src/app/shared/services/person.service';
 import { Person } from 'src/app/shared/models/person';
-import { UserService } from 'src/app/shared/services/user.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatIconModule} from '@angular/material/icon'
+import { PersonService } from 'src/app/shared/services/person.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-person',
@@ -20,7 +18,9 @@ export class PersonComponent implements OnInit {
     private _personService : PersonService,
     private _route: ActivatedRoute,
     private _router : Router,
-    private _userService: UserService
+    private _userService: UserService,
+    private _authService : AuthService,
+
   ) { }
 
   getPrenomNom(){

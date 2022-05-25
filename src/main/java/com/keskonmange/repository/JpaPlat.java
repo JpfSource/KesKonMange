@@ -10,4 +10,7 @@ public interface JpaPlat extends CrudRepository<Plat, Integer>{
 	
 	@Query("select re from Repas as re where re.plat.getId() = :id")
 	public Iterable<Repas> getRepas(Integer id);
+	
+	@Query("select pl from Plat pl where pl.createur.id = :id")
+	public Iterable<Plat> getAllPlatsCreatedByUser(Integer id);
 }
