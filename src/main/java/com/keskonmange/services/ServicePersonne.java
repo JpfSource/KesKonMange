@@ -350,8 +350,4 @@ public class ServicePersonne {
 		return save(personne);
 	}
 	
-	public Iterable<Personne> getAllPersonsCreatedByUser(Integer id){
-		return jp.getAllPersonsCreatedByUser(id);
-	}
-
 }

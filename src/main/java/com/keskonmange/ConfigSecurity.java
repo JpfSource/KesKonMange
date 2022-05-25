@@ -9,8 +9,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.keskonmange.security.jwt.AuthEntryPointJwt;
 import com.keskonmange.security.jwt.AuthTokenFilter;
@@ -76,7 +78,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		
 		//POUR DESACTIVER LA SECURITE
-		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+//		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
 
 	}
 }
