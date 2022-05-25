@@ -1,6 +1,7 @@
 package com.keskonmange.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +45,14 @@ public class Personne {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false, unique = false)
 	private Integer id;
+
+	@Nullable
+	@Column(name="DATE_SYS_CREATION", nullable = true, unique = false)
+	private LocalDateTime dateSysCreation;
+	
+	@Nullable
+	@Column(name="DATE_SYS_MODIFICATION", nullable = true, unique = false)
+	private LocalDateTime dateSysModification;
 
 	@NotNull
 	@NotBlank
@@ -108,7 +117,7 @@ public class Personne {
 
 	@Transient
 	private String roleLibelle;
-
+	
 	
     /* RELATIONS */
 	@JsonBackReference
@@ -133,7 +142,37 @@ public class Personne {
 	public Personne() {
 		super();
 	}
-		
+	
+	public Personne(Integer id, String nom, String prenom, Genre genre, LocalDate dateNaissance, Integer taille, Integer poids, Integer objectifCalorique, String urlPhoto, Activite activite, String description, String email, String pwd, Role role) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.genre = genre;
+		this.dateNaissance = dateNaissance;
+		this.taille = taille;
+		this.poids = poids;
+		this.objectifCalorique = objectifCalorique;
+		this.urlPhoto = urlPhoto;
+		this.activite = activite;
+		this.description = description;
+		this.email = email;
+		this.pwd = pwd;
+		this.role = role;
+	}
+	
+	public Personne(Genre genre, Integer poids, Integer taille, LocalDate dateNaissance, Activite activite, Integer objectifCalorique) {
+		super();
+		this.genre = genre;
+		this.dateNaissance = dateNaissance;
+		this.taille = taille;
+		this.poids = poids;
+		this.objectifCalorique = objectifCalorique;
+		this.activite = activite;
+	}
+
+	
+	
 	/* GETTERS & SETTERS */
 
 	/**
@@ -433,10 +472,36 @@ public class Personne {
 		this.personnesCreees = personnesCreees;
 	}	
 	
-		
+	/**
+	 * @return the dateSysCreation
+	 */
+	public LocalDateTime getDateSysCreation() {
+		return dateSysCreation;
+	}
+
+	/**
+	 * @param dateSysCreation the dateSysCreation to set
+	 */
+	public void setDateSysCreation(LocalDateTime dateSysCreation) throws Exception {
+		throw new Exception("Method not implemented : it's forbidden to set a system date");
+	}
+
+	/**
+	 * @return the dateSysModification
+	 */
+	public LocalDateTime getDateSysModification() {
+		return dateSysModification;
+	}
+
+	/**
+	 * @param dateSysModification the dateSysModification to set
+	 */
+	public void setDateSysModification(LocalDateTime dateSysModification) throws Exception {
+		throw new Exception("Method not implemented : it's forbidden to set a system date");
+	}
+
+	
 	/* PUBLIC METHODS */	
-
-
 	@Override
 	public String toString() {
 		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", genreLibelle=" + genreLibelle
